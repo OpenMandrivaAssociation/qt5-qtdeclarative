@@ -86,10 +86,6 @@ Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{qtquicktest} = %version
 Requires: %{name} = %version
-Provides: qtquicktest-devel = %version
-Provides: libqtquicktest5-devel = %version
-Provides: qt5quicktest-devel = %version
-Provides: qtquicktest5-devel = %version
 
 %description -n %{qtquicktestd}
 Devel files needed to build apps based on QtVersit.
@@ -109,10 +105,7 @@ Devel files needed to build apps based on QtVersit.
 Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{qtquicktestd} = %version
-Provides: qtquicktest-private-devel = %version
-Provides: libqtquicktest5-private-devel = %version
-Provides: qt5quicktest-private-devel = %version
-Provides: qtquicktest5-private-devel = %version
+Provides: qt5-quicktest-private-devel = %version
 
 %description -n %{quicktest_p_d}
 Devel files needed to build apps based on QtVersit.
@@ -140,11 +133,6 @@ Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{name} = %version
 Requires: %{qtquick} = %version
-Provides: libqt5quick-devel = %version
-Provides: libqtquick5-devel = %version
-Provides: qt5quick-devel = %version
-Provides: qtquick5-devel = %version
-Requires: qtgui5-devel = %version
 
 %description -n %{qtquickd}
 Devel files needed to build apps based on QtVersit.
@@ -167,10 +155,7 @@ Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{qtquickd} = %version
 Requires: %{qtqml_p_d} = %version
-Provides: libqt5quick-private-devel = %version
-Provides: libqtquick5-private-devel = %version
-Provides: qt5quick-private-devel = %version
-Provides: qtquick5-private-devel = %version
+Provides: qt5-qtquick-private-devel = %version
 
 %description -n %{qtquick_p_d}
 Devel files needed to build apps based on QtVersit.
@@ -198,10 +183,6 @@ Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{name} = %version
 Requires: %{qtquickwidgets} = %version
-Provides: libqt5quickwidgets-devel = %version
-Provides: libqtquickwidgets5-devel = %version
-Provides: qt5quickwidgets-devel = %version
-Provides: qtquickwidgets5-devel = %version
 
 %description -n %{qtquickwidgetsd}
 Devel files needed to build apps based on QtVersit.
@@ -222,10 +203,7 @@ Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{qtquickwidgetsd} = %version
 Requires: %{qtqml_p_d} = %version
-Provides: libqt5quickwidgets-private-devel = %version
-Provides: libqtquickwidgets5-private-devel = %version
-Provides: qt5quickwidgets-private-devel = %version
-Provides: qtquickwidgets5-private-devel = %version
+Provides: qt5-qtquickwidgets-private-devel = %version
 
 %description -n %{qtquickwidgetsd_p_d}
 Devel files needed to build apps based on QtVersit.
@@ -253,10 +231,6 @@ Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{name} = %version
 Requires: %{qtquickparticles} = %version
-Provides: libqt5quickparticles-devel = %version
-Provides: libqtquickparticles5-devel = %version
-Provides: qt5quickparticles-devel = %version
-Provides: qtquickparticles5-devel = %version
 
 %description -n %{qtquickparticlesd}
 Devel files needed to build apps based on QtVersit.
@@ -274,10 +248,7 @@ Devel files needed to build apps based on QtVersit.
 Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{qtquickparticlesd} = %version
-Provides: libqt5quickparticles-private-devel = %version
-Provides: libqtquickparticles5-private-devel = %version
-Provides: qt5quickparticles-private-devel = %version
-Provides: qtquickparticles5-private-devel = %version
+Provides: qt5-qtquickparticles-private-devel = %version
 
 %description -n %{qtquickparticles_p_d}
 Devel files needed to build apps based on QtVersit.
@@ -305,13 +276,8 @@ Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{name} = %version
 Requires: %{qtqml} = %version
-Provides: libqt5qml-devel = %version
-Provides: libqtqml5-devel = %version
-Provides: qt5qml-devel = %version
-Provides: qtqml5-devel = %version
-
-Requires: qtnetwork5-devel = %version
-Requires: qtcore5-devel = %version
+Requires: pkgconfig(Qt5Core) = %version
+Requires: pkgconfig(Qt5Network) = %version
 
 %description -n %{qtqmld}
 Devel files needed to build apps based on QtVersit.
@@ -335,10 +301,7 @@ Devel files needed to build apps based on QtVersit.
 Summary: Devel files needed to build apps based on QtVersit
 Group:    Development/KDE and Qt
 Requires: %{qtqmld} = %version
-Provides: libqt5qml-private-devel = %version
-Provides: libqtqml5-private-devel = %version
-Provides: qt5qml-private-devel = %version
-Provides: qtqml5-private-devel = %version
+Provides: qt5-qtqml-private-devel = %version
 
 Requires: qtcore5-private-devel = %version
 
