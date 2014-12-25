@@ -30,7 +30,7 @@
 
 Name:		qt5-qtdeclarative
 Version:	%{qtversion}
-Release:	1
+Release:	2
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
@@ -297,13 +297,12 @@ Devel files needed to build apps based on QtVersit.
 
 #------------------------------------------------------------------------------
 
-%package -n %{qtqml_p_d}
-Summary: Devel files needed to build apps based on QtVersit
-Group:    Development/KDE and Qt
-Requires: %{qtqmld} = %version
-Provides: qt5-qtqml-private-devel = %version
-
-Requires: qtcore5-private-devel = %version
+%package -n	%{qtqml_p_d}
+Summary:	Devel files needed to build apps based on QtVersit
+Group:		Development/KDE and Qt
+Requires:	%{qtqmld} = %version
+Provides:	qt5-qtqml-private-devel = %version
+Requires:	pkgconfig(Qt5Core) = %version
 
 %description -n %{qtqml_p_d}
 Devel files needed to build apps based on QtVersit.
