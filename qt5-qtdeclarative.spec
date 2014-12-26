@@ -30,7 +30,7 @@
 
 Name:		qt5-qtdeclarative
 Version:	%{qtversion}
-Release:	2
+Release:	3
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
