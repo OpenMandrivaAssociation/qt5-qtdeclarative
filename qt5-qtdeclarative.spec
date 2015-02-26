@@ -1,7 +1,7 @@
 %define api 5
 %define major %api
 %define qtminor 4
-%define qtsubminor 0
+%define qtsubminor 1
 
 %define qtversion %{api}.%{qtminor}.%{qtsubminor}
 
@@ -30,7 +30,7 @@
 
 Name:		qt5-qtdeclarative
 Version:	%{qtversion}
-Release:	3
+Release:	1
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
