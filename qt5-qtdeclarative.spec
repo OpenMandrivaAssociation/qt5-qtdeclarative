@@ -1,9 +1,6 @@
-%define api 5
+%define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define qtminor 4
-%define qtsubminor 1
-
-%define qtversion %{api}.%{qtminor}.%{qtsubminor}
+%define beta alpha
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -25,17 +22,22 @@
 %define qtqmld %mklibname qt%{api}qml -d
 %define qtqml_p_d %mklibname qt%{api}qml-private -d
 
-%define qttarballdir qtdeclarative-opensource-src-%{qtversion}
+%define qttarballdir qtdeclarative-opensource-src-%{version}%{?beta:-%{beta}}
 %define _qt_prefix %{_libdir}/qt%{api}
 
 Name:		qt5-qtdeclarative
-Version:	%{qtversion}
+Version:	5.5.0
+%if "%{beta}" != ""
+Release:	0.%{beta}.1
+Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
+%else
 Release:	1
+Source0:	http://download.qt.io/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+%endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt-project.org
-Source0:	http://download.qt-project.org/official_releases/qt/%{api}.%{qtminor}/%{version}/submodules/%{qttarballdir}.tar.xz
 BuildRequires: 	pkgconfig(Qt5Core) = %{version}
 BuildRequires: 	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
@@ -52,7 +54,6 @@ Window System. Qt is written in C++ and is fully object-oriented.
 %files
 %_qt5_bindir/qml
 %_qt5_bindir/qmlimportscanner
-%_qt5_bindir/qmlbundle
 %_qt5_bindir/qmlmin
 %_qt5_bindir/qmlplugindump
 %_qt5_bindir/qmlprofiler
@@ -95,7 +96,7 @@ Devel files needed to build apps based on QtVersit.
 %_qt5_libdir/libQt5QuickTest.so
 %_qt5_libdir/cmake/Qt5QuickTest
 %_qt5_includedir/QtQuickTest
-%exclude %_qt5_includedir/QtQuickTest/%qtversion
+%exclude %_qt5_includedir/QtQuickTest/%version
 %_qt5_libdir/pkgconfig/Qt5QuickTest.pc
 %_qt_prefix/examples/qmltest
 
@@ -111,7 +112,7 @@ Provides: qt5-quicktest-private-devel = %version
 Devel files needed to build apps based on QtVersit.
 
 %files -n %{quicktest_p_d}
-%_qt5_includedir/QtQuickTest/%qtversion
+%_qt5_includedir/QtQuickTest/%version
 
 #------------------------------------------------------------------------------
 
@@ -142,7 +143,7 @@ Devel files needed to build apps based on QtVersit.
 %_qt5_libdir/libQt5Quick.so
 %_qt5_libdir/cmake/Qt5Quick
 %_qt5_includedir/QtQuick
-%exclude %_qt5_includedir/QtQuick/%qtversion
+%exclude %_qt5_includedir/QtQuick/%version
 %_qt_prefix/examples/quick
 %_qt5_libdir/pkgconfig/Qt5Quick.pc
 %_qt_prefix/mkspecs/modules/qt_lib_quick.pri
@@ -161,7 +162,7 @@ Provides: qt5-qtquick-private-devel = %version
 Devel files needed to build apps based on QtVersit.
 
 %files -n %{qtquick_p_d}
-%_qt5_includedir/QtQuick/%qtversion
+%_qt5_includedir/QtQuick/%version
 %_qt_prefix/mkspecs/modules/qt_lib_quick_private.pri
 
 #------------------------------------------------------------------------------
@@ -192,7 +193,7 @@ Devel files needed to build apps based on QtVersit.
 %_qt5_libdir/libQt5QuickWidgets.so
 %_qt5_libdir/cmake/Qt5QuickWidgets
 %_qt5_includedir/QtQuickWidgets
-%exclude %_qt5_includedir/QtQuickWidgets/%qtversion
+%exclude %_qt5_includedir/QtQuickWidgets/%version
 %_qt5_libdir/pkgconfig/Qt5QuickWidgets.pc
 %_qt_prefix/mkspecs/modules/qt_lib_quickwidgets.pri
 
@@ -209,7 +210,7 @@ Provides: qt5-qtquickwidgets-private-devel = %version
 Devel files needed to build apps based on QtVersit.
 
 %files -n %{qtquickwidgetsd_p_d}
-%_qt5_includedir/QtQuickWidgets/%qtversion
+%_qt5_includedir/QtQuickWidgets/%version
 %_qt_prefix/mkspecs/modules/qt_lib_quickwidgets_private.pri
 
 #------------------------------------------------------------------------------
@@ -239,7 +240,7 @@ Devel files needed to build apps based on QtVersit.
 %_qt5_libdir/libQt5QuickParticles.prl
 %_qt5_libdir/libQt5QuickParticles.so
 %_qt5_includedir/QtQuickParticles
-%exclude %_qt5_includedir/QtQuickParticles/%qtversion
+%exclude %_qt5_includedir/QtQuickParticles/%version
 %_qt5_libdir/pkgconfig/Qt5QuickParticles.pc
 
 #------------------------------------------------------------------------------
@@ -254,7 +255,7 @@ Provides: qt5-qtquickparticles-private-devel = %version
 Devel files needed to build apps based on QtVersit.
 
 %files -n %{qtquickparticles_p_d}
-%_qt5_includedir/QtQuickParticles/%qtversion
+%_qt5_includedir/QtQuickParticles/%version
 %_qt_prefix/mkspecs/modules/qt_lib_quickparticles_private.pri
 
 #------------------------------------------------------------------------------
@@ -292,7 +293,7 @@ Devel files needed to build apps based on QtVersit.
 %_qt5_libdir/pkgconfig/Qt5Qml.pc
 %_qt5_libdir/pkgconfig/Qt5QmlDevTools.pc
 %_qt5_includedir/QtQml*
-%exclude %_qt5_includedir/QtQml/%qtversion
+%exclude %_qt5_includedir/QtQml/%version
 %_qt5_libdir/libQt5QmlDevTools.prl
 
 #------------------------------------------------------------------------------
@@ -308,7 +309,7 @@ Requires:	pkgconfig(Qt5Core) = %version
 Devel files needed to build apps based on QtVersit.
 
 %files -n %{qtqml_p_d}
-%_qt5_includedir/QtQml/%qtversion
+%_qt5_includedir/QtQml/%version
 %_qt_prefix/mkspecs/modules/qt_lib_qml_private.pri
 %_qt_prefix/mkspecs/modules/qt_lib_qmldevtools_private.pri
 %_qt_prefix/mkspecs/modules/qt_lib_qmltest_private.pri
