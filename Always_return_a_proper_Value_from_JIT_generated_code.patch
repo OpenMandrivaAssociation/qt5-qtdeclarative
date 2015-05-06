@@ -1,4 +1,16 @@
-change-Id: Ice380f2de673b179c1e2c98fbeb87e47347ef520
+From a41dc6147436f3c1c977ff8c04379ff4bde3f0a6 Mon Sep 17 00:00:00 2001
+From: Lars Knoll <lars.knoll@theqtcompany.com>
+Date: Mon, 20 Apr 2015 13:38:31 +0200
+Subject: [PATCH] Always return a proper Value from JIT generated code
+
+When throwing an exception, we ended up having junk data in
+the return value register. That could end up being written
+onto the JS stack when returning from the function, and then
+causing crashes in the garbage collector afterwards.
+
+Fix it by returning undefined in case we throw an exception.
+
+Change-Id: Ice380f2de673b179c1e2c98fbeb87e47347ef520
 Reviewed-by: Simon Hausmann <simon.hausmann@theqtcompany.com>
 ---
  src/qml/jit/qv4isel_masm.cpp | 15 ++++++++++++++-
@@ -39,3 +51,4 @@ index 05d3876..da511cd 100644
  int InstructionSelection::prepareVariableArguments(IR::ExprList* args)
 -- 
 1.9.0
+

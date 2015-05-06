@@ -1,4 +1,4 @@
-From a10e907837764f534245898dab8fa210d2581344 Mon Sep 17 00:00:00 2001
+From 10fce2bc8fb95f44d664c37f6a21333e263c9863 Mon Sep 17 00:00:00 2001
 From: Simon Hausmann <simon.hausmann@theqtcompany.com>
 Date: Tue, 28 Apr 2015 15:38:09 +0200
 Subject: [PATCH] Fix memory corruption when multiple QML engines have
@@ -15,13 +15,13 @@ Change-Id: I8587f9921a9b4f9efd288326d00cebc25ad0bc12
 Task-number: QTBUG-45051
 ---
  src/qml/jsruntime/qv4mm.cpp             |  2 +-
- src/qml/jsruntime/qv4qobjectwrapper.cpp | 18 +++++++++---------
+ src/qml/jsruntime/qv4qobjectwrapper.cpp | 22 +++++++++++++---------
  src/qml/jsruntime/qv4qobjectwrapper_p.h | 18 +++++++++---------
  src/qml/qml/qqmldata_p.h                |  4 ++--
- 4 files changed, 21 insertions(+), 21 deletions(-)
+ 4 files changed, 25 insertions(+), 21 deletions(-)
 
 diff --git a/src/qml/jsruntime/qv4mm.cpp b/src/qml/jsruntime/qv4mm.cpp
-index 07408a3..80bf92a 100644
+index 07408a3..d5576b4 100644
 --- a/src/qml/jsruntime/qv4mm.cpp
 +++ b/src/qml/jsruntime/qv4mm.cpp
 @@ -390,7 +390,7 @@ void MemoryManager::sweep(bool lastSweep)
@@ -29,12 +29,12 @@ index 07408a3..80bf92a 100644
      if (MultiplyWrappedQObjectMap *multiplyWrappedQObjects = m_d->engine->m_multiplyWrappedQObjects) {
          for (MultiplyWrappedQObjectMap::Iterator it = multiplyWrappedQObjects->begin(); it != multiplyWrappedQObjects->end();) {
 -            if (!it.value()->markBit())
-+            if (!it.value()->isMarked())
++            if (!it.value().isNullOrUndefined())
                  it = multiplyWrappedQObjects->erase(it);
              else
                  ++it;
 diff --git a/src/qml/jsruntime/qv4qobjectwrapper.cpp b/src/qml/jsruntime/qv4qobjectwrapper.cpp
-index 50efff0..f59cd80 100644
+index 50efff0..353f402 100644
 --- a/src/qml/jsruntime/qv4qobjectwrapper.cpp
 +++ b/src/qml/jsruntime/qv4qobjectwrapper.cpp
 @@ -589,7 +589,7 @@ ReturnedValue QObjectWrapper::wrap(ExecutionEngine *engine, QObject *object)
@@ -71,7 +71,7 @@ index 50efff0..f59cd80 100644
          }
  
          return alternateWrapper.asReturnedValue();
-@@ -1908,16 +1908,16 @@ Heap::QmlSignalHandler::QmlSignalHandler(QV4::ExecutionEngine *engine, QObject *
+@@ -1908,16 +1908,20 @@ Heap::QmlSignalHandler::QmlSignalHandler(QV4::ExecutionEngine *engine, QObject *
  
  DEFINE_OBJECT_VTABLE(QmlSignalHandler);
  
@@ -79,29 +79,33 @@ index 50efff0..f59cd80 100644
 +void MultiplyWrappedQObjectMap::insert(QObject *key, Heap::Object *value)
  {
 -    QHash<QObject*, Object*>::insert(key, value);
-+    QHash<QObject*, Heap::Object*>::insert(key, value);
++    QV4::WeakValue v;
++    v.set(value->internalClass->engine, value);
++    QHash<QObject*, QV4::WeakValue>::insert(key, v);
      connect(key, SIGNAL(destroyed(QObject*)), this, SLOT(removeDestroyedObject(QObject*)));
  }
  
++
++
  MultiplyWrappedQObjectMap::Iterator MultiplyWrappedQObjectMap::erase(MultiplyWrappedQObjectMap::Iterator it)
  {
      disconnect(it.key(), SIGNAL(destroyed(QObject*)), this, SLOT(removeDestroyedObject(QObject*)));
 -    return QHash<QObject*, Object*>::erase(it);
-+    return QHash<QObject*, Heap::Object*>::erase(it);
++    return QHash<QObject*, QV4::WeakValue>::erase(it);
  }
  
  void MultiplyWrappedQObjectMap::remove(QObject *key)
-@@ -1930,7 +1930,7 @@ void MultiplyWrappedQObjectMap::remove(QObject *key)
+@@ -1930,7 +1934,7 @@ void MultiplyWrappedQObjectMap::remove(QObject *key)
  
  void MultiplyWrappedQObjectMap::removeDestroyedObject(QObject *object)
  {
 -    QHash<QObject*, Object*>::remove(object);
-+    QHash<QObject*, Heap::Object*>::remove(object);
++    QHash<QObject*, QV4::WeakValue>::remove(object);
  }
  
  QT_END_NAMESPACE
 diff --git a/src/qml/jsruntime/qv4qobjectwrapper_p.h b/src/qml/jsruntime/qv4qobjectwrapper_p.h
-index 1b41ca6..f9f21aa 100644
+index 1b41ca6..5d23780 100644
 --- a/src/qml/jsruntime/qv4qobjectwrapper_p.h
 +++ b/src/qml/jsruntime/qv4qobjectwrapper_p.h
 @@ -173,20 +173,20 @@ struct QmlSignalHandler : public QV4::Object
@@ -109,33 +113,33 @@ index 1b41ca6..f9f21aa 100644
  
  class MultiplyWrappedQObjectMap : public QObject,
 -                                  private QHash<QObject*, Object*>
-+                                  private QHash<QObject*, Heap::Object*>
++                                  private QHash<QObject*, QV4::WeakValue>
  {
      Q_OBJECT
  public:
 -    typedef QHash<QObject*, Object*>::ConstIterator ConstIterator;
 -    typedef QHash<QObject*, Object*>::Iterator Iterator;
-+    typedef QHash<QObject*, Heap::Object*>::ConstIterator ConstIterator;
-+    typedef QHash<QObject*, Heap::Object*>::Iterator Iterator;
++    typedef QHash<QObject*, QV4::WeakValue>::ConstIterator ConstIterator;
++    typedef QHash<QObject*, QV4::WeakValue>::Iterator Iterator;
  
 -    ConstIterator begin() const { return QHash<QObject*, Object*>::constBegin(); }
 -    Iterator begin() { return QHash<QObject*, Object*>::begin(); }
 -    ConstIterator end() const { return QHash<QObject*, Object*>::constEnd(); }
 -    Iterator end() { return QHash<QObject*, Object*>::end(); }
-+    ConstIterator begin() const { return QHash<QObject*, Heap::Object*>::constBegin(); }
-+    Iterator begin() { return QHash<QObject*, Heap::Object*>::begin(); }
-+    ConstIterator end() const { return QHash<QObject*, Heap::Object*>::constEnd(); }
-+    Iterator end() { return QHash<QObject*, Heap::Object*>::end(); }
++    ConstIterator begin() const { return QHash<QObject*, QV4::WeakValue>::constBegin(); }
++    Iterator begin() { return QHash<QObject*, QV4::WeakValue>::begin(); }
++    ConstIterator end() const { return QHash<QObject*, QV4::WeakValue>::constEnd(); }
++    Iterator end() { return QHash<QObject*, QV4::WeakValue>::end(); }
  
 -    void insert(QObject *key, Object *value);
 -    Object *value(QObject *key) const { return QHash<QObject*, Object*>::value(key, 0); }
 +    void insert(QObject *key, Heap::Object *value);
-+    Heap::Object *value(QObject *key) const { return QHash<QObject*, Heap::Object*>::value(key, 0); }
++    ReturnedValue value(QObject *key) const { return QHash<QObject*, QV4::WeakValue>::value(key).value(); }
      Iterator erase(Iterator it);
      void remove(QObject *key);
  
 diff --git a/src/qml/qml/qqmldata_p.h b/src/qml/qml/qqmldata_p.h
-index c9bae8e..2d65b77 100644
+index c7654be..04c42b6 100644
 --- a/src/qml/qml/qqmldata_p.h
 +++ b/src/qml/qml/qqmldata_p.h
 @@ -74,7 +74,7 @@ class Q_QML_PRIVATE_EXPORT QQmlData : public QAbstractDeclarativeData

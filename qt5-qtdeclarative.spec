@@ -28,7 +28,7 @@
 Name:		qt5-qtdeclarative
 Version:	5.5.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.3
+Release:	0.%{beta}.4
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
 Release:	1
@@ -36,6 +36,7 @@ Source0:	http://download.qt.io/official_releases/qt/%(echo %{version} |cut -d. -
 %endif
 Patch0:		Always_return_a_proper_Value_from_JIT_generated_code.patch
 Patch1:		Fix_memory_corruption_when_multiple_QML_engines_have_JavaScript_wrappers_for_the_same_QObject.patch
+Patch2:		Fix_memory_corruption_in_array_handling.patch
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
