@@ -34,10 +34,6 @@ Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d
 Release:	1
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
-Patch0:		Always_return_a_proper_Value_from_JIT_generated_code.patch
-#Patch1:		Fix_memory_corruption_when_multiple_QML_engines_have_JavaScript_wrappers_for_the_same_QObject.patch
-#Patch2:		Fix_memory_corruption_in_array_handling.patch
-#Patch3:		Fix-memory-corruption-when-sharing-QObjects-between-different-QML-engines.patch
 
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
