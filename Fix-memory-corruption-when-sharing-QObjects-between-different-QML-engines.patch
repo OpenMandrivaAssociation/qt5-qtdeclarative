@@ -1,0 +1,141 @@
+From 2099e9eb1ffca008e4ae3118586523d5271cda6e Mon Sep 17 00:00:00 2001
+From: Simon Hausmann <simon.hausmann@theqtcompany.com>
+Date: Thu, 7 May 2015 16:22:24 +0200
+Subject: [PATCH] Fix memory corruption when sharing QObjects between different
+ QML engines
+
+When marking the JS wrappers for QObject manually, we cannot use
+ddata->jsWrapper directly but we must respect the case where the same
+object is exposed to different engines and then we must mark the wrapper
+that belongs to the engine that is currently collecting garbage.
+
+Change-Id: If82883c762ccaf3431e7074243ff2ff703234d66
+Task-number: QTBUG-44895
+---
+ src/qml/jsruntime/qv4qobjectwrapper.cpp | 27 ++++++++++++++++++++++++---
+ src/qml/jsruntime/qv4qobjectwrapper_p.h |  2 ++
+ src/qml/qml/qqmlvmemetaobject.cpp       | 13 +++++++------
+ src/quick/items/qquickitem.cpp          |  4 +---
+ 4 files changed, 34 insertions(+), 12 deletions(-)
+
+diff --git a/src/qml/jsruntime/qv4qobjectwrapper.cpp b/src/qml/jsruntime/qv4qobjectwrapper.cpp
+index 353f402..1e4718c 100644
+--- a/src/qml/jsruntime/qv4qobjectwrapper.cpp
++++ b/src/qml/jsruntime/qv4qobjectwrapper.cpp
+@@ -624,6 +624,21 @@ ReturnedValue QObjectWrapper::wrap(ExecutionEngine *engine, QObject *object)
+     }
+ }
+ 
++void QObjectWrapper::markWrapper(QObject *object, ExecutionEngine *engine)
++{
++    if (QQmlData::wasDeleted(object))
++        return;
++
++    QQmlData *ddata = QQmlData::get(object);
++    if (!ddata)
++        return;
++
++    if (ddata->jsEngineId == engine->m_engineId)
++        ddata->jsWrapper.markOnce(engine);
++    else  if (engine->m_multiplyWrappedQObjects && ddata->hasTaintedV4Object)
++        engine->m_multiplyWrappedQObjects->mark(object, engine);
++}
++
+ ReturnedValue QObjectWrapper::getProperty(QObject *object, ExecutionContext *ctx, int propertyIndex, bool captureRequired)
+ {
+     if (QQmlData::wasDeleted(object))
+@@ -993,9 +1008,7 @@ static void markChildQObjectsRecursively(QObject *parent, QV4::ExecutionEngine *
+         QObject *child = children.at(i);
+         if (!child)
+             continue;
+-        QQmlData *ddata = QQmlData::get(child, /*create*/false);
+-        if (ddata)
+-            ddata->jsWrapper.markOnce(e);
++        QObjectWrapper::markWrapper(child, e);
+         markChildQObjectsRecursively(child, e);
+     }
+ }
+@@ -1932,6 +1945,14 @@ void MultiplyWrappedQObjectMap::remove(QObject *key)
+     erase(it);
+ }
+ 
++void MultiplyWrappedQObjectMap::mark(QObject *key, ExecutionEngine *engine)
++{
++    Iterator it = find(key);
++    if (it == end())
++        return;
++    it->markOnce(engine);
++}
++
+ void MultiplyWrappedQObjectMap::removeDestroyedObject(QObject *object)
+ {
+     QHash<QObject*, QV4::WeakValue>::remove(object);
+diff --git a/src/qml/jsruntime/qv4qobjectwrapper_p.h b/src/qml/jsruntime/qv4qobjectwrapper_p.h
+index 5d23780..24e8b29 100644
+--- a/src/qml/jsruntime/qv4qobjectwrapper_p.h
++++ b/src/qml/jsruntime/qv4qobjectwrapper_p.h
+@@ -110,6 +110,7 @@ struct Q_QML_EXPORT QObjectWrapper : public Object
+     static bool setQmlProperty(ExecutionEngine *engine, QQmlContextData *qmlContext, QObject *object, String *name, RevisionMode revisionMode, const Value &value);
+ 
+     static ReturnedValue wrap(ExecutionEngine *engine, QObject *object);
++    static void markWrapper(QObject *object, ExecutionEngine *engine);
+ 
+     using Object::get;
+ 
+@@ -189,6 +190,7 @@ public:
+     ReturnedValue value(QObject *key) const { return QHash<QObject*, QV4::WeakValue>::value(key).value(); }
+     Iterator erase(Iterator it);
+     void remove(QObject *key);
++    void mark(QObject *key, ExecutionEngine *engine);
+ 
+ private Q_SLOTS:
+     void removeDestroyedObject(QObject*);
+diff --git a/src/qml/qml/qqmlvmemetaobject.cpp b/src/qml/qml/qqmlvmemetaobject.cpp
+index 37ff696..5b1be15 100644
+--- a/src/qml/qml/qqmlvmemetaobject.cpp
++++ b/src/qml/qml/qqmlvmemetaobject.cpp
+@@ -1227,6 +1227,11 @@ void QQmlVMEMetaObject::ensureQObjectWrapper()
+ 
+ void QQmlVMEMetaObject::mark(QV4::ExecutionEngine *e)
+ {
++    QQmlEnginePrivate *ep = (ctxt == 0 || ctxt->engine == 0) ? 0 : QQmlEnginePrivate::get(ctxt->engine);
++    QV4::ExecutionEngine *v4 = (ep == 0) ? 0 : ep->v4engine();
++    if (v4 != e)
++        return;
++
+     varProperties.markOnce(e);
+ 
+     // add references created by VMEVariant properties
+@@ -1234,12 +1239,8 @@ void QQmlVMEMetaObject::mark(QV4::ExecutionEngine *e)
+     for (int ii = 0; ii < maxDataIdx; ++ii) { // XXX TODO: optimize?
+         if (data[ii].dataType() == QMetaType::QObjectStar) {
+             // possible QObject reference.
+-            QObject *ref = data[ii].asQObject();
+-            if (ref) {
+-                QQmlData *ddata = QQmlData::get(ref);
+-                if (ddata)
+-                    ddata->jsWrapper.markOnce(e);
+-            }
++            if (QObject *ref = data[ii].asQObject())
++                QV4::QObjectWrapper::markWrapper(ref, e);
+         }
+     }
+ 
+diff --git a/src/quick/items/qquickitem.cpp b/src/quick/items/qquickitem.cpp
+index 07d7636..3d0f550 100644
+--- a/src/quick/items/qquickitem.cpp
++++ b/src/quick/items/qquickitem.cpp
+@@ -6740,9 +6740,7 @@ void QQuickItemPrivate::setHasCursorInChild(bool hasCursor)
+ void QQuickItemPrivate::markObjects(QV4::ExecutionEngine *e)
+ {
+     Q_Q(QQuickItem);
+-    QQmlData *ddata = QQmlData::get(q);
+-    if (ddata)
+-        ddata->jsWrapper.markOnce(e);
++    QV4::QObjectWrapper::markWrapper(q, e);
+ 
+     foreach (QQuickItem *child, childItems)
+         QQuickItemPrivate::get(child)->markObjects(e);
+-- 
+1.9.0
+

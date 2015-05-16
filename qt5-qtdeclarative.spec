@@ -28,24 +28,27 @@
 Name:		qt5-qtdeclarative
 Version:	5.5.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.1
+Release:	0.%{beta}.2
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
 Release:	1
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
-
+# (tpg) https://issues.openmandriva.org/show_bug.cgi?id=1138
+Patch1:		Fix_memory_corruption_when_multiple_QML_engines_have_JavaScript_wrappers_for_the_same_QObject.patch
+Patch2:		Fix_memory_corruption_in_array_handling.patch
+Patch3:		Fix-memory-corruption-when-sharing-QObjects-between-different-QML-engines.patch
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt-project.org
-BuildRequires: 	pkgconfig(Qt5Core) = %{version}
-BuildRequires: 	qt5-qtbase-devel = %{version}
+BuildRequires:	pkgconfig(Qt5Core) = %{version}
+BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
 BuildRequires:	pkgconfig(Qt5Sql) = %{version}
 BuildRequires:	pkgconfig(Qt5Gui) = %{version}
 BuildRequires:	pkgconfig(Qt5Test) = %{version}
-BuildRequires: 	pkgconfig(Qt5Widgets) = %{version}
+BuildRequires:	pkgconfig(Qt5Widgets) = %{version}
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
