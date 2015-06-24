@@ -34,8 +34,6 @@ Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d
 Release:	1
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
-# (tpg) https://issues.openmandriva.org/show_bug.cgi?id=1138
-Patch3:		Fix-memory-corruption-when-sharing-QObjects-between-different-QML-engines.patch
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
