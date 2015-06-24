@@ -35,7 +35,6 @@ Release:	1
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
 # (tpg) https://issues.openmandriva.org/show_bug.cgi?id=1138
-Patch1:		Fix_memory_corruption_when_multiple_QML_engines_have_JavaScript_wrappers_for_the_same_QObject.patch
 Patch2:		Fix_memory_corruption_in_array_handling.patch
 Patch3:		Fix-memory-corruption-when-sharing-QObjects-between-different-QML-engines.patch
 Summary:	Qt GUI toolkit
