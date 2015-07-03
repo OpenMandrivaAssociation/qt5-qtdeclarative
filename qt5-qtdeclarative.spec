@@ -28,10 +28,10 @@
 Name:		qt5-qtdeclarative
 Version:	5.5.0
 %if "%{beta}" != ""
-$1.%{beta}.1
+Release:	1.%{beta}.1
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-$1
+Release:	1
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
