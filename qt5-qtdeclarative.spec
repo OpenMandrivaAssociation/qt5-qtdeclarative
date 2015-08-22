@@ -23,6 +23,7 @@
 %define qtqml_p_d %mklibname qt%{api}qml-private -d
 
 %define _qt_prefix %{_libdir}/qt%{api}
+%define _disable_lto 1
 
 Name:		qt5-qtdeclarative
 Version:	5.5.0
