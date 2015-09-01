@@ -32,7 +32,7 @@ Release:	1.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	2
+Release:	3
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -47,6 +47,7 @@ BuildRequires:	pkgconfig(Qt5Sql) = %{version}
 BuildRequires:	pkgconfig(Qt5Gui) = %{version}
 BuildRequires:	pkgconfig(Qt5Test) = %{version}
 BuildRequires:	pkgconfig(Qt5Widgets) = %{version}
+BuildRequires:	pkgconfig(Qt5XmlPatterns) = %{version}
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
