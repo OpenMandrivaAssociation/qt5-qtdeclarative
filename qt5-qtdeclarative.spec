@@ -48,6 +48,7 @@ BuildRequires:	pkgconfig(Qt5Gui) = %{version}
 BuildRequires:	pkgconfig(Qt5Test) = %{version}
 BuildRequires:	pkgconfig(Qt5Widgets) = %{version}
 BuildRequires:	pkgconfig(Qt5XmlPatterns) = %{version}
+BuildRequires:	qt5-qtbase-devel = %{version}
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
@@ -327,7 +328,7 @@ Devel files needed to build apps based on QtVersit.
 %qmake_qt5
 
 #------------------------------------------------------------------------------
-%make -j1
+%make
 
 %install
 %makeinstall_std INSTALL_ROOT=%{buildroot}
