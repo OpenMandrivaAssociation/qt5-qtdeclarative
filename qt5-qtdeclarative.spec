@@ -327,7 +327,7 @@ Devel files needed to build apps based on QtVersit.
 %qmake_qt5
 
 #------------------------------------------------------------------------------
-%make
+%make -j1
 
 %install
 %makeinstall_std INSTALL_ROOT=%{buildroot}
