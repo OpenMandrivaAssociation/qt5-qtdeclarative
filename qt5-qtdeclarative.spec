@@ -32,7 +32,7 @@ Release:	1.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	2
+Release:	3
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -40,6 +40,8 @@ Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
+# (tpg) https://bugs.kde.org/show_bug.cgi?id=348385
+Patch0:		qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
