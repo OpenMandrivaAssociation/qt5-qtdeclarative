@@ -26,13 +26,13 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.5.1
+Version:	5.6.0
 %if "%{beta}" != ""
-Release:	1.%{beta}.1
+Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	3
+Release:	1
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -69,7 +69,13 @@ Window System. Qt is written in C++ and is fully object-oriented.
 %_qt5_bindir/qmllint
 %_qt_prefix/qml/QtTest
 %_qt_prefix/qml/QtQuick*
-%_qt_prefix/plugins/qmltooling/libqmldbg_qtquick2.so
+%_qt_prefix/qml/builtins.qmltypes
+%_qt_prefix/plugins/qmltooling/libqmldbg_debugger.so
+%_qt_prefix/plugins/qmltooling/libqmldbg_inspector.so
+%_qt_prefix/plugins/qmltooling/libqmldbg_local.so
+%_qt_prefix/plugins/qmltooling/libqmldbg_native.so
+%_qt_prefix/plugins/qmltooling/libqmldbg_profiler.so
+%_qt_prefix/plugins/qmltooling/libqmldbg_server.so
 %_qt_prefix/plugins/qmltooling/libqmldbg_tcp.so
 %_qt_prefix/qml/Qt/labs/folderlistmodel
 %_qt_prefix/qml/Qt/labs/settings
@@ -247,7 +253,6 @@ Devel files needed to build apps based on QtVersit.
 %_qt5_libdir/libQt5QuickParticles.so
 %_qt5_includedir/QtQuickParticles
 %exclude %_qt5_includedir/QtQuickParticles/%version
-%_qt5_libdir/pkgconfig/Qt5QuickParticles.pc
 
 #------------------------------------------------------------------------------
 
@@ -297,7 +302,6 @@ Devel files needed to build apps based on QtVersit.
 %_qt_prefix/mkspecs/modules/qt_lib_qml.pri
 %_qt_prefix/examples/qml
 %_qt5_libdir/pkgconfig/Qt5Qml.pc
-%_qt5_libdir/pkgconfig/Qt5QmlDevTools.pc
 %_qt5_includedir/QtQml*
 %exclude %_qt5_includedir/QtQml/%version
 %_qt5_libdir/libQt5QmlDevTools.prl
