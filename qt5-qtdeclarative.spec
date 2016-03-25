@@ -58,6 +58,7 @@ BuildRequires:	pkgconfig(Qt5Test) = %{version}
 BuildRequires:	pkgconfig(Qt5Widgets) = %{version}
 BuildRequires:	pkgconfig(Qt5XmlPatterns) = %{version}
 BuildRequires:	pkgconfig(Qt5OpenGL) = %{version}
+BuildRequires:	pkgconfig(Qt5Xml) = %{version}
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
