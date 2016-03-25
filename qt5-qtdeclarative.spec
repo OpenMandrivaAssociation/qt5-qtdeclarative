@@ -32,7 +32,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	4
+Release:	3
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -42,6 +42,11 @@ License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 # (tpg) https://bugs.kde.org/show_bug.cgi?id=348385
 Patch0:		qtdeclarative-QQuickShaderEffectSource_deadlock.patch
+# (tpg) Fedora patches
+Patch1:		0008-Fix-crash-when-Canvas-has-negative-width-or-height.patch
+Patch2:		0019-Revert-Fix-crash-on-QQmlEngine-destruction.patch
+Patch3:		0029-Avoid-div-by-zero-when-nothing-is-rendered.patch
+Patch4:		Check-for-NULL-from-glGetString.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
