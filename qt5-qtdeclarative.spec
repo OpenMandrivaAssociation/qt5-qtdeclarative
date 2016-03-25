@@ -32,7 +32,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -302,6 +302,7 @@ Devel files needed to build apps based on QtVersit.
 %_qt_prefix/mkspecs/modules/qt_lib_qml.pri
 %_qt_prefix/examples/qml
 %_qt5_libdir/pkgconfig/Qt5Qml.pc
+%_qt5_libdir/libQt5QmlDevTools.a
 %_qt5_includedir/QtQml*
 %exclude %_qt5_includedir/QtQml/%version
 %_qt5_libdir/libQt5QmlDevTools.prl
@@ -353,4 +354,5 @@ popd
 
 # .la and .a files, die, die, die.
 rm -f %{buildroot}%{_qt5_libdir}/lib*.la
-rm -f %{buildroot}%{_qt5_libdir}/lib*.a
+# .a files are needed for qttools
+#rm -f %{buildroot}%{_qt5_libdir}/lib*.a
