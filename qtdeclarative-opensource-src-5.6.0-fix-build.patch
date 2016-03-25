@@ -1,0 +1,12 @@
+diff -Naur qtdeclarative-opensource-src-5.6.0/src/3rdparty/masm/masm.pri qtdeclarative-opensource-src-5.6.0.tpg/src/3rdparty/masm/masm.pri
+--- qtdeclarative-opensource-src-5.6.0/src/3rdparty/masm/masm.pri	2016-02-26 09:34:34.000000000 +0000
++++ qtdeclarative-opensource-src-5.6.0.tpg/src/3rdparty/masm/masm.pri	2016-03-25 19:41:31.871854516 +0000
+@@ -77,7 +77,7 @@
+         GENERATEDDIR = $$GENERATEDDIR/release
+     }
+ }
+-INCLUDEPATH += $$GENERATEDDIR
++INCLUDEPATH += $$OUT_PWD/$$GENERATEDDIR
+ 
+ retgen.output = $$GENERATEDDIR/RegExpJitTables.h
+ retgen.script = $$PWD/create_regex_tables

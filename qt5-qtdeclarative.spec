@@ -42,11 +42,13 @@ License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 # (tpg) https://bugs.kde.org/show_bug.cgi?id=348385
 Patch0:		qtdeclarative-QQuickShaderEffectSource_deadlock.patch
+# (tpg) fix build ../3rdparty/masm/yarr/YarrPattern.cpp:39:29: fatal error: RegExpJitTables.h: No such file or directory
+Patch1:		qtdeclarative-opensource-src-5.6.0-fix-build.patch
 # (tpg) Fedora patches
-Patch1:		0008-Fix-crash-when-Canvas-has-negative-width-or-height.patch
-Patch2:		0019-Revert-Fix-crash-on-QQmlEngine-destruction.patch
-Patch3:		0029-Avoid-div-by-zero-when-nothing-is-rendered.patch
-Patch4:		Check-for-NULL-from-glGetString.patch
+Patch2:		0008-Fix-crash-when-Canvas-has-negative-width-or-height.patch
+Patch3:		0019-Revert-Fix-crash-on-QQmlEngine-destruction.patch
+Patch4:		0029-Avoid-div-by-zero-when-nothing-is-rendered.patch
+Patch5:		Check-for-NULL-from-glGetString.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
