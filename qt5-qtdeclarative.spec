@@ -26,13 +26,13 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.6.0
+Version:	5.6.1
 %if "%{beta}" != ""
-Release:	0.%{beta}.1
+Release:	1.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	3
+Release:	1
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -45,9 +45,6 @@ Patch0:		qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 # (tpg) fix build ../3rdparty/masm/yarr/YarrPattern.cpp:39:29: fatal error: RegExpJitTables.h: No such file or directory
 Patch1:		qtdeclarative-opensource-src-5.6.0-fix-build.patch
 # (tpg) Fedora patches
-Patch2:		0008-Fix-crash-when-Canvas-has-negative-width-or-height.patch
-Patch3:		0019-Revert-Fix-crash-on-QQmlEngine-destruction.patch
-Patch4:		0029-Avoid-div-by-zero-when-nothing-is-rendered.patch
 Patch5:		Check-for-NULL-from-glGetString.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
