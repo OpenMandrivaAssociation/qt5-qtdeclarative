@@ -1,24 +1,6 @@
-From d4efd5ab810e92202efe672be29136324dd2a3f9 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?D=C4=81vis=20Mos=C4=81ns?= <davispuh@gmail.com>
-Date: Mon, 28 Dec 2015 05:43:18 +0200
-Subject: [PATCH] Check for NULL from glGetString
-
-glGetString can return NULL pointer in case of error
-so check for it before using.
-
-Change-Id: Ia07424c8f2b3ce6dce675514900a509e3ef3b739
----
- src/particles/qquickimageparticle.cpp              |  6 ++++--
- src/quick/scenegraph/qsgcontext.cpp                | 22 ++++++++++++++++------
- .../qsgdefaultdistancefieldglyphcache.cpp          |  8 +++++---
- src/quick/scenegraph/util/qsgatlastexture.cpp      |  4 ++--
- 4 files changed, 27 insertions(+), 13 deletions(-)
-
-diff --git a/src/particles/qquickimageparticle.cpp b/src/particles/qquickimageparticle.cpp
-index d78a350..b54861e 100644
---- a/src/particles/qquickimageparticle.cpp
-+++ b/src/particles/qquickimageparticle.cpp
-@@ -1276,14 +1276,16 @@ void QQuickImageParticle::finishBuildParticleNodes(QSGNode** node)
+--- qtdeclarative-opensource-src-5.7.0/src/particles/qquickimageparticle.cpp.0005~	2016-06-11 14:05:08.000000000 +0200
++++ qtdeclarative-opensource-src-5.7.0/src/particles/qquickimageparticle.cpp	2016-06-20 01:28:37.173564494 +0200
+@@ -1291,14 +1291,16 @@ void QQuickImageParticle::finishBuildPar
      // OS X 10.8.3 introduced a bug in the AMD drivers, for at least the 2011 macbook pros,
      // causing point sprites who read gl_PointCoord in the frag shader to come out as
      // green-red blobs.
@@ -37,11 +19,9 @@ index d78a350..b54861e 100644
          perfLevel = Deformable;
  #endif
  
-diff --git a/src/quick/scenegraph/qsgcontext.cpp b/src/quick/scenegraph/qsgcontext.cpp
-index dd6977e..43d549f 100644
---- a/src/quick/scenegraph/qsgcontext.cpp
-+++ b/src/quick/scenegraph/qsgcontext.cpp
-@@ -624,14 +624,24 @@ void QSGRenderContext::initialize(QOpenGLContext *context)
+--- qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/qsgcontext.cpp.0005~	2016-06-11 14:05:08.000000000 +0200
++++ qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/qsgcontext.cpp	2016-06-20 01:28:37.173564494 +0200
+@@ -630,14 +630,24 @@ void QSGRenderContext::initialize(QOpenG
      m_sg->renderContextInitialized(this);
  
  #ifdef Q_OS_LINUX
@@ -72,11 +52,9 @@ index dd6977e..43d549f 100644
  #endif
  
      emit initialized();
-diff --git a/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp b/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp
-index dcc485c..43e234b 100644
---- a/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp
-+++ b/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp
-@@ -488,9 +488,11 @@ bool QSGDefaultDistanceFieldGlyphCache::useTextureUploadWorkaround() const
+--- qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp.0005~	2016-06-11 14:05:08.000000000 +0200
++++ qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp	2016-06-20 01:28:37.173564494 +0200
+@@ -494,9 +494,11 @@ bool QSGDefaultDistanceFieldGlyphCache::
      static bool set = false;
      static bool useWorkaround = false;
      if (!set) {
@@ -91,11 +69,9 @@ index dcc485c..43e234b 100644
      }
      return useWorkaround;
  }
-diff --git a/src/quick/scenegraph/util/qsgatlastexture.cpp b/src/quick/scenegraph/util/qsgatlastexture.cpp
-index 8e8e870..d726907 100644
---- a/src/quick/scenegraph/util/qsgatlastexture.cpp
-+++ b/src/quick/scenegraph/util/qsgatlastexture.cpp
-@@ -150,13 +150,13 @@ Atlas::Atlas(const QSize &size)
+--- qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/util/qsgatlastexture.cpp.0005~	2016-06-20 01:28:37.173564494 +0200
++++ qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/util/qsgatlastexture.cpp	2016-06-20 01:30:02.913878717 +0200
+@@ -157,13 +157,13 @@ Atlas::Atlas(const QSize &size)
          wrongfullyReportsBgra8888Support = false;
  
      const char *ext = (const char *) QOpenGLContext::currentContext()->functions()->glGetString(GL_EXTENSIONS);
@@ -105,12 +81,9 @@ index 8e8e870..d726907 100644
                  || strstr(ext, "GL_EXT_texture_format_BGRA8888")
                  || strstr(ext, "GL_IMG_texture_format_BGRA8888"))) {
          m_internalFormat = m_externalFormat = GL_BGRA;
- #ifdef Q_OS_IOS
+ #if defined(Q_OS_DARWIN) && !defined(Q_OS_OSX)
 -    } else if (strstr(ext, "GL_APPLE_texture_format_BGRA8888")) {
 +    } else if (ext && strstr(ext, "GL_APPLE_texture_format_BGRA8888")) {
          m_internalFormat = GL_RGBA;
          m_externalFormat = GL_BGRA;
- #endif // IOS
--- 
-1.9.3
-
+ #endif // IOS || TVOS
