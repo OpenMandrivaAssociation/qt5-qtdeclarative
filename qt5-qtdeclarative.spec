@@ -59,7 +59,8 @@ Patch33:	0033-QML-Only-release-types-if-they-aren-t-referenced-any.patch
 
 ## upstreamable patches
 # use system double-conversation
-Patch200:	qtdeclarative-system_doubleconv.patch
+# (tpg) patch from Debian
+Patch200:	check_system_double-conversion.patch
 # https://bugs.kde.org/show_bug.cgi?id=346118#c108
 Patch201:	qtdeclarative-kdebug346118.patch
 # additional i686/qml workaround (on top of existing patch135),  https://bugzilla.redhat.com/1331593
