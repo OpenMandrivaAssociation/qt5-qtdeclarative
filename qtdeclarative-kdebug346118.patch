@@ -1,0 +1,20 @@
+diff -Naur qtdeclarative-opensource-src-5.6.1/src/qml/util/qqmladaptormodel.cpp qtdeclarative-opensource-src-5.6.1.tpg/src/qml/util/qqmladaptormodel.cpp
+--- qtdeclarative-opensource-src-5.6.1/src/qml/util/qqmladaptormodel.cpp	2016-05-20 20:56:32.000000000 +0000
++++ qtdeclarative-opensource-src-5.6.1.tpg/src/qml/util/qqmladaptormodel.cpp	2016-07-03 19:33:32.533064065 +0000
+@@ -165,8 +165,14 @@
+                 signalIndexes.append(propertyId + signalOffset);
+         }
+ 
+-        for (int i = 0, c = items.count();  i < c; ++i) {
+-            QQmlDelegateModelItem *item = items.at(i);
++        const QList<QQmlDelegateModelItem *> copy = items;
++        for (int i = 0, c = copy.count();  i < c; ++i) {
++            // Applying the same logic used in QQmlDelegateModel::_q_itemsRemoved().
++            QQmlDelegateModelItem *item = copy.at(i);
++            if (!items.contains(item)) {
++                continue;
++            }
++
+             const int idx = item->modelIndex();
+             if (idx >= index && idx < index + count) {
+                 for (int i = 0; i < signalIndexes.count(); ++i)

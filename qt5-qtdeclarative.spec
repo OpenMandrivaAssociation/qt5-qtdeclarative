@@ -57,6 +57,14 @@ Patch24:	0024-Revert-removal-of-Fixed-MouseArea-threshold-with-pre.patch
 Patch27:	0027-Fix-crash-when-using-with-statement-with-an-expressi.patch
 Patch33:	0033-QML-Only-release-types-if-they-aren-t-referenced-any.patch
 
+## upstreamable patches
+# use system double-conversation
+Patch200:	qtdeclarative-system_doubleconv.patch
+# https://bugs.kde.org/show_bug.cgi?id=346118#c108
+Patch201:	qtdeclarative-kdebug346118.patch
+# additional i686/qml workaround (on top of existing patch135),  https://bugzilla.redhat.com/1331593
+Patch235:	qtdeclarative-opensource-src-5.6.0-qml_no-lifetime-dse.patch
+
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
@@ -67,6 +75,7 @@ BuildRequires:	pkgconfig(Qt5Widgets) = %{version}
 BuildRequires:	pkgconfig(Qt5XmlPatterns) = %{version}
 BuildRequires:	pkgconfig(Qt5OpenGL) = %{version}
 BuildRequires:	pkgconfig(Qt5Xml) = %{version}
+BuildRequires:	double-conversion-devel
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
@@ -360,10 +369,17 @@ Devel files needed to build apps based on Qt%{api}.
 # nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
 pushd %{buildroot}%{_qt5_libdir}
 for prl_file in libQt5*.prl ; do
-  sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" ${prl_file}
+  sed -i \
+    -e "/^QMAKE_PRL_BUILD_DIR/d" \
+    -e "/-ldouble-conversion/d" \
+    ${prl_file}
   if [ -f "$(basename ${prl_file} .prl).so" ]; then
     rm -fv "$(basename ${prl_file} .prl).la"
-    sed -i -e "/^QMAKE_PRL_LIBS/d" ${prl_file}
+  else
+    sed -i \
+       -e "/^QMAKE_PRL_LIBS/d" \
+       -e "/-ldouble-conversion/d" \
+       $(basename ${prl_file} .prl).la
   fi
 done
 popd
