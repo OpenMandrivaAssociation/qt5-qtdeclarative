@@ -54,7 +54,7 @@ Patch11:	0011-Avoid-Canvas-crashes-with-qtquickcompiler.patch
 Patch16:	0016-Fix-crash-with-SignalTransition.patch
 Patch24:	0024-Revert-removal-of-Fixed-MouseArea-threshold-with-pre.patch
 Patch27:	0027-Fix-crash-when-using-with-statement-with-an-expressi.patch
-Patch33:	0033-QML-Only-release-types-if-they-aren-t-referenced-any.patc
+Patch33:	0033-QML-Only-release-types-if-they-aren-t-referenced-any.patch
 
 ## upstreamable patches
 # use system double-conversation
