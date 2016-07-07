@@ -1,6 +1,8 @@
---- src/qml/util/qqmladaptormodel.cpp.orig	2016-05-27 17:06:31.192332166 -0300
-+++ src/qml/util/qqmladaptormodel.cpp	2016-05-27 18:37:27.764552053 -0300
-@@ -163,8 +163,14 @@ public:
+diff --git a/src/qml/util/qqmladaptormodel.cpp b/src/qml/util/qqmladaptormodel.cpp
+index 5fc2444..0c37918 100644
+--- a/src/qml/util/qqmladaptormodel.cpp
++++ b/src/qml/util/qqmladaptormodel.cpp
+@@ -171,8 +171,14 @@ public:
                  signalIndexes.append(propertyId + signalOffset);
          }
  
