@@ -26,7 +26,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.6.1
+Version:	5.6.2
 %if "%{beta}" != ""
 Release:	1.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
@@ -48,23 +48,11 @@ Patch1:		qtdeclarative-opensource-src-5.6.0-fix-build.patch
 Patch5:		Check-for-NULL-from-glGetString.patch
 # (tpg) http://blog.qt.io/blog/2016/06/22/qt-5-6-1-1-released/#comment-1197998
 # fixed in 5.7.0
-## upstream patches
-Patch7:		0007-Revert-Remove-this-piece-of-code.patch
-Patch10:	0010-Fix-crash-for-unknown-QQmlListModel-roles-in-debug-b.patch
-Patch11:	0011-Avoid-Canvas-crashes-with-qtquickcompiler.patch
-Patch16:	0016-Fix-crash-with-SignalTransition.patch
-Patch24:	0024-Revert-removal-of-Fixed-MouseArea-threshold-with-pre.patch
-Patch27:	0027-Fix-crash-when-using-with-statement-with-an-expressi.patch
-Patch33:	0033-QML-Only-release-types-if-they-aren-t-referenced-any.patch
-
-## upstreamable patches
 # use system double-conversation
 # (tpg) patch from Debian
 Patch200:	check_system_double-conversion.patch
 # https://bugs.kde.org/show_bug.cgi?id=346118#c108
 Patch201:	qtdeclarative-kdebug346118.patch
-# additional i686/qml workaround (on top of existing patch135),  https://bugzilla.redhat.com/1331593
-Patch235:	qtdeclarative-opensource-src-5.6.0-qml_no-lifetime-dse.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
