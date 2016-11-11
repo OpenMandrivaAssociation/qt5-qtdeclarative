@@ -1,6 +1,6 @@
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta %nil
+%define beta beta
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -26,13 +26,13 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.7.0
+Version:	5.8.0
 %if "%{beta}" != ""
-Release:	1.%{beta}.1
+Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	2
+Release:	1
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -48,11 +48,6 @@ Patch1:		qtdeclarative-opensource-src-5.6.0-fix-build.patch
 Patch5:		Check-for-NULL-from-glGetString.patch
 
 # upstream patches
-Patch10:	0010-Fix-crash-for-unknown-QQmlListModel-roles-in-debug-b.patch
-Patch11:	0011-Avoid-Canvas-crashes-with-qtquickcompiler.patch
-Patch16:	0016-Fix-crash-with-SignalTransition.patch
-Patch24:	0024-Revert-removal-of-Fixed-MouseArea-threshold-with-pre.patch
-Patch27:	0027-Fix-crash-when-using-with-statement-with-an-expressi.patch
 
 ## upstreamable patches
 # use system double-conversation
@@ -60,7 +55,8 @@ Patch27:	0027-Fix-crash-when-using-with-statement-with-an-expressi.patch
 # https://bugs.kde.org/show_bug.cgi?id=346118#c108
 Patch201:	qtdeclarative-kdebug346118.patch
 # additional i686/qml workaround (on top of existing patch135),  https://bugzilla.redhat.com/1331593
-Patch235:	qtdeclarative-opensource-src-5.6.0-qml_no-lifetime-dse.patch
+# FIXME check if this is still needed
+#Patch235:	qtdeclarative-opensource-src-5.6.0-qml_no-lifetime-dse.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}

@@ -1,6 +1,6 @@
---- qtdeclarative-opensource-src-5.7.0/src/particles/qquickimageparticle.cpp.0005~	2016-06-11 14:05:08.000000000 +0200
-+++ qtdeclarative-opensource-src-5.7.0/src/particles/qquickimageparticle.cpp	2016-06-20 01:28:37.173564494 +0200
-@@ -1291,14 +1291,16 @@ void QQuickImageParticle::finishBuildPar
+--- qtdeclarative-opensource-src-5.8.0-beta/src/particles/qquickimageparticle.cpp.0005~	2016-10-27 12:27:54.000000000 +0200
++++ qtdeclarative-opensource-src-5.8.0-beta/src/particles/qquickimageparticle.cpp	2016-11-11 23:29:23.022034868 +0100
+@@ -1292,14 +1292,16 @@ void QQuickImageParticle::finishBuildPar
      // OS X 10.8.3 introduced a bug in the AMD drivers, for at least the 2011 macbook pros,
      // causing point sprites who read gl_PointCoord in the frag shader to come out as
      // green-red blobs.
@@ -19,42 +19,9 @@
          perfLevel = Deformable;
  #endif
  
---- qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/qsgcontext.cpp.0005~	2016-06-11 14:05:08.000000000 +0200
-+++ qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/qsgcontext.cpp	2016-06-20 01:28:37.173564494 +0200
-@@ -630,14 +630,24 @@ void QSGRenderContext::initialize(QOpenG
-     m_sg->renderContextInitialized(this);
- 
- #ifdef Q_OS_LINUX
-+    while (funcs->glGetError() != GL_NO_ERROR);
-+
-     const char *vendor = (const char *) funcs->glGetString(GL_VENDOR);
--    if (strstr(vendor, "nouveau"))
--        m_brokenIBOs = true;
-     const char *renderer = (const char *) funcs->glGetString(GL_RENDERER);
--    if (strstr(renderer, "llvmpipe"))
--        m_serializedRender = true;
--    if (strstr(vendor, "Hisilicon Technologies") && strstr(renderer, "Immersion.16"))
--        m_brokenIBOs = true;
-+
-+    if (vendor && renderer) {
-+        if (strstr(vendor, "nouveau"))
-+            m_brokenIBOs = true;
-+        if (strstr(renderer, "llvmpipe"))
-+            m_serializedRender = true;
-+        if (strstr(vendor, "Hisilicon Technologies") && strstr(renderer, "Immersion.16"))
-+            m_brokenIBOs = true;
-+    } else {
-+        GLenum err;
-+        while ((err = funcs->glGetError()) != GL_NO_ERROR) {
-+            qWarning("QSGRenderContext::initialize: GL error %x from glGetString", err);
-+        }
-+    }
- #endif
- 
-     emit initialized();
---- qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp.0005~	2016-06-11 14:05:08.000000000 +0200
-+++ qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp	2016-06-20 01:28:37.173564494 +0200
-@@ -494,9 +494,11 @@ bool QSGDefaultDistanceFieldGlyphCache::
+--- qtdeclarative-opensource-src-5.8.0-beta/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp.0005~	2016-10-27 12:27:54.000000000 +0200
++++ qtdeclarative-opensource-src-5.8.0-beta/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp	2016-11-11 23:29:23.022034868 +0100
+@@ -499,9 +499,11 @@ bool QSGDefaultDistanceFieldGlyphCache::
      static bool set = false;
      static bool useWorkaround = false;
      if (!set) {
@@ -69,21 +36,34 @@
      }
      return useWorkaround;
  }
---- qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/util/qsgatlastexture.cpp.0005~	2016-06-20 01:28:37.173564494 +0200
-+++ qtdeclarative-opensource-src-5.7.0/src/quick/scenegraph/util/qsgatlastexture.cpp	2016-06-20 01:30:02.913878717 +0200
-@@ -157,13 +157,13 @@ Atlas::Atlas(const QSize &size)
-         wrongfullyReportsBgra8888Support = false;
+--- qtdeclarative-opensource-src-5.8.0-beta/src/quick/scenegraph/qsgdefaultrendercontext.cpp.0005~	2016-11-11 23:31:53.819667017 +0100
++++ qtdeclarative-opensource-src-5.8.0-beta/src/quick/scenegraph/qsgdefaultrendercontext.cpp	2016-11-11 23:35:14.769052025 +0100
+@@ -98,14 +98,22 @@ void QSGDefaultRenderContext::initialize
+     m_sg->renderContextInitialized(this);
  
-     const char *ext = (const char *) QOpenGLContext::currentContext()->functions()->glGetString(GL_EXTENSIONS);
--    if (!wrongfullyReportsBgra8888Support
-+    if (!wrongfullyReportsBgra8888Support && ext
-             && (strstr(ext, "GL_EXT_bgra")
-                 || strstr(ext, "GL_EXT_texture_format_BGRA8888")
-                 || strstr(ext, "GL_IMG_texture_format_BGRA8888"))) {
-         m_internalFormat = m_externalFormat = GL_BGRA;
- #if defined(Q_OS_DARWIN) && !defined(Q_OS_OSX)
--    } else if (strstr(ext, "GL_APPLE_texture_format_BGRA8888")) {
-+    } else if (ext && strstr(ext, "GL_APPLE_texture_format_BGRA8888")) {
-         m_internalFormat = GL_RGBA;
-         m_externalFormat = GL_BGRA;
- #endif // IOS || TVOS
+ #ifdef Q_OS_LINUX
++    while (funcs->glGetError() != GL_NO_ERROR);
++
+     const char *vendor = (const char *) funcs->glGetString(GL_VENDOR);
+-    if (vendor && strstr(vendor, "nouveau"))
+-        m_brokenIBOs = true;
+     const char *renderer = (const char *) funcs->glGetString(GL_RENDERER);
+-    if (renderer && strstr(renderer, "llvmpipe"))
+-        m_serializedRender = true;
+-    if (vendor && renderer && strstr(vendor, "Hisilicon Technologies") && strstr(renderer, "Immersion.16"))
+-        m_brokenIBOs = true;
++    if (vendor && renderer) {
++        if (strstr(vendor, "nouveau"))
++            m_brokenIBOs = true;
++        if (strstr(renderer, "llvmpipe"))
++            m_serializedRender = true;
++        if (strstr(vendor, "Hisilicon Technologies") && strstr(renderer, "Immersion.16"))
++            m_brokenIBOs = true;
++    } else {
++        GLenum err;
++        while ((err = funcs->glGetError()) != GL_NO_ERROR)
++            qWarning("QSGRenderContext::initialize: GL error %x from glGetString", err);
++    }
+ #endif
+ 
+     emit initialized();
