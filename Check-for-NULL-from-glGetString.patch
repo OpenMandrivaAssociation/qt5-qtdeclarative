@@ -1,26 +1,5 @@
---- qtdeclarative-opensource-src-5.8.0-beta/src/particles/qquickimageparticle.cpp.0005~	2016-10-27 12:27:54.000000000 +0200
-+++ qtdeclarative-opensource-src-5.8.0-beta/src/particles/qquickimageparticle.cpp	2016-11-11 23:29:23.022034868 +0100
-@@ -1292,14 +1292,16 @@ void QQuickImageParticle::finishBuildPar
-     // OS X 10.8.3 introduced a bug in the AMD drivers, for at least the 2011 macbook pros,
-     // causing point sprites who read gl_PointCoord in the frag shader to come out as
-     // green-red blobs.
--    if (perfLevel < Deformable && strstr((char *) glGetString(GL_VENDOR), "ATI")) {
-+    const char *vendor = (const char *) glGetString(GL_VENDOR);
-+    if (perfLevel < Deformable && vendor && strstr(vendor, "ATI")) {
-         perfLevel = Deformable;
-     }
- #endif
- 
- #ifdef Q_OS_LINUX
-     // Nouveau drivers can potentially freeze a machine entirely when taking the point-sprite path.
--    if (perfLevel < Deformable && strstr((const char *) glGetString(GL_VENDOR), "nouveau"))
-+    const char *vendor = (const char *) glGetString(GL_VENDOR);
-+    if (perfLevel < Deformable && vendor && strstr(vendor, "nouveau"))
-         perfLevel = Deformable;
- #endif
- 
---- qtdeclarative-opensource-src-5.8.0-beta/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp.0005~	2016-10-27 12:27:54.000000000 +0200
-+++ qtdeclarative-opensource-src-5.8.0-beta/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp	2016-11-11 23:29:23.022034868 +0100
+--- qtdeclarative-opensource-src-5.8.0-rc/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp.0005~	2016-12-09 13:14:10.000000000 +0100
++++ qtdeclarative-opensource-src-5.8.0-rc/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp	2016-12-24 16:16:21.691982490 +0100
 @@ -499,9 +499,11 @@ bool QSGDefaultDistanceFieldGlyphCache::
      static bool set = false;
      static bool useWorkaround = false;
@@ -36,8 +15,8 @@
      }
      return useWorkaround;
  }
---- qtdeclarative-opensource-src-5.8.0-beta/src/quick/scenegraph/qsgdefaultrendercontext.cpp.0005~	2016-11-11 23:31:53.819667017 +0100
-+++ qtdeclarative-opensource-src-5.8.0-beta/src/quick/scenegraph/qsgdefaultrendercontext.cpp	2016-11-11 23:35:14.769052025 +0100
+--- qtdeclarative-opensource-src-5.8.0-rc/src/quick/scenegraph/qsgdefaultrendercontext.cpp.0005~	2016-12-09 13:14:10.000000000 +0100
++++ qtdeclarative-opensource-src-5.8.0-rc/src/quick/scenegraph/qsgdefaultrendercontext.cpp	2016-12-24 16:16:21.691982490 +0100
 @@ -98,14 +98,22 @@ void QSGDefaultRenderContext::initialize
      m_sg->renderContextInitialized(this);
  
