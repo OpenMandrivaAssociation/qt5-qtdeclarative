@@ -1,7 +1,8 @@
-diff -Naur qtdeclarative-opensource-src-5.6.1/src/qml/util/qqmladaptormodel.cpp qtdeclarative-opensource-src-5.6.1.tpg/src/qml/util/qqmladaptormodel.cpp
---- qtdeclarative-opensource-src-5.6.1/src/qml/util/qqmladaptormodel.cpp	2016-05-20 20:56:32.000000000 +0000
-+++ qtdeclarative-opensource-src-5.6.1.tpg/src/qml/util/qqmladaptormodel.cpp	2016-07-03 19:33:32.533064065 +0000
-@@ -165,8 +165,14 @@
+diff --git a/src/qml/util/qqmladaptormodel.cpp b/src/qml/util/qqmladaptormodel.cpp
+index 5fc2444..0c37918 100644
+--- a/src/qml/util/qqmladaptormodel.cpp
++++ b/src/qml/util/qqmladaptormodel.cpp
+@@ -171,8 +171,14 @@ public:
                  signalIndexes.append(propertyId + signalOffset);
          }
  

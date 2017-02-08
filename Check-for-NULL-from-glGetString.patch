@@ -1,66 +1,6 @@
-diff --git a/src/particles/qquickimageparticle.cpp b/src/particles/qquickimageparticle.cpp
-index d78a350..b54861e 100644
---- a/src/particles/qquickimageparticle.cpp
-+++ b/src/particles/qquickimageparticle.cpp
-@@ -1276,14 +1276,16 @@ void QQuickImageParticle::finishBuildParticleNodes(QSGNode** node)
-     // OS X 10.8.3 introduced a bug in the AMD drivers, for at least the 2011 macbook pros,
-     // causing point sprites who read gl_PointCoord in the frag shader to come out as
-     // green-red blobs.
--    if (perfLevel < Deformable && strstr((char *) glGetString(GL_VENDOR), "ATI")) {
-+    const char *vendor = (const char *) glGetString(GL_VENDOR);
-+    if (perfLevel < Deformable && vendor && strstr(vendor, "ATI")) {
-         perfLevel = Deformable;
-     }
- #endif
- 
- #ifdef Q_OS_LINUX
-     // Nouveau drivers can potentially freeze a machine entirely when taking the point-sprite path.
--    if (perfLevel < Deformable && strstr((const char *) glGetString(GL_VENDOR), "nouveau"))
-+    const char *vendor = (const char *) glGetString(GL_VENDOR);
-+    if (perfLevel < Deformable && vendor && strstr(vendor, "nouveau"))
-         perfLevel = Deformable;
- #endif
- 
-diff --git a/src/quick/scenegraph/qsgcontext.cpp b/src/quick/scenegraph/qsgcontext.cpp
-index be228e8..08032c3 100644
---- a/src/quick/scenegraph/qsgcontext.cpp
-+++ b/src/quick/scenegraph/qsgcontext.cpp
-@@ -624,14 +624,24 @@ void QSGRenderContext::initialize(QOpenGLContext *context)
-     m_sg->renderContextInitialized(this);
- 
- #ifdef Q_OS_LINUX
-+    while (funcs->glGetError() != GL_NO_ERROR);
-+
-     const char *vendor = (const char *) funcs->glGetString(GL_VENDOR);
--    if (strstr(vendor, "nouveau"))
--        m_brokenIBOs = true;
-     const char *renderer = (const char *) funcs->glGetString(GL_RENDERER);
--    if (strstr(renderer, "llvmpipe"))
--        m_serializedRender = true;
--    if (strstr(vendor, "Hisilicon Technologies") && strstr(renderer, "Immersion.16"))
--        m_brokenIBOs = true;
-+
-+    if (vendor && renderer) {
-+        if (strstr(vendor, "nouveau"))
-+            m_brokenIBOs = true;
-+        if (strstr(renderer, "llvmpipe"))
-+            m_serializedRender = true;
-+        if (strstr(vendor, "Hisilicon Technologies") && strstr(renderer, "Immersion.16"))
-+            m_brokenIBOs = true;
-+    } else {
-+        GLenum err;
-+        while ((err = funcs->glGetError()) != GL_NO_ERROR) {
-+            qWarning("QSGRenderContext::initialize: GL error %x from glGetString", err);
-+        }
-+    }
- #endif
- 
-     emit initialized();
-diff --git a/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp b/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp
-index 31275b3..99e5485 100644
---- a/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp
-+++ b/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp
-@@ -493,9 +493,11 @@ bool QSGDefaultDistanceFieldGlyphCache::useTextureUploadWorkaround() const
+--- qtdeclarative-opensource-src-5.8.0-rc/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp.0005~	2016-12-09 13:14:10.000000000 +0100
++++ qtdeclarative-opensource-src-5.8.0-rc/src/quick/scenegraph/qsgdefaultdistancefieldglyphcache.cpp	2016-12-24 16:16:21.691982490 +0100
+@@ -499,9 +499,11 @@ bool QSGDefaultDistanceFieldGlyphCache::
      static bool set = false;
      static bool useWorkaround = false;
      if (!set) {
@@ -75,3 +15,34 @@ index 31275b3..99e5485 100644
      }
      return useWorkaround;
  }
+--- qtdeclarative-opensource-src-5.8.0-rc/src/quick/scenegraph/qsgdefaultrendercontext.cpp.0005~	2016-12-09 13:14:10.000000000 +0100
++++ qtdeclarative-opensource-src-5.8.0-rc/src/quick/scenegraph/qsgdefaultrendercontext.cpp	2016-12-24 16:16:21.691982490 +0100
+@@ -98,14 +98,22 @@ void QSGDefaultRenderContext::initialize
+     m_sg->renderContextInitialized(this);
+ 
+ #ifdef Q_OS_LINUX
++    while (funcs->glGetError() != GL_NO_ERROR);
++
+     const char *vendor = (const char *) funcs->glGetString(GL_VENDOR);
+-    if (vendor && strstr(vendor, "nouveau"))
+-        m_brokenIBOs = true;
+     const char *renderer = (const char *) funcs->glGetString(GL_RENDERER);
+-    if (renderer && strstr(renderer, "llvmpipe"))
+-        m_serializedRender = true;
+-    if (vendor && renderer && strstr(vendor, "Hisilicon Technologies") && strstr(renderer, "Immersion.16"))
+-        m_brokenIBOs = true;
++    if (vendor && renderer) {
++        if (strstr(vendor, "nouveau"))
++            m_brokenIBOs = true;
++        if (strstr(renderer, "llvmpipe"))
++            m_serializedRender = true;
++        if (strstr(vendor, "Hisilicon Technologies") && strstr(renderer, "Immersion.16"))
++            m_brokenIBOs = true;
++    } else {
++        GLenum err;
++        while ((err = funcs->glGetError()) != GL_NO_ERROR)
++            qWarning("QSGRenderContext::initialize: GL error %x from glGetString", err);
++    }
+ #endif
+ 
+     emit initialized();

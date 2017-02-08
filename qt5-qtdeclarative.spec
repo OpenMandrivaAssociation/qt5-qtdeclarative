@@ -1,6 +1,6 @@
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta %nil
+%define beta %{nil}
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -26,9 +26,9 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.6.2
+Version:	5.8.0
 %if "%{beta}" != ""
-Release:	1.%{beta}.1
+Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
@@ -46,13 +46,17 @@ Patch0:		qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 Patch1:		qtdeclarative-opensource-src-5.6.0-fix-build.patch
 # (tpg) Fedora patches
 Patch5:		Check-for-NULL-from-glGetString.patch
-# (tpg) http://blog.qt.io/blog/2016/06/22/qt-5-6-1-1-released/#comment-1197998
-# fixed in 5.7.0
+
+# upstream patches
+
+## upstreamable patches
 # use system double-conversation
-# (tpg) patch from Debian
-Patch200:	check_system_double-conversion.patch
+#Patch200:	qtdeclarative-system_doubleconv.patch
 # https://bugs.kde.org/show_bug.cgi?id=346118#c108
 Patch201:	qtdeclarative-kdebug346118.patch
+# additional i686/qml workaround (on top of existing patch135),  https://bugzilla.redhat.com/1331593
+# FIXME check if this is still needed
+#Patch235:	qtdeclarative-opensource-src-5.6.0-qml_no-lifetime-dse.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
@@ -84,11 +88,13 @@ Window System. Qt is written in C++ and is fully object-oriented.
 %{_qt_prefix}/qml/QtTest
 %{_qt_prefix}/qml/QtQuick*
 %{_qt_prefix}/qml/builtins.qmltypes
+%dir %{_qt_prefix}/plugins/qmltooling
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_debugger.so
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_inspector.so
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_local.so
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_native.so
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_profiler.so
+%{_qt_prefix}/plugins/qmltooling/libqmldbg_quickprofiler.so
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_server.so
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_tcp.so
 %{_qt_prefix}/qml/Qt/labs/folderlistmodel
@@ -190,6 +196,13 @@ Devel files needed to build apps based on Qt%{api}.
 %files -n %{qtquick_p_d}
 %{_qt5_includedir}/QtQuick/%{version}
 %{_qt_prefix}/mkspecs/modules/qt_lib_quick_private.pri
+%{_qt5_includedir}/QtPacketProtocol
+%{_qt5_libdir}/libQt5PacketProtocol.a
+%{_qt5_libdir}/libQt5PacketProtocol.prl
+%{_qt_prefix}/mkspecs/modules/qt_lib_packetprotocol_private.pri
+%{_qt5_libdir}/libQt5QmlDebug.a
+%{_qt5_libdir}/libQt5QmlDebug.prl
+%{_qt_prefix}/mkspecs/modules/qt_lib_qmldebug_private.pri
 
 #------------------------------------------------------------------------------
 
