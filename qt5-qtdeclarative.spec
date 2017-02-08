@@ -69,6 +69,7 @@ BuildRequires:	pkgconfig(Qt5XmlPatterns) = %{version}
 BuildRequires:	pkgconfig(Qt5OpenGL) = %{version}
 BuildRequires:	pkgconfig(Qt5Xml) = %{version}
 BuildRequires:	double-conversion-devel
+Conflicts:  qt5-qtquickcontrols < 5.8.0
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
