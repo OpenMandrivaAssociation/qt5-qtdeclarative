@@ -1,6 +1,6 @@
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta %{nil}
+%define beta alpha
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -26,13 +26,13 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.8.0
+Version:	5.9.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	4
+Release:	1
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -44,6 +44,8 @@ URL:		http://www.qt.io
 Patch0:		qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 # (tpg) fix build ../3rdparty/masm/yarr/YarrPattern.cpp:39:29: fatal error: RegExpJitTables.h: No such file or directory
 Patch1:		qtdeclarative-opensource-src-5.6.0-fix-build.patch
+# (bero) more build fixes
+Patch2:		qt5-qtdeclarative-buildfixes.patch
 # (tpg) Fedora patches
 Patch5:		Check-for-NULL-from-glGetString.patch
 
@@ -78,6 +80,8 @@ Window System. Qt is written in C++ and is fully object-oriented.
 
 %files
 %{_qt5_bindir}/qml
+%{_qt5_bindir}/qmlcachegen
+%{_qt_prefix}/mkspecs/features/qmlcache.prf
 %{_qt5_bindir}/qmlimportscanner
 %{_qt5_bindir}/qmlmin
 %{_qt5_bindir}/qmlplugindump
@@ -181,6 +185,8 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt5_libdir}/pkgconfig/Qt5Quick.pc
 %{_qt_prefix}/mkspecs/modules/qt_lib_quick.pri
 #_qt5_libdir/cmake/Qt5Widgets/Qt5Widgets_AccessibleQuickFactory.cmake
+%{_qt_prefix}/plugins/qmltooling/libqmldbg_messages.so
+%{_qt_prefix}/plugins/qmltooling/libqmldbg_nativedebugger.so
 
 #------------------------------------------------------------------------------
 
