@@ -28,7 +28,7 @@
 Name:		qt5-qtdeclarative
 Version:	5.9.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.1
+Release:	0.%{beta}.2
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
@@ -324,6 +324,7 @@ Requires: %{name} = %{version}
 Requires: %{qtqml} = %{version}
 Requires: pkgconfig(Qt5Core) = %{version}
 Requires: pkgconfig(Qt5Network) = %{version}
+Requires: %{qtquickd} = %{EVRD}
 
 %description -n %{qtqmld}
 Devel files needed to build apps based on Qt%{api}.
