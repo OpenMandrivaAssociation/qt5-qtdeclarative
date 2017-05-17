@@ -1,6 +1,6 @@
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta beta
+%define beta beta4
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -28,7 +28,7 @@
 Name:		qt5-qtdeclarative
 Version:	5.9.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.2
+Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
@@ -104,6 +104,7 @@ Window System. Qt is written in C++ and is fully object-oriented.
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_tcp.so
 %{_qt_prefix}/qml/Qt/labs/folderlistmodel
 %{_qt_prefix}/qml/Qt/labs/settings
+%{_qt_prefix}/qml/Qt/labs/sharedimage
 
 #------------------------------------------------------------------------------
 
