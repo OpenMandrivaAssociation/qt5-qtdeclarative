@@ -26,7 +26,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.9.1
+Version:	5.9.2
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
