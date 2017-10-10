@@ -1,6 +1,6 @@
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta %{nil}
+%define beta beta
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -26,10 +26,10 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.9.2
+Version:	5.10.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
-%define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
+%define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
 Release:	1
@@ -164,6 +164,10 @@ Qt%{api} Lib.
 %files -n %{qtquick}
 %{_qt5_libdir}/libQt5Quick.so.%{api}*
 %{_qt_prefix}/qml/QtQml
+%dir %{_qt5_libdir}/qt5/qml
+%dir %{_qt5_libdir}/qt5/qml/Qt
+%dir %{_qt5_libdir}/qt5/qml/Qt/labs
+%{_qt5_libdir}/qt5/qml/Qt/labs/handlers
 
 #------------------------------------------------------------------------------
 
