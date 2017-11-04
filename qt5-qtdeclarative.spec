@@ -32,7 +32,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	4
+Release:	5
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -58,6 +58,10 @@ Patch201:	qtdeclarative-kdebug346118.patch
 # FIXME check if this is still needed
 #Patch235:	qtdeclarative-opensource-src-5.6.0-qml_no-lifetime-dse.patch
 
+# From upstream
+Patch300:		QTBUG-61754-1.patch
+Patch301:		QTBUG-61754-2.patch
+
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
@@ -69,7 +73,7 @@ BuildRequires:	pkgconfig(Qt5XmlPatterns) = %{version}
 BuildRequires:	pkgconfig(Qt5OpenGL) = %{version}
 BuildRequires:	pkgconfig(Qt5Xml) = %{version}
 BuildRequires:	double-conversion-devel
-Conflicts:  qt5-qtquickcontrols < 5.8.0
+Conflicts:	qt5-qtquickcontrols < 5.8.0
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
