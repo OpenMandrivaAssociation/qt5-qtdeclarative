@@ -1,6 +1,6 @@
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta rc3
+%define beta %{nil}
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -33,7 +33,7 @@ Release:	0.%{beta}.1
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%(echo %{beta} |sed -e "s,1$,,")/submodules/%{qttarballdir}.tar.xz
 %else
 Release:	1
-%define qttarballdir qtdeclarative-opensource-src-%{version}
+%define qttarballdir qtdeclarative-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
@@ -43,7 +43,7 @@ URL:		http://www.qt.io
 # (tpg) https://bugs.kde.org/show_bug.cgi?id=348385
 Patch0:		qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 # (tpg) fix build ../3rdparty/masm/yarr/YarrPattern.cpp:39:29: fatal error: RegExpJitTables.h: No such file or directory
-Patch1:		qtdeclarative-opensource-src-5.6.0-fix-build.patch
+Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch
 # (bero) more build fixes
 Patch2:		qt5-qtdeclarative-buildfixes.patch
 # (tpg) Fedora patches
@@ -58,7 +58,7 @@ Patch5:		Check-for-NULL-from-glGetString.patch
 Patch201:	qtdeclarative-kdebug346118.patch
 # additional i686/qml workaround (on top of existing patch135),  https://bugzilla.redhat.com/1331593
 # FIXME check if this is still needed
-#Patch235:	qtdeclarative-opensource-src-5.6.0-qml_no-lifetime-dse.patch
+#Patch235:	qtdeclarative-everywhere-src-5.6.0-qml_no-lifetime-dse.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
