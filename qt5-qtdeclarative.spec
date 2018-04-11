@@ -1,6 +1,6 @@
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta %{nil}
+%define beta beta3
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -26,7 +26,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.10.1
+Version:	5.11.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
@@ -190,9 +190,11 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt_prefix}/examples/quick
 %{_qt5_libdir}/pkgconfig/Qt5Quick.pc
 %{_qt_prefix}/mkspecs/modules/qt_lib_quick.pri
+%{_qt_prefix}/mkspecs/features/qtquickcompiler.prf
 #_qt5_libdir/cmake/Qt5Widgets/Qt5Widgets_AccessibleQuickFactory.cmake
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_messages.so
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_nativedebugger.so
+%{_libdir}/cmake/Qt5QuickCompiler
 
 #------------------------------------------------------------------------------
 
