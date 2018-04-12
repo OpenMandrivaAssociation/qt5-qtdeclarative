@@ -72,6 +72,8 @@ BuildRequires:	pkgconfig(Qt5OpenGL) = %{version}
 BuildRequires:	pkgconfig(Qt5Xml) = %{version}
 BuildRequires:	double-conversion-devel
 BuildRequires:	ruby byacc bison
+# For the Provides: generator
+BuildRequires:	cmake >= 3.11.0-1
 Conflicts:  qt5-qtquickcontrols < 5.8.0
 
 %description
