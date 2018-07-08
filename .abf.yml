@@ -1,2 +1,4 @@
+removed_sources:
+  qtdeclarative-opensource-src-5.9.2.tar.xz: 8cbb0fd759a4a4ce95e6d38159543080cb83ff4d
 sources:
-  qtdeclarative-opensource-src-5.8.0.tar.xz: b7e1f4f16082c507a48bfaf00d000e1445d03af2
+  qtdeclarative-opensource-src-5.9.6.tar.xz: b1befda12dcf8de452f209ca346d57df56217b90
