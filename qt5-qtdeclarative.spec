@@ -32,7 +32,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtdeclarative-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -48,21 +48,6 @@ Patch1:		qtdeclarative-opensource-src-5.6.0-fix-build.patch
 Patch2:		qt5-qtdeclarative-buildfixes.patch
 # (tpg) Fedora patches
 Patch5:		Check-for-NULL-from-glGetString.patch
-
-# upstream patches
-
-## upstreamable patches
-# use system double-conversation
-#Patch200:	qtdeclarative-system_doubleconv.patch
-# https://bugs.kde.org/show_bug.cgi?id=346118#c108
-Patch201:	qtdeclarative-kdebug346118.patch
-# additional i686/qml workaround (on top of existing patch135),  https://bugzilla.redhat.com/1331593
-# FIXME check if this is still needed
-#Patch235:	qtdeclarative-opensource-src-5.6.0-qml_no-lifetime-dse.patch
-
-# From upstream
-Patch300:		QTBUG-61754-1.patch
-#Patch301:		QTBUG-61754-2.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
