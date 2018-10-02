@@ -74,7 +74,7 @@ BuildRequires:	double-conversion-devel
 BuildRequires:	ruby byacc bison
 # For the Provides: generator
 BuildRequires:	cmake >= 3.11.0-1
-Conflicts:  qt5-qtquickcontrols < 5.8.0
+Conflicts:	qt5-qtquickcontrols < 5.8.0
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
@@ -373,17 +373,16 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %prep
-%setup -q -n %qttarballdir
-%apply_patches
+%autosetup -n %qttarballdir -p1
 
 %build
 %qmake_qt5
 
 #------------------------------------------------------------------------------
-%make
+%make_build
 
 %install
-%makeinstall_std INSTALL_ROOT=%{buildroot}
+%make_install INSTALL_ROOT=%{buildroot}
 
 ## .prl/.la file love
 # nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
