@@ -10,6 +10,10 @@
 %define qtquickd %mklibname qt%{api}quick -d
 %define qtquick_p_d %mklibname qt%{api}quick-private -d
 
+%define qtquickshapes %mklibname qt%{api}quickshapes %{major}
+%define qtquickshapesd %mklibname qt%{api}quickshapes -d
+%define qtquickshapes_p_d %mklibname qt%{api}quickshapes-private -d
+
 %define qtquickwidgets %mklibname qt%{api}quickwidgets %{major}
 %define qtquickwidgetsd %mklibname qt%{api}quickwidgets -d
 %define qtquickwidgetsd_p_d %mklibname qt%{api}quickwidgets-private -d
@@ -26,13 +30,13 @@
 %define _disable_lto 1
 
 Name:		qt5-qtdeclarative
-Version:	5.11.2
+Version:	5.12.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%(echo %{beta} |sed -e "s,1$,,")/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	2
+Release:	1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -88,6 +92,7 @@ Window System. Qt is written in C++ and is fully object-oriented.
 %{_qt5_bindir}/qmlimportscanner
 %{_qt5_bindir}/qmlmin
 %{_qt5_bindir}/qmlplugindump
+%{_qt5_bindir}/qmlpreview
 %{_qt5_bindir}/qmlprofiler
 %{_qt5_bindir}/qmlscene
 %{_qt5_bindir}/qmltestrunner
@@ -108,6 +113,8 @@ Window System. Qt is written in C++ and is fully object-oriented.
 %{_qt_prefix}/qml/Qt/labs/folderlistmodel
 %{_qt_prefix}/qml/Qt/labs/settings
 %{_qt_prefix}/qml/Qt/labs/sharedimage
+%{_qt_prefix}/qml/Qt/labs/qmlmodels
+%{_qt_prefix}/qml/Qt/labs/wavefrontmesh
 
 #------------------------------------------------------------------------------
 
@@ -170,7 +177,6 @@ Qt%{api} Lib.
 %dir %{_qt5_libdir}/qt5/qml
 %dir %{_qt5_libdir}/qt5/qml/Qt
 %dir %{_qt5_libdir}/qt5/qml/Qt/labs
-%{_qt5_libdir}/qt5/qml/Qt/labs/handlers
 
 #------------------------------------------------------------------------------
 
@@ -196,6 +202,7 @@ Devel files needed to build apps based on Qt%{api}.
 #_qt5_libdir/cmake/Qt5Widgets/Qt5Widgets_AccessibleQuickFactory.cmake
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_messages.so
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_nativedebugger.so
+%{_qt_prefix}/plugins/qmltooling/libqmldbg_preview.so
 %{_libdir}/cmake/Qt5QuickCompiler
 
 #------------------------------------------------------------------------------
@@ -220,6 +227,51 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt5_libdir}/libQt5QmlDebug.a
 %{_qt5_libdir}/libQt5QmlDebug.prl
 %{_qt_prefix}/mkspecs/modules/qt_lib_qmldebug_private.pri
+
+#------------------------------------------------------------------------------
+
+%package -n %{qtquickshapes}
+Summary: Qt%{api} Lib
+Group: System/Libraries
+
+%description -n %{qtquickshapes}
+Qt%{api} Lib.
+
+%files -n %{qtquickshapes}
+%{_qt5_libdir}/libQt5QuickShapes.so.%{api}*
+
+#------------------------------------------------------------------------------
+
+%package -n %{qtquickshapesd}
+Summary: Devel files needed to build apps based on Qt%{api}
+Group:    Development/KDE and Qt
+Requires: %{name} = %{version}
+Requires: %{qtquickshapes} = %{version}
+
+%description -n %{qtquickshapesd}
+Devel files needed to build apps based on Qt%{api}.
+
+%files -n %{qtquickshapesd}
+%{_qt5_libdir}/libQt5QuickShapes.prl
+%{_qt5_libdir}/libQt5QuickShapes.so
+%{_qt5_includedir}/QtQuickShapes
+%exclude %{_qt5_includedir}/QtQuickShapes/%{version}
+
+#------------------------------------------------------------------------------
+
+%package -n %{qtquickshapes_p_d}
+Summary: Devel files needed to build apps based on Qt%{api}
+Group:    Development/KDE and Qt
+Requires: %{qtquickshapesd} = %{version}
+Requires: %{qtqml_p_d} = %{version}
+Provides: qt5-qtquickshapes-private-devel = %{version}
+
+%description -n %{qtquickshapes_p_d}
+Devel files needed to build apps based on Qt%{api}.
+
+%files -n %{qtquickshapes_p_d}
+%{_qt5_includedir}/QtQuickShapes/%{version}
+%{_qt_prefix}/mkspecs/modules/qt_lib_quickshapes_private.pri
 
 #------------------------------------------------------------------------------
 
