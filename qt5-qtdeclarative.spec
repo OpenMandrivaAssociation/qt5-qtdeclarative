@@ -433,7 +433,8 @@ Devel files needed to build apps based on Qt%{api}.
 %qmake_qt5
 
 #------------------------------------------------------------------------------
-%make_build
+#make_build
+make
 
 %install
 %make_install INSTALL_ROOT=%{buildroot}
