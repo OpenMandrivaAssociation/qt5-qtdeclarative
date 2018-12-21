@@ -78,6 +78,7 @@ BuildRequires:	double-conversion-devel
 BuildRequires:	ruby byacc bison
 # For code generator in yarr
 BuildRequires:	python
+BuildRequires:	qlalr5
 # For the Provides: generator
 BuildRequires:	cmake >= 3.11.0-1
 Conflicts:	qt5-qtquickcontrols < 5.8.0
@@ -433,8 +434,7 @@ Devel files needed to build apps based on Qt%{api}.
 %qmake_qt5
 
 #------------------------------------------------------------------------------
-#make_build
-make
+%make_build
 
 %install
 %make_install INSTALL_ROOT=%{buildroot}
