@@ -71,7 +71,6 @@ BuildRequires:	pkgconfig(Qt5Sql) = %{version}
 BuildRequires:	pkgconfig(Qt5Gui) = %{version}
 BuildRequires:	pkgconfig(Qt5Test) = %{version}
 BuildRequires:	pkgconfig(Qt5Widgets) = %{version}
-BuildRequires:	pkgconfig(Qt5XmlPatterns) = %{version}
 BuildRequires:	pkgconfig(Qt5OpenGL) = %{version}
 BuildRequires:	pkgconfig(Qt5Xml) = %{version}
 BuildRequires:	double-conversion-devel
