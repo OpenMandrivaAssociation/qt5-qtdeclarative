@@ -1,3 +1,7 @@
+# Workaround for clang bug causing a build error with clang 20190709, Qt 5.13.0
+%global optflags %{optflags} -g0
+%global ldflags %{ldflags} -g0
+
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
 %define beta %{nil}
