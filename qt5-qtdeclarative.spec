@@ -47,25 +47,12 @@ Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
-# (tpg) https://bugs.kde.org/show_bug.cgi?id=348385
-Patch0:		qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 # (tpg) fix build ../3rdparty/masm/yarr/YarrPattern.cpp:39:29: fatal error: RegExpJitTables.h: No such file or directory
 Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch
 # (bero) more build fixes
 Patch2:		qt5-qtdeclarative-buildfixes.patch
-# (tpg) Fedora patches
-Patch5:		Check-for-NULL-from-glGetString.patch
 
 # upstream patches
-
-## upstreamable patches
-# use system double-conversation
-#Patch200:	qtdeclarative-system_doubleconv.patch
-# https://bugs.kde.org/show_bug.cgi?id=346118#c108
-Patch201:	qtdeclarative-kdebug346118.patch
-# additional i686/qml workaround (on top of existing patch135),  https://bugzilla.redhat.com/1331593
-# FIXME check if this is still needed
-#Patch235:	qtdeclarative-everywhere-src-5.6.0-qml_no-lifetime-dse.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
@@ -76,8 +63,9 @@ BuildRequires:	pkgconfig(Qt5Test) = %{version}
 BuildRequires:	pkgconfig(Qt5Widgets) = %{version}
 BuildRequires:	pkgconfig(Qt5OpenGL) = %{version}
 BuildRequires:	pkgconfig(Qt5Xml) = %{version}
-BuildRequires:	double-conversion-devel
-BuildRequires:	ruby byacc bison
+BuildRequires:	ruby
+BuildRequires:	byacc
+BuildRequires:	bison
 # For code generator in yarr
 BuildRequires:	python
 BuildRequires:	qlalr5
@@ -447,14 +435,12 @@ pushd %{buildroot}%{_qt5_libdir}
 for prl_file in libQt5*.prl ; do
   sed -i \
     -e "/^QMAKE_PRL_BUILD_DIR/d" \
-    -e "/-ldouble-conversion/d" \
     ${prl_file}
   if [ -f "$(basename ${prl_file} .prl).so" ]; then
     rm -fv "$(basename ${prl_file} .prl).la"
   else
     sed -i \
        -e "/^QMAKE_PRL_LIBS/d" \
-       -e "/-ldouble-conversion/d" \
        $(basename ${prl_file} .prl).la
   fi
 done
