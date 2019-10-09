@@ -4,7 +4,7 @@
 
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta %{nil}
+%define beta beta1
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -30,14 +30,22 @@
 %define qtqmld %mklibname qt%{api}qml -d
 %define qtqml_p_d %mklibname qt%{api}qml-private -d
 
+%define qtqmlmodels %mklibname qt%{api}qmlmodels %{major}
+%define qtqmlmodelsd %mklibname qt%{api}qmlmodels -d
+%define qtqmlmodels_p_d %mklibname qt%{api}qmlmodels-private -d
+
+%define qtqmlworkerscript %mklibname qt%{api}qmlworkerscript %{major}
+%define qtqmlworkerscriptd %mklibname qt%{api}qmlworkerscript -d
+%define qtqmlworkerscript_p_d %mklibname qt%{api}qmlworkerscript-private -d
+
 %define _qt_prefix %{_libdir}/qt%{api}
 
 Name:		qt5-qtdeclarative
-Version:	5.13.1
+Version:	5.14.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
-Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%(echo %{beta} |sed -e "s,1$,,")/submodules/%{qttarballdir}.tar.xz
+Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
 Release:	1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}
@@ -187,6 +195,7 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt5_libdir}/libQt5Quick.so
 %{_qt5_libdir}/cmake/Qt5Quick
 %{_qt5_includedir}/QtQuick
+%{_qt5_includedir}/QtQmlDebug
 %exclude %{_qt5_includedir}/QtQuick/%{version}
 %{_qt_prefix}/examples/quick
 %{_qt5_libdir}/pkgconfig/Qt5Quick.pc
@@ -197,6 +206,7 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_nativedebugger.so
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_preview.so
 %{_libdir}/cmake/Qt5QuickCompiler
+%{_libdir}/cmake/Qt5QmlImportScanner
 
 #------------------------------------------------------------------------------
 
@@ -212,6 +222,7 @@ Devel files needed to build apps based on Qt%{api}.
 
 %files -n %{qtquick_p_d}
 %{_qt5_includedir}/QtQuick/%{version}
+%{_qt5_includedir}/QtQmlDebug/%{version}
 %{_qt_prefix}/mkspecs/modules/qt_lib_quick_private.pri
 %{_qt5_includedir}/QtPacketProtocol
 %{_qt5_libdir}/libQt5PacketProtocol.a
@@ -397,7 +408,7 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt_prefix}/examples/qml
 %{_qt5_libdir}/pkgconfig/Qt5Qml.pc
 %{_qt5_libdir}/libQt5QmlDevTools.a
-%{_qt5_includedir}/QtQml*
+%{_qt5_includedir}/QtQml
 %exclude %{_qt5_includedir}/QtQml/%{version}
 %{_qt5_libdir}/libQt5QmlDevTools.prl
 %{_libdir}/cmake/Qt%{api}QmlDevTools
@@ -419,6 +430,121 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt_prefix}/mkspecs/modules/qt_lib_qml_private.pri
 %{_qt_prefix}/mkspecs/modules/qt_lib_qmldevtools_private.pri
 %{_qt_prefix}/mkspecs/modules/qt_lib_qmltest_private.pri
+
+#------------------------------------------------------------------------------
+
+%package -n %{qtqmlmodels}
+Summary: Qt%{api} QmlModels Lib
+Group: System/Libraries
+
+%description -n %{qtqmlmodels}
+Qt%{api} QmlModels Lib.
+
+%files -n %{qtqmlmodels}
+%{_qt5_libdir}/libQt5QmlModels.so.%{api}*
+
+#------------------------------------------------------------------------------
+
+%package -n %{qtqmlmodelsd}
+Summary: Devel files needed to build apps based on Qt%{api} QmlModels
+Group:    Development/KDE and Qt
+Requires: %{name} = %{version}
+Requires: %{qtqmlmodels} = %{version}
+Requires: pkgconfig(Qt5Core) = %{version}
+Requires: pkgconfig(Qt5Network) = %{version}
+Requires: %{qtqmld} = %{EVRD}
+
+%description -n %{qtqmlmodelsd}
+Devel files needed to build apps based on Qt%{api} QmlModels.
+
+%files -n %{qtqmlmodelsd}
+%{_qt5_libdir}/libQt5QmlModels.prl
+%{_qt5_libdir}/libQt5QmlModels.so
+%{_qt5_libdir}/pkgconfig/Qt5QmlModels.pc
+%{_qt5_includedir}/QtQmlModels*
+%exclude %{_qt5_includedir}/QtQmlModels/%{version}
+%{_qt5_libdir}/libQt5QmlModels.prl
+%{_libdir}/cmake/Qt%{api}QmlModels
+%{_libdir}/qt5/mkspecs/modules/qt_lib_qmlmodels.pri
+
+#------------------------------------------------------------------------------
+
+%package -n	%{qtqmlmodels_p_d}
+Summary:	Devel files needed to build apps based on Qt%{api} QmlModels
+Group:		Development/KDE and Qt
+Requires:	%{qtqmlmodelsd} = %{version}
+Provides:	qt5-qtqml-private-devel = %{version}
+Requires:	pkgconfig(Qt5Core) = %{version}
+
+%description -n %{qtqmlmodels_p_d}
+Devel files needed to build apps based on Qt%{api} QmlModels.
+
+%files -n %{qtqmlmodels_p_d}
+%{_qt5_includedir}/QtQmlModels/%{version}
+%{_libdir}/qt5/mkspecs/modules/qt_lib_qmlmodels_private.pri
+
+#------------------------------------------------------------------------------
+
+%package -n %{qtqmlworkerscript}
+Summary: Qt%{api} QmlWorkerScript Lib
+Group: System/Libraries
+
+%description -n %{qtqmlworkerscript}
+Qt%{api} Lib.
+
+%files -n %{qtqmlworkerscript}
+%{_qt5_libdir}/libQt5QmlWorkerScript.so.%{api}*
+
+#------------------------------------------------------------------------------
+
+%package -n %{qtqmlworkerscriptd}
+Summary: Devel files needed to build apps based on Qt%{api} QmlWorkerScript
+Group:    Development/KDE and Qt
+Requires: %{name} = %{version}
+Requires: %{qtqmlworkerscript} = %{version}
+Requires: pkgconfig(Qt5Core) = %{version}
+Requires: pkgconfig(Qt5Network) = %{version}
+Requires: %{qtquickd} = %{EVRD}
+
+%description -n %{qtqmlworkerscriptd}
+Devel files needed to build apps based on Qt%{api}.
+
+%files -n %{qtqmlworkerscriptd}
+%{_qt5_libdir}/libQt5QmlWorkerScript.prl
+%{_qt5_libdir}/libQt5QmlWorkerScript.so
+%{_qt5_libdir}/cmake/Qt5QmlWorkerScript
+%{_qt5_libdir}/pkgconfig/Qt5QmlWorkerScript.pc
+%{_qt5_includedir}/QtQmlWorkerScript
+%exclude %{_qt5_includedir}/QtQmlWorkerScript/%{version}
+%{_libdir}/qt5/mkspecs/modules/qt_lib_qmlworkerscript.pri
+
+#------------------------------------------------------------------------------
+
+%package -n	%{qtqmlworkerscript_p_d}
+Summary:	Devel files needed to build apps based on Qt%{api} QmlWorkerScript
+Group:		Development/KDE and Qt
+Requires:	%{qtqmld} = %{version}
+Provides:	qt5-qtqml-private-devel = %{version}
+Requires:	pkgconfig(Qt5Core) = %{version}
+
+%description -n %{qtqmlworkerscript_p_d}
+Devel files needed to build apps based on Qt%{api} QmlWorkerScript.
+
+%files -n %{qtqmlworkerscript_p_d}
+%{_qt5_includedir}/QtQmlWorkerScript/%{version}
+%{_libdir}/qt5/mkspecs/modules/qt_lib_qmlworkerscript_private.pri
+
+#------------------------------------------------------------------------------
+
+%package	animation
+Summary:	Animation support for Qt Declarative
+Group:		System/Libraries
+
+%description	animation
+Animation support for Qt Declarative
+
+%files		animation
+%{_libdir}/qt5/qml/Qt/labs/animation
 
 #------------------------------------------------------------------------------
 
