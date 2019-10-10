@@ -43,11 +43,11 @@
 Name:		qt5-qtdeclarative
 Version:	5.14.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.1
+Release:	0.%{beta}.2
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	0
 %define qttarballdir qtdeclarative-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -473,7 +473,7 @@ Devel files needed to build apps based on Qt%{api} QmlModels.
 Summary:	Devel files needed to build apps based on Qt%{api} QmlModels
 Group:		Development/KDE and Qt
 Requires:	%{qtqmlmodelsd} = %{version}
-Provides:	qt5-qtqml-private-devel = %{version}
+Provides:	qt5-qtqmlmodels-private-devel = %{version}
 Requires:	pkgconfig(Qt5Core) = %{version}
 
 %description -n %{qtqmlmodels_p_d}
@@ -524,7 +524,7 @@ Devel files needed to build apps based on Qt%{api}.
 Summary:	Devel files needed to build apps based on Qt%{api} QmlWorkerScript
 Group:		Development/KDE and Qt
 Requires:	%{qtqmld} = %{version}
-Provides:	qt5-qtqml-private-devel = %{version}
+Provides:	qt5-qtqmlworkerscript-private-devel = %{version}
 Requires:	pkgconfig(Qt5Core) = %{version}
 
 %description -n %{qtqmlworkerscript_p_d}
