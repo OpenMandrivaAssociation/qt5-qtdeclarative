@@ -4,7 +4,7 @@
 
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta beta1
+%define beta beta2
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -43,11 +43,11 @@
 Name:		qt5-qtdeclarative
 Version:	5.14.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.3
+Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	0
+Release:	1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -59,7 +59,6 @@ URL:		http://www.qt.io
 Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch
 # (bero) more build fixes
 Patch2:		qt5-qtdeclarative-buildfixes.patch
-Patch3:		qtdeclarative-fixes-from-5.14-branch.patch
 
 # upstream patches
 
