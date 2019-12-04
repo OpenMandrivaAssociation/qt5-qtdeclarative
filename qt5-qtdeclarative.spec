@@ -59,6 +59,7 @@ URL:		http://www.qt.io
 Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch
 # (bero) more build fixes
 Patch2:		qt5-qtdeclarative-buildfixes.patch
+Patch3:		qtdeclarative-python3.patch
 
 # upstream patches
 
