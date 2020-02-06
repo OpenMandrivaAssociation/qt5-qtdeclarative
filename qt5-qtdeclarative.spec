@@ -47,7 +47,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtdeclarative-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -55,6 +55,8 @@ Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
+# Fix build with clang 10.0 in c++20 mode
+Patch0:		qt5-qtdeclarative-c++20ambiguity.patch
 # (tpg) fix build ../3rdparty/masm/yarr/YarrPattern.cpp:39:29: fatal error: RegExpJitTables.h: No such file or directory
 Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch
 # (bero) more build fixes
