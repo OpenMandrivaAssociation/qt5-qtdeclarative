@@ -8,7 +8,7 @@ exit 0
 while read r; do
 	echo $r |grep -qE '\.qml$' || continue
 	grep -E '^[[:space:]]*import[[:space:]]*' $r |cut -d: -f2- |while read l; do
-		L="$(echo $l |tr -s '[:blank:]' | sed -e 's/^[[:space:]]*//')"
+		L="$(echo $l |tr -s '[:blank:]' | sed -e 's/^[[:space:]]*//;s,\;$,,')"
 		echo "qml($(echo $L |cut -d' ' -f2)) >= $(echo $L |cut -d' ' -f3)"
 	done
 done | sort | uniq

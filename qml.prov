@@ -32,6 +32,7 @@ while read r; do
 	MVER=""
 	while read l; do
 		L="$(echo $l |tr -s '[:blank:]' | sed -e 's/^[[:space:]]*//')"
+		[ -z "$L" ] && continue
 		if echo $L |grep -qiE '^(#|internal |plugin |classname |typeinfo |depends |designersupported)'; then
 			# None of those are relevant to the Provides: generator...
 			continue
