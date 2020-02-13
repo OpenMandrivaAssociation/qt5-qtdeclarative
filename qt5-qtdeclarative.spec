@@ -1,7 +1,3 @@
-# Workaround for clang bug causing a build error with clang 20190709, Qt 5.13.0
-%global optflags %{optflags} -g0
-%global ldflags %{ldflags} -g0
-
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
 %define beta %{nil}
@@ -47,10 +43,13 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	2
+Release:	3
 %define qttarballdir qtdeclarative-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
+Source100:	qml.attr
+Source101:	qml.req
+Source102:	qml.prov
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
@@ -83,6 +82,10 @@ BuildRequires:	qlalr5
 # For the Provides: generator
 BuildRequires:	cmake >= 3.11.0-1
 Conflicts:	qt5-qtquickcontrols < 5.8.0
+# Not currently picked up by the dep generator, maybe
+# there's some internal hardcodes
+Provides:	qml(QtQuick) = 2.14
+Provides:	qml(QtQuick.tooling) = 1.2
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
@@ -415,6 +418,9 @@ Devel files needed to build apps based on Qt%{api}.
 %exclude %{_qt5_includedir}/QtQml/%{version}
 %{_qt5_libdir}/libQt5QmlDevTools.prl
 %{_libdir}/cmake/Qt%{api}QmlDevTools
+%{_rpmconfigdir}/fileattrs/qml.attr
+%{_rpmconfigdir}/qml.req
+%{_rpmconfigdir}/qml.prov
 
 #------------------------------------------------------------------------------
 
@@ -584,3 +590,8 @@ popd
 rm -f %{buildroot}%{_qt5_libdir}/lib*.la
 # .a files are needed for qttools
 #rm -f %{buildroot}%{_qt5_libdir}/lib*.a
+
+# Teach rpm about QML dependencies
+install -m644 %{S:100} -D %{buildroot}%{_rpmconfigdir}/fileattrs/qml.attr
+install -m755 %{S:101} -D %{buildroot}%{_rpmconfigdir}/qml.req
+install -m755 %{S:102} -D %{buildroot}%{_rpmconfigdir}/qml.prov
