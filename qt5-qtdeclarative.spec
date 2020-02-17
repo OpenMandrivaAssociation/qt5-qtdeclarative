@@ -1,6 +1,6 @@
 %define api %(echo %{version}|cut -d. -f1)
 %define major %api
-%define beta %{nil}
+%define beta alpha
 
 %define qtquicktest %mklibname qt%{api}quicktest %{api}
 %define qtquicktestd %mklibname qt%{api}quicktest -d
@@ -37,13 +37,13 @@
 %define _qt_prefix %{_libdir}/qt%{api}
 
 Name:		qt5-qtdeclarative
-Version:	5.14.1
+Version:	5.15.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	4
+Release:	1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -154,6 +154,7 @@ Devel files needed to build apps based on Qt%{api}.
 %exclude %{_qt5_includedir}/QtQuickTest/%{version}
 %{_qt5_libdir}/pkgconfig/Qt5QuickTest.pc
 %{_qt_prefix}/examples/qmltest
+%{_libdir}/metatypes/qt5quicktest_metatypes.json
 
 #------------------------------------------------------------------------------
 
@@ -213,6 +214,7 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt_prefix}/plugins/qmltooling/libqmldbg_preview.so
 %{_libdir}/cmake/Qt5QuickCompiler
 %{_libdir}/cmake/Qt5QmlImportScanner
+%{_libdir}/metatypes/qt5quick_metatypes.json
 
 #------------------------------------------------------------------------------
 
@@ -269,6 +271,7 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt5_includedir}/QtQuickShapes
 %exclude %{_qt5_includedir}/QtQuickShapes/%{version}
 %{_libdir}/cmake/Qt%{api}QuickShapes
+%{_libdir}/metatypes/qt5quickshapes_metatypes.json
 
 #------------------------------------------------------------------------------
 
@@ -363,6 +366,7 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt5_includedir}/QtQuickParticles
 %exclude %{_qt5_includedir}/QtQuickParticles/%{version}
 %{_libdir}/cmake/Qt%{api}QuickParticles
+%{_libdir}/metatypes/qt5quickparticles_metatypes.json
 
 #------------------------------------------------------------------------------
 
@@ -421,6 +425,12 @@ Devel files needed to build apps based on Qt%{api}.
 %{_rpmconfigdir}/fileattrs/qml.attr
 %{_rpmconfigdir}/qml.req
 %{_rpmconfigdir}/qml.prov
+%{_libdir}/metatypes/qt5qml_metatypes.json
+%{_libdir}/qt5/mkspecs/features/qmltypes.prf
+%{_libdir}/qt5/bin/qmlformat
+%{_libdir}/qt5/bin/qmltyperegistrar
+%{_bindir}/qmlformat
+%{_bindir}/qmltyperegistrar
 
 #------------------------------------------------------------------------------
 
@@ -475,6 +485,7 @@ Devel files needed to build apps based on Qt%{api} QmlModels.
 %{_qt5_libdir}/libQt5QmlModels.prl
 %{_libdir}/cmake/Qt%{api}QmlModels
 %{_libdir}/qt5/mkspecs/modules/qt_lib_qmlmodels.pri
+%{_libdir}/metatypes/qt5qmlmodels_metatypes.json
 
 #------------------------------------------------------------------------------
 
@@ -526,6 +537,7 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt5_includedir}/QtQmlWorkerScript
 %exclude %{_qt5_includedir}/QtQmlWorkerScript/%{version}
 %{_libdir}/qt5/mkspecs/modules/qt_lib_qmlworkerscript.pri
+%{_libdir}/metatypes/qt5qmlworkerscript_metatypes.json
 
 #------------------------------------------------------------------------------
 
@@ -590,6 +602,10 @@ popd
 rm -f %{buildroot}%{_qt5_libdir}/lib*.la
 # .a files are needed for qttools
 #rm -f %{buildroot}%{_qt5_libdir}/lib*.a
+
+mkdir -p %{buildroot}%{_bindir}
+ln -s ../%{_lib}/qt5/bin/qmlformat %{buildroot}%{_bindir}/qmlformat
+ln -s ../%{_lib}/qt5/bin/qmltyperegistrar %{buildroot}%{_bindir}/qmltyperegistrar
 
 # Teach rpm about QML dependencies
 install -m644 %{S:100} -D %{buildroot}%{_rpmconfigdir}/fileattrs/qml.attr
