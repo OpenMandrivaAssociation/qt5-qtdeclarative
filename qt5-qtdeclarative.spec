@@ -86,6 +86,7 @@ Conflicts:	qt5-qtquickcontrols < 5.8.0
 # there's some internal hardcodes
 Provides:	qml(QtQuick) = 2.14
 Provides:	qml(QtQuick.tooling) = 1.2
+Provides:	qml(QtQuick.Window) = 2.1
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
