@@ -153,7 +153,6 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt5_includedir}/QtQuickTest
 %exclude %{_qt5_includedir}/QtQuickTest/%{version}
 %{_qt5_libdir}/pkgconfig/Qt5QuickTest.pc
-%{_qt_prefix}/examples/qmltest
 %{_libdir}/metatypes/qt5quicktest_metatypes.json
 
 #------------------------------------------------------------------------------
@@ -204,7 +203,6 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt5_includedir}/QtQuick
 %{_qt5_includedir}/QtQmlDebug
 %exclude %{_qt5_includedir}/QtQuick/%{version}
-%{_qt_prefix}/examples/quick
 %{_qt5_libdir}/pkgconfig/Qt5Quick.pc
 %{_qt_prefix}/mkspecs/modules/qt_lib_quick.pri
 %{_qt_prefix}/mkspecs/features/qtquickcompiler.prf
@@ -415,7 +413,6 @@ Devel files needed to build apps based on Qt%{api}.
 %{_qt5_libdir}/cmake/Qt5Qml
 %{_qt_prefix}/mkspecs/modules/qt_lib_qmltest.pri
 %{_qt_prefix}/mkspecs/modules/qt_lib_qml.pri
-%{_qt_prefix}/examples/qml
 %{_qt5_libdir}/pkgconfig/Qt5Qml.pc
 %{_qt5_libdir}/libQt5QmlDevTools.a
 %{_qt5_includedir}/QtQml
@@ -566,6 +563,19 @@ Animation support for Qt Declarative
 
 %files		animation
 %{_libdir}/qt5/qml/Qt/labs/animation
+
+#------------------------------------------------------------------------------
+%package	examples
+Summary:	Examples for the use of Qt Declarative
+Group:		Documentation
+
+%description	examples
+Examples for the use of Qt Declarative
+
+%files		examples
+%{_qt_prefix}/examples/qml
+%{_qt_prefix}/examples/qmltest
+%{_qt_prefix}/examples/quick
 
 #------------------------------------------------------------------------------
 
