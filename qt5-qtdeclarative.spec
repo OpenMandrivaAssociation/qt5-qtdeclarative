@@ -39,7 +39,7 @@
 Name:		qt5-qtdeclarative
 Version:	5.15.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.1
+Release:	0.%{beta}.2
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
@@ -63,6 +63,8 @@ Patch2:		qt5-qtdeclarative-buildfixes.patch
 Patch3:		qtdeclarative-python3.patch
 
 # upstream patches
+# https://codereview.qt-project.org/c/qt/qtdeclarative/+/291011
+Patch10:	add46fd.diff
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
