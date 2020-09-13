@@ -45,7 +45,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtdeclarative-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -63,6 +63,7 @@ Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch
 # (bero) more build fixes
 Patch2:		qt5-qtdeclarative-buildfixes.patch
 Patch3:		qtdeclarative-python3.patch
+Patch4:		qtdeclarative-5.15.1-opengles.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
