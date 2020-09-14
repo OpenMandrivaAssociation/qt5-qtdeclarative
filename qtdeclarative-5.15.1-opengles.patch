@@ -6,8 +6,8 @@ diff -up qtdeclarative-everywhere-src-5.15.1/src/quick/scenegraph/coreapi/qsgsha
      result.reserve(1024);
      result += QByteArray::fromRawData(input, voidPos - input);
 +#if defined(QT_OPENGL_ES_2)
-+    result += "in float _qt_order;\n"
-+              "uniform float _qt_zRange;\n";
++    result += "uniform highp float _qt_order;\n"
++              "uniform highp float _qt_zRange;\n";
 +#else
      switch (profile) {
      case QSurfaceFormat::NoProfile:
