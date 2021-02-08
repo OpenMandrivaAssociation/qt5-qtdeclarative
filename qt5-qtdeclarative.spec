@@ -45,7 +45,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtdeclarative-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -63,6 +63,8 @@ Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch
 # (bero) more build fixes
 Patch2:		qt5-qtdeclarative-buildfixes.patch
 Patch3:		qtdeclarative-python3.patch
+# (tpg) https://bugreports.qt.io/browse/QTBUG-83890
+Patch4:		qtdeclarative-5.14.2-QQuickItemView-fix-maxXY-extent.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
@@ -432,7 +434,7 @@ Devel files needed to build apps based on Qt%{api}.
 
 #------------------------------------------------------------------------------
 
-%package -n	%{qtqml_p_d}
+%package -n %{qtqml_p_d}
 Summary:	Devel files needed to build apps based on Qt%{api}
 Group:		Development/KDE and Qt
 Requires:	%{qtqmld} = %{version}
@@ -451,8 +453,8 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtqmlmodels}
-Summary: Qt%{api} QmlModels Lib
-Group: System/Libraries
+Summary:	Qt%{api} QmlModels Lib
+Group:		System/Libraries
 
 %description -n %{qtqmlmodels}
 Qt%{api} QmlModels Lib.
@@ -463,13 +465,13 @@ Qt%{api} QmlModels Lib.
 #------------------------------------------------------------------------------
 
 %package -n %{qtqmlmodelsd}
-Summary: Devel files needed to build apps based on Qt%{api} QmlModels
-Group:    Development/KDE and Qt
-Requires: %{name} = %{version}
-Requires: %{qtqmlmodels} = %{version}
-Requires: pkgconfig(Qt5Core) = %{version}
-Requires: pkgconfig(Qt5Network) = %{version}
-Requires: %{qtqmld} = %{EVRD}
+Summary:	Devel files needed to build apps based on Qt%{api} QmlModels
+Group:		Development/KDE and Qt
+Requires:	%{name} = %{version}
+Requires:	%{qtqmlmodels} = %{version}
+Requires:	pkgconfig(Qt5Core) = %{version}
+Requires:	pkgconfig(Qt5Network) = %{version}
+Requires:	%{qtqmld} = %{EVRD}
 
 %description -n %{qtqmlmodelsd}
 Devel files needed to build apps based on Qt%{api} QmlModels.
@@ -487,7 +489,7 @@ Devel files needed to build apps based on Qt%{api} QmlModels.
 
 #------------------------------------------------------------------------------
 
-%package -n	%{qtqmlmodels_p_d}
+%package -n %{qtqmlmodels_p_d}
 Summary:	Devel files needed to build apps based on Qt%{api} QmlModels
 Group:		Development/KDE and Qt
 Requires:	%{qtqmlmodelsd} = %{version}
@@ -504,8 +506,8 @@ Devel files needed to build apps based on Qt%{api} QmlModels.
 #------------------------------------------------------------------------------
 
 %package -n %{qtqmlworkerscript}
-Summary: Qt%{api} QmlWorkerScript Lib
-Group: System/Libraries
+Summary:	Qt%{api} QmlWorkerScript Lib
+Group:		System/Libraries
 
 %description -n %{qtqmlworkerscript}
 Qt%{api} Lib.
@@ -516,13 +518,13 @@ Qt%{api} Lib.
 #------------------------------------------------------------------------------
 
 %package -n %{qtqmlworkerscriptd}
-Summary: Devel files needed to build apps based on Qt%{api} QmlWorkerScript
-Group:    Development/KDE and Qt
-Requires: %{name} = %{version}
-Requires: %{qtqmlworkerscript} = %{version}
-Requires: pkgconfig(Qt5Core) = %{version}
-Requires: pkgconfig(Qt5Network) = %{version}
-Requires: %{qtquickd} = %{EVRD}
+Summary:	Devel files needed to build apps based on Qt%{api} QmlWorkerScript
+Group:		Development/KDE and Qt
+Requires:	%{name} = %{version}
+Requires:	%{qtqmlworkerscript} = %{version}
+Requires:	pkgconfig(Qt5Core) = %{version}
+Requires:	pkgconfig(Qt5Network) = %{version}
+Requires:	%{qtquickd} = %{EVRD}
 
 %description -n %{qtqmlworkerscriptd}
 Devel files needed to build apps based on Qt%{api}.
@@ -539,7 +541,7 @@ Devel files needed to build apps based on Qt%{api}.
 
 #------------------------------------------------------------------------------
 
-%package -n	%{qtqmlworkerscript_p_d}
+%package -n %{qtqmlworkerscript_p_d}
 Summary:	Devel files needed to build apps based on Qt%{api} QmlWorkerScript
 Group:		Development/KDE and Qt
 Requires:	%{qtqmld} = %{version}
@@ -555,25 +557,25 @@ Devel files needed to build apps based on Qt%{api} QmlWorkerScript.
 
 #------------------------------------------------------------------------------
 
-%package	animation
+%package animation
 Summary:	Animation support for Qt Declarative
 Group:		System/Libraries
 
-%description	animation
+%description animation
 Animation support for Qt Declarative
 
-%files		animation
+%files animation
 %{_libdir}/qt5/qml/Qt/labs/animation
 
 #------------------------------------------------------------------------------
-%package	examples
+%package examples
 Summary:	Examples for the use of Qt Declarative
 Group:		Documentation
 
-%description	examples
-Examples for the use of Qt Declarative
+%description examples
+Examples for the use of Qt Declarative.
 
-%files		examples
+%files examples
 %{_qt_prefix}/examples/qml
 %{_qt_prefix}/examples/qmltest
 %{_qt_prefix}/examples/quick
