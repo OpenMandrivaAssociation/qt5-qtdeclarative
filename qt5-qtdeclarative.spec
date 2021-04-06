@@ -39,15 +39,15 @@
 %global optflags %{optflags} -O3
 
 Name:		qt5-qtdeclarative
-Version:	5.15.2
+Version:	5.15.3
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
 Release:	1
-%define qttarballdir qtdeclarative-everywhere-src-%{version}
-Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+%define qttarballdir qtdeclarative-everywhere-src-5.15.2
+Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
 Source100:	qml.attr
 Source101:	qml.req
@@ -63,6 +63,27 @@ Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch
 # (bero) more build fixes
 Patch2:		qt5-qtdeclarative-buildfixes.patch
 Patch3:		qtdeclarative-python3.patch
+Patch1000:	0001-Bump-version.patch
+Patch1004:	0005-QQuickView-docs-show-correct-usage-of-setInitialProp.patch
+Patch1005:	0006-QQuickWindow-Check-if-QQuickItem-was-not-deleted.patch
+Patch1006:	0007-Avoid-GHS-linker-to-optimize-away-QML-type-registrat.patch
+Patch1007:	0008-QML-Text-doesn-t-reset-lineCount-when-text-is-empty.patch
+Patch1008:	0009-Doc-mention-that-INCLUDEPATH-must-be-set-in-some-cas.patch
+Patch1009:	0010-qmlfunctions.qdoc-Add-clarification-to-QML_FOREIGN.patch
+Patch1010:	0011-Fix-QML-property-cache-leaks-of-delegate-items.patch
+Patch1011:	0012-QQuickTextInput-Store-mask-data-in-std-unique_ptr.patch
+Patch1012:	0013-Fix-crash-when-calling-hasOwnProperty-on-proxy-objec.patch
+Patch1013:	0014-Accessibility-event-is-sent-on-item-s-geometry-chang.patch
+Patch1014:	0015-qmltypes.prf-Take-abi-into-account-for-_metatypes.js.patch
+Patch1015:	0016-qv4qmlcontext-Fix-bounded-signal-expressions-when-de.patch
+Patch1016:	0017-Use-load-qt_tool-for-qmltime.patch
+Patch1017:	0018-qqmlistmodel-Fix-crash-when-modelCache-is-null.patch
+Patch1018:	0019-Show-a-tableview-even-if-the-syncView-has-an-empty-m.patch
+Patch1019:	0020-DesignerSupport-Don-t-skip-already-inspected-objects.patch
+Patch1020:	0021-QML-Fix-proxy-iteration.patch
+Patch1021:	0022-Fix-IC-properties-in-same-file.patch
+Patch1022:	0023-JIT-When-making-memory-writable-include-the-exceptio.patch
+Patch1023:	0024-doc-explain-QQItem-event-delivery-handlers-setAccept.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
@@ -105,6 +126,7 @@ Window System. Qt is written in C++ and is fully object-oriented.
 %{_qt5_bindir}/qmltestrunner
 %{_qt5_bindir}/qmleasing
 %{_qt5_bindir}/qmllint
+%{_qt5_bindir}/qmltime
 %{_qt_prefix}/qml/QtTest
 %{_qt_prefix}/qml/QtQuick*
 %{_qt_prefix}/qml/builtins.qmltypes
@@ -582,6 +604,7 @@ Examples for the use of Qt Declarative
 
 %prep
 %autosetup -n %qttarballdir -p1
+%{_qt_prefix}/bin/syncqt.pl -version %{version}
 
 %build
 %qmake_qt5
