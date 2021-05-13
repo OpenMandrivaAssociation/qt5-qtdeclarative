@@ -31,12 +31,16 @@ while read r; do
 	MODULE=""
 	MVER=""
 	while read l; do
+		OPTIONAL=""
 		L="$(echo $l |tr -s '[:blank:]' | sed -e 's/^[[:space:]]*//')"
+		if echo $L |grep -q '^optional '; then
+			L="$(echo $L |sed -e 's,^optional ,,')"
+		fi
 		[ -z "$L" ] && continue
-		if echo $L |grep -qiE '^(#|internal |plugin |classname |typeinfo |depends |designersupported)'; then
+		if echo $L |grep -qiE '^(#|internal |plugin |classname |typeinfo |depends |designersupported|import )'; then
 			# None of those are relevant to the Provides: generator...
 			continue
-		elif echo $L |grep -qi '^module '; then
+		elif echo $L |grep -qE '^module '; then
 			# FIXME is there a way to determine the module
 			# version other than looking at the items it
 			# provides? There doesn't seem to be anything
@@ -48,13 +52,21 @@ while read r; do
 		elif echo $L |grep -qi '^singleton '; then
 			TYPE="$(echo $L |cut -d' ' -f2)"
 			VER="$(echo $L |cut -d' ' -f3)"
-			newer "$VER" "$MVER" && MVER="$VER"
-			echo "qml($MODULE.$TYPE) = $VER"
+			if [ "$VER" = "auto" ]; then
+				echo "qml($MODULE.$TYPE)"
+			else
+				newer "$VER" "$MVER" && MVER="$VER"
+				echo "qml($MODULE.$TYPE) = $VER"
+			fi
 		else
 			TYPE="$(echo $L |cut -d' ' -f1)"
 			VER="$(echo $L |cut -d' ' -f2)"
-			newer "$VER" "$MVER" && MVER="$VER"
-			echo "qml($MODULE.$TYPE) = $VER"
+			if [ "$VER" = "auto" ]; then
+				echo "qml($MODULE.$TYPE)"
+			else
+				newer "$VER" "$MVER" && MVER="$VER"
+				echo "qml($MODULE.$TYPE) = $VER"
+			fi
 		fi
 	done < <(cat $r)
 	if [ -n "$MODULE" ]; then

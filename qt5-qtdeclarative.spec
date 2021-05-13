@@ -45,7 +45,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtdeclarative-everywhere-src-5.15.2
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -428,6 +428,7 @@ Requires: %{qtqml} = %{version}
 Requires: pkgconfig(Qt5Core) = %{version}
 Requires: pkgconfig(Qt5Network) = %{version}
 Requires: %{qtquickd} = %{EVRD}
+Requires: rpm-provreq-qml = %{EVRD}
 
 %description -n %{qtqmld}
 Devel files needed to build apps based on Qt%{api}.
@@ -444,15 +445,25 @@ Devel files needed to build apps based on Qt%{api}.
 %exclude %{_qt5_includedir}/QtQml/%{version}
 %{_qt5_libdir}/libQt5QmlDevTools.prl
 %{_libdir}/cmake/Qt%{api}QmlDevTools
-%{_rpmconfigdir}/fileattrs/qml.attr
-%{_rpmconfigdir}/qml.req
-%{_rpmconfigdir}/qml.prov
 %{_libdir}/metatypes/qt5qml_metatypes.json
 %{_libdir}/qt5/mkspecs/features/qmltypes.prf
 %{_libdir}/qt5/bin/qmlformat
 %{_libdir}/qt5/bin/qmltyperegistrar
 %{_bindir}/qmlformat
 %{_bindir}/qmltyperegistrar
+
+#------------------------------------------------------------------------------
+%package -n rpm-provreq-qml
+Summary:	RPM Provides/Requires generator for QML files
+Group:		Development/KDE and Qt
+
+%description -n rpm-provreq-qml
+RPM Provides/Requires generator for QML files
+
+%files -n rpm-provreq-qml
+%{_rpmconfigdir}/fileattrs/qml.attr
+%{_rpmconfigdir}/qml.req
+%{_rpmconfigdir}/qml.prov
 
 #------------------------------------------------------------------------------
 
