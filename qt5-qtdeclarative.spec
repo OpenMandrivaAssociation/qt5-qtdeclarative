@@ -45,7 +45,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	3
+Release:	4
 %define qttarballdir qtdeclarative-everywhere-src-5.15.2
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -86,6 +86,10 @@ Patch1020:	0021-QML-Fix-proxy-iteration.patch
 Patch1021:	0022-Fix-IC-properties-in-same-file.patch
 Patch1022:	0023-JIT-When-making-memory-writable-include-the-exceptio.patch
 Patch1023:	0024-doc-explain-QQItem-event-delivery-handlers-setAccept.patch
+Patch1024:	0025-Give-a-warning-when-StyledText-encounters-a-non-supp.patch
+Patch1025:	0026-Add-missing-limits-include-to-fix-build-with-GCC-11.patch
+Patch1026:	0027-Document-that-StyledText-also-supports-nbsp-and-quot.patch
+Patch1027:	0028-Support-apos-in-styled-text.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
