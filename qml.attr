@@ -1,3 +1,0 @@
-%__qml_provides	%{_rpmconfigdir}/qml.prov
-%__qml_requires	%{_rpmconfigdir}/qml.req
-%__qml_path	^(.*/qmldir|.*\.qml)$

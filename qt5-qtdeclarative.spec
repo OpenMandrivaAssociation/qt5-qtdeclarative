@@ -45,13 +45,10 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	4
+Release:	5
 %define qttarballdir qtdeclarative-everywhere-src-5.15.2
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
-Source100:	qml.attr
-Source101:	qml.req
-Source102:	qml.prov
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
@@ -90,6 +87,8 @@ Patch1024:	0025-Give-a-warning-when-StyledText-encounters-a-non-supp.patch
 Patch1025:	0026-Add-missing-limits-include-to-fix-build-with-GCC-11.patch
 Patch1026:	0027-Document-that-StyledText-also-supports-nbsp-and-quot.patch
 Patch1027:	0028-Support-apos-in-styled-text.patch
+Patch1028:	0029-Remove-unused-QPointer-QQuickPointerMask.patch
+Patch1029:	0030-Include-limits-in-Yarr.h-to-fix-build-with-GCC-11.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
@@ -432,7 +431,7 @@ Requires: %{qtqml} = %{version}
 Requires: pkgconfig(Qt5Core) = %{version}
 Requires: pkgconfig(Qt5Network) = %{version}
 Requires: %{qtquickd} = %{EVRD}
-Requires: rpm-provreq-qml = %{EVRD}
+Requires: rpm-provreq-qml >= 6.0.0
 
 %description -n %{qtqmld}
 Devel files needed to build apps based on Qt%{api}.
@@ -455,19 +454,6 @@ Devel files needed to build apps based on Qt%{api}.
 %{_libdir}/qt5/bin/qmltyperegistrar
 %{_bindir}/qmlformat
 %{_bindir}/qmltyperegistrar
-
-#------------------------------------------------------------------------------
-%package -n rpm-provreq-qml
-Summary:	RPM Provides/Requires generator for QML files
-Group:		Development/KDE and Qt
-
-%description -n rpm-provreq-qml
-RPM Provides/Requires generator for QML files
-
-%files -n rpm-provreq-qml
-%{_rpmconfigdir}/fileattrs/qml.attr
-%{_rpmconfigdir}/qml.req
-%{_rpmconfigdir}/qml.prov
 
 #------------------------------------------------------------------------------
 
@@ -657,8 +643,3 @@ rm -f %{buildroot}%{_qt5_libdir}/lib*.la
 mkdir -p %{buildroot}%{_bindir}
 ln -s ../%{_lib}/qt5/bin/qmlformat %{buildroot}%{_bindir}/qmlformat
 ln -s ../%{_lib}/qt5/bin/qmltyperegistrar %{buildroot}%{_bindir}/qmltyperegistrar
-
-# Teach rpm about QML dependencies
-install -m644 %{S:100} -D %{buildroot}%{_rpmconfigdir}/fileattrs/qml.attr
-install -m755 %{S:101} -D %{buildroot}%{_rpmconfigdir}/qml.req
-install -m755 %{S:102} -D %{buildroot}%{_rpmconfigdir}/qml.prov
