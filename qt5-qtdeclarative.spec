@@ -609,6 +609,16 @@ Examples for the use of Qt Declarative.
 %autosetup -n %qttarballdir -p1
 %{_qt_prefix}/bin/syncqt.pl -version %{version}
 
+# FIXME at some point we need to determine if this is needed because
+# of a Qt bug or because of a clang bug... In the mean time, this
+# workaround keeps things going
+find . -name "*.cpp" |while read r; do
+	if grep -E 'qml(Warning|Info|Context|Engine|Execute)' $r; then
+		sed -i -e '/QT_BEGIN_NAMESPACE/ausing namespace QtQml;' $r
+	fi
+done
+sed -i -e 's,qmlWarning,QtQml::qmlWarning,g' src/particles/qquickspritegoal_p.h
+
 %build
 %qmake_qt5
 
