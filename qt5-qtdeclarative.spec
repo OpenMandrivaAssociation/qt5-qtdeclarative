@@ -38,21 +38,21 @@
 
 %global optflags %{optflags} -O3
 
+Summary:	Qt GUI toolkit
 Name:		qt5-qtdeclarative
+Group:		Development/KDE and Qt
+License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
+URL:		http://www.qt.io
 Version:	5.15.3
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	5
+Release:	6
 %define qttarballdir qtdeclarative-everywhere-src-5.15.2
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
-Summary:	Qt GUI toolkit
-Group:		Development/KDE and Qt
-License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
-URL:		http://www.qt.io
 # Fix build with clang 10.0 in c++20 mode
 Patch0:		qt5-qtdeclarative-c++20ambiguity.patch
 # (tpg) fix build ../3rdparty/masm/yarr/YarrPattern.cpp:39:29: fatal error: RegExpJitTables.h: No such file or directory
@@ -89,6 +89,7 @@ Patch1026:	0027-Document-that-StyledText-also-supports-nbsp-and-quot.patch
 Patch1027:	0028-Support-apos-in-styled-text.patch
 Patch1028:	0029-Remove-unused-QPointer-QQuickPointerMask.patch
 Patch1029:	0030-Include-limits-in-Yarr.h-to-fix-build-with-GCC-11.patch
+Patch1030:	0031-QQuickLoader-Do-not-incubate-if-the-source-arrives-a.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
@@ -153,8 +154,8 @@ Window System. Qt is written in C++ and is fully object-oriented.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquicktest}
-Summary: Qt%{api} Lib
-Group: System/Libraries
+Summary:	Qt%{api} Lib
+Group:		System/Libraries
 
 %description -n %{qtquicktest}
 Qt%{api} Lib.
@@ -166,10 +167,10 @@ Qt%{api} Lib.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquicktestd}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{qtquicktest} = %{version}
-Requires: %{name} = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{qtquicktest} = %{version}
+Requires:	%{name} = %{version}
 
 %description -n %{qtquicktestd}
 Devel files needed to build apps based on Qt%{api}.
@@ -186,10 +187,10 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{quicktest_p_d}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{qtquicktestd} = %{version}
-Provides: qt5-quicktest-private-devel = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{qtquicktestd} = %{version}
+Provides:	qt5-quicktest-private-devel = %{version}
 
 %description -n %{quicktest_p_d}
 Devel files needed to build apps based on Qt%{api}.
@@ -200,8 +201,8 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquick}
-Summary: Qt%{api} Lib
-Group: System/Libraries
+Summary:	Qt%{api} Lib
+Group:		System/Libraries
 
 %description -n %{qtquick}
 Qt%{api} Lib.
@@ -216,10 +217,10 @@ Qt%{api} Lib.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickd}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{name} = %{version}
-Requires: %{qtquick} = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{name} = %{version}
+Requires:	%{qtquick} = %{version}
 
 %description -n %{qtquickd}
 Devel files needed to build apps based on Qt%{api}.
@@ -245,11 +246,11 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquick_p_d}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{qtquickd} = %{version}
-Requires: %{qtqml_p_d} = %{version}
-Provides: qt5-qtquick-private-devel = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{qtquickd} = %{version}
+Requires:	%{qtqml_p_d} = %{version}
+Provides:	qt5-qtquick-private-devel = %{version}
 
 %description -n %{qtquick_p_d}
 Devel files needed to build apps based on Qt%{api}.
@@ -271,8 +272,8 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickshapes}
-Summary: Qt%{api} Lib
-Group: System/Libraries
+Summary:	Qt%{api} Lib
+Group:		System/Libraries
 
 %description -n %{qtquickshapes}
 Qt%{api} Lib.
@@ -283,10 +284,10 @@ Qt%{api} Lib.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickshapesd}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{name} = %{version}
-Requires: %{qtquickshapes} = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{name} = %{version}
+Requires:	%{qtquickshapes} = %{version}
 
 %description -n %{qtquickshapesd}
 Devel files needed to build apps based on Qt%{api}.
@@ -302,11 +303,11 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickshapes_p_d}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{qtquickshapesd} = %{version}
-Requires: %{qtqml_p_d} = %{version}
-Provides: qt5-qtquickshapes-private-devel = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{qtquickshapesd} = %{version}
+Requires:	%{qtqml_p_d} = %{version}
+Provides:	qt5-qtquickshapes-private-devel = %{version}
 
 %description -n %{qtquickshapes_p_d}
 Devel files needed to build apps based on Qt%{api}.
@@ -318,8 +319,8 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickwidgets}
-Summary: Qt%{api} Lib
-Group: System/Libraries
+Summary:	Qt%{api} Lib
+Group:		System/Libraries
 
 %description -n %{qtquickwidgets}
 Qt%{api} Lib.
@@ -330,10 +331,10 @@ Qt%{api} Lib.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickwidgetsd}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{name} = %{version}
-Requires: %{qtquickwidgets} = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{name} = %{version}
+Requires:	%{qtquickwidgets} = %{version}
 
 %description -n %{qtquickwidgetsd}
 Devel files needed to build apps based on Qt%{api}.
@@ -350,11 +351,11 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickwidgetsd_p_d}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{qtquickwidgetsd} = %{version}
-Requires: %{qtqml_p_d} = %{version}
-Provides: qt5-qtquickwidgets-private-devel = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{qtquickwidgetsd} = %{version}
+Requires:	%{qtqml_p_d} = %{version}
+Provides:	qt5-qtquickwidgets-private-devel = %{version}
 
 %description -n %{qtquickwidgetsd_p_d}
 Devel files needed to build apps based on Qt%{api}.
@@ -366,8 +367,8 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickparticles}
-Summary: Qt%{api} Lib
-Group: System/Libraries
+Summary:	Qt%{api} Lib
+Group:		System/Libraries
 
 %description -n %{qtquickparticles}
 Qt%{api} Lib.
@@ -378,10 +379,10 @@ Qt%{api} Lib.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickparticlesd}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{name} = %{version}
-Requires: %{qtquickparticles} = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{name} = %{version}
+Requires:	%{qtquickparticles} = %{version}
 
 %description -n %{qtquickparticlesd}
 Devel files needed to build apps based on Qt%{api}.
@@ -397,10 +398,10 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtquickparticles_p_d}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{qtquickparticlesd} = %{version}
-Provides: qt5-qtquickparticles-private-devel = %{version}
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{qtquickparticlesd} = %{version}
+Provides:	qt5-qtquickparticles-private-devel = %{version}
 
 %description -n %{qtquickparticles_p_d}
 Devel files needed to build apps based on Qt%{api}.
@@ -412,8 +413,8 @@ Devel files needed to build apps based on Qt%{api}.
 #------------------------------------------------------------------------------
 
 %package -n %{qtqml}
-Summary: Qt%{api} Lib
-Group: System/Libraries
+Summary:	Qt%{api} Lib
+Group:		System/Libraries
 
 %description -n %{qtqml}
 Qt%{api} Lib.
@@ -424,14 +425,14 @@ Qt%{api} Lib.
 #------------------------------------------------------------------------------
 
 %package -n %{qtqmld}
-Summary: Devel files needed to build apps based on Qt%{api}
-Group:    Development/KDE and Qt
-Requires: %{name} = %{version}
-Requires: %{qtqml} = %{version}
-Requires: pkgconfig(Qt5Core) = %{version}
-Requires: pkgconfig(Qt5Network) = %{version}
-Requires: %{qtquickd} = %{EVRD}
-Requires: rpm-provreq-qml >= 6.0.0
+Summary:	Devel files needed to build apps based on Qt%{api}
+Group:		Development/KDE and Qt
+Requires:	%{name} = %{version}
+Requires:	%{qtqml} = %{version}
+Requires:	pkgconfig(Qt5Core) = %{version}
+Requires:	pkgconfig(Qt5Network) = %{version}
+Requires:	%{qtquickd} = %{EVRD}
+Requires:	rpm-provreq-qml >= 6.0.0
 
 %description -n %{qtqmld}
 Devel files needed to build apps based on Qt%{api}.
@@ -606,7 +607,7 @@ Examples for the use of Qt Declarative.
 #------------------------------------------------------------------------------
 
 %prep
-%autosetup -n %qttarballdir -p1
+%autosetup -n %{qttarballdir} -p1
 %{_qt_prefix}/bin/syncqt.pl -version %{version}
 
 # FIXME at some point we need to determine if this is needed because
@@ -647,8 +648,6 @@ popd
 
 # .la and .a files, die, die, die.
 rm -f %{buildroot}%{_qt5_libdir}/lib*.la
-# .a files are needed for qttools
-#rm -f %{buildroot}%{_qt5_libdir}/lib*.a
 
 mkdir -p %{buildroot}%{_bindir}
 ln -s ../%{_lib}/qt5/bin/qmlformat %{buildroot}%{_bindir}/qmlformat
