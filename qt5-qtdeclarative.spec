@@ -49,7 +49,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	6
+Release:	7
 %define qttarballdir qtdeclarative-everywhere-src-5.15.2
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -62,6 +62,7 @@ Patch2:		qt5-qtdeclarative-buildfixes.patch
 Patch3:		qtdeclarative-python3.patch
 # (tpg) https://bugreports.qt.io/browse/QTBUG-83890
 Patch4:		qtdeclarative-5.14.2-QQuickItemView-fix-maxXY-extent.patch
+# from KDE https://invent.kde.org/qt/qt/qtdeclarative -b kde/5.15
 Patch1000:	0001-Bump-version.patch
 Patch1004:	0005-QQuickView-docs-show-correct-usage-of-setInitialProp.patch
 Patch1005:	0006-QQuickWindow-Check-if-QQuickItem-was-not-deleted.patch
@@ -90,6 +91,12 @@ Patch1027:	0028-Support-apos-in-styled-text.patch
 Patch1028:	0029-Remove-unused-QPointer-QQuickPointerMask.patch
 Patch1029:	0030-Include-limits-in-Yarr.h-to-fix-build-with-GCC-11.patch
 Patch1030:	0031-QQuickLoader-Do-not-incubate-if-the-source-arrives-a.patch
+Patch1031:	0032-QQmlDelegateModel-Refresh-the-view-when-a-column-is-.patch
+Patch1032:	0033-Fix-sweep-step-for-tainted-QObject-JavaScript-wrappe.patch
+Patch1033:	0034-Fix-distorted-text-with-subpixel-matrix-translation.patch
+Patch1034:	0035-Revert-Fix-for-possible-crash-in-QSGDefaultLayer-gra.patch
+Patch1035:	0036-Do-not-revert-properties-of-deleted-objects.patch
+
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
