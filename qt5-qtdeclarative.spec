@@ -49,7 +49,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	7
+Release:	8
 %define qttarballdir qtdeclarative-everywhere-src-5.15.2
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -96,6 +96,11 @@ Patch1032:	0033-Fix-sweep-step-for-tainted-QObject-JavaScript-wrappe.patch
 Patch1033:	0034-Fix-distorted-text-with-subpixel-matrix-translation.patch
 Patch1034:	0035-Revert-Fix-for-possible-crash-in-QSGDefaultLayer-gra.patch
 Patch1035:	0036-Do-not-revert-properties-of-deleted-objects.patch
+Patch1036:	0037-QQuickItemAnimation-close-potential-memory-leak.patch
+Patch1037:	0038-qqmldelegatemodel-Fix-out-of-bounds-cache-removal.patch
+Patch1038:	0039-QQuickWindow-don-t-leak-old-screenChanged-connection.patch
+Patch1039:	0040-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
+Patch1040:	0041-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
