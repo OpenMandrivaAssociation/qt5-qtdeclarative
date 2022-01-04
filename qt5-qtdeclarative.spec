@@ -49,7 +49,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	8
+Release:	9
 %define qttarballdir qtdeclarative-everywhere-src-5.15.2
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -101,7 +101,7 @@ Patch1037:	0038-qqmldelegatemodel-Fix-out-of-bounds-cache-removal.patch
 Patch1038:	0039-QQuickWindow-don-t-leak-old-screenChanged-connection.patch
 Patch1039:	0040-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
 Patch1040:	0041-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
-
+Patch1041:	0042-Fix-crash-during-model-reset.patch
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
@@ -598,7 +598,7 @@ Summary:	Animation support for Qt Declarative
 Group:		System/Libraries
 
 %description animation
-Animation support for Qt Declarative
+Animation support for Qt Declarative.
 
 %files animation
 %{_libdir}/qt5/qml/Qt/labs/animation
@@ -626,9 +626,9 @@ Examples for the use of Qt Declarative.
 # of a Qt bug or because of a clang bug... In the mean time, this
 # workaround keeps things going
 find . -name "*.cpp" |while read r; do
-	if grep -E 'qml(Warning|Info|Context|Engine|Execute)' $r; then
-		sed -i -e '/QT_BEGIN_NAMESPACE/ausing namespace QtQml;' $r
-	fi
+    if grep -E 'qml(Warning|Info|Context|Engine|Execute)' $r; then
+	sed -i -e '/QT_BEGIN_NAMESPACE/ausing namespace QtQml;' $r
+    fi
 done
 sed -i -e 's,qmlWarning,QtQml::qmlWarning,g' src/particles/qquickspritegoal_p.h
 
@@ -643,7 +643,7 @@ sed -i -e 's,qmlWarning,QtQml::qmlWarning,g' src/particles/qquickspritegoal_p.h
 
 ## .prl/.la file love
 # nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
-pushd %{buildroot}%{_qt5_libdir}
+cd %{buildroot}%{_qt5_libdir}
 for prl_file in libQt5*.prl ; do
   sed -i \
     -e "/^QMAKE_PRL_BUILD_DIR/d" \
@@ -656,7 +656,7 @@ for prl_file in libQt5*.prl ; do
        $(basename ${prl_file} .prl).la
   fi
 done
-popd
+cd -
 
 # .la and .a files, die, die, die.
 rm -f %{buildroot}%{_qt5_libdir}/lib*.la
