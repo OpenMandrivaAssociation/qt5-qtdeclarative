@@ -49,7 +49,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	9
+Release:	10
 %define qttarballdir qtdeclarative-everywhere-src-5.15.2
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -102,6 +102,10 @@ Patch1038:	0039-QQuickWindow-don-t-leak-old-screenChanged-connection.patch
 Patch1039:	0040-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
 Patch1040:	0041-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
 Patch1041:	0042-Fix-crash-during-model-reset.patch
+Patch1042:	0043-QQuickTextInput-update-cursor-rectangle-after-paddin.patch
+Patch1043:	0044-V4-Do-not-call-dtor-of-an-object-we-continue-to-use.patch
+Patch1044:	0045-Make-sure-QQuickWidget-and-its-offscreen-window-s-sc.patch
+
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Network) = %{version}
