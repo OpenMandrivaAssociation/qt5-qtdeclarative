@@ -49,12 +49,10 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	10
-%define qttarballdir qtdeclarative-everywhere-src-5.15.2
-Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
+Release:	11
+%define qttarballdir qtdeclarative-everywhere-opensource-src-%{version}
+Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
-# Fix build with clang 10.0 in c++20 mode
-Patch0:		qt5-qtdeclarative-c++20ambiguity.patch
 # (tpg) fix build ../3rdparty/masm/yarr/YarrPattern.cpp:39:29: fatal error: RegExpJitTables.h: No such file or directory
 Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch
 # (bero) more build fixes
@@ -63,48 +61,26 @@ Patch3:		qtdeclarative-python3.patch
 # (tpg) https://bugreports.qt.io/browse/QTBUG-83890
 Patch4:		qtdeclarative-5.14.2-QQuickItemView-fix-maxXY-extent.patch
 # from KDE https://invent.kde.org/qt/qt/qtdeclarative -b kde/5.15
-Patch1000:	0001-Bump-version.patch
-Patch1004:	0005-QQuickView-docs-show-correct-usage-of-setInitialProp.patch
-Patch1005:	0006-QQuickWindow-Check-if-QQuickItem-was-not-deleted.patch
-Patch1006:	0007-Avoid-GHS-linker-to-optimize-away-QML-type-registrat.patch
-Patch1007:	0008-QML-Text-doesn-t-reset-lineCount-when-text-is-empty.patch
-Patch1008:	0009-Doc-mention-that-INCLUDEPATH-must-be-set-in-some-cas.patch
-Patch1009:	0010-qmlfunctions.qdoc-Add-clarification-to-QML_FOREIGN.patch
-Patch1010:	0011-Fix-QML-property-cache-leaks-of-delegate-items.patch
-Patch1011:	0012-QQuickTextInput-Store-mask-data-in-std-unique_ptr.patch
-Patch1012:	0013-Fix-crash-when-calling-hasOwnProperty-on-proxy-objec.patch
-Patch1013:	0014-Accessibility-event-is-sent-on-item-s-geometry-chang.patch
-Patch1014:	0015-qmltypes.prf-Take-abi-into-account-for-_metatypes.js.patch
-Patch1015:	0016-qv4qmlcontext-Fix-bounded-signal-expressions-when-de.patch
-Patch1016:	0017-Use-load-qt_tool-for-qmltime.patch
-Patch1017:	0018-qqmlistmodel-Fix-crash-when-modelCache-is-null.patch
-Patch1018:	0019-Show-a-tableview-even-if-the-syncView-has-an-empty-m.patch
-Patch1019:	0020-DesignerSupport-Don-t-skip-already-inspected-objects.patch
-Patch1020:	0021-QML-Fix-proxy-iteration.patch
-Patch1021:	0022-Fix-IC-properties-in-same-file.patch
-Patch1022:	0023-JIT-When-making-memory-writable-include-the-exceptio.patch
-Patch1023:	0024-doc-explain-QQItem-event-delivery-handlers-setAccept.patch
-Patch1024:	0025-Give-a-warning-when-StyledText-encounters-a-non-supp.patch
-Patch1025:	0026-Add-missing-limits-include-to-fix-build-with-GCC-11.patch
-Patch1026:	0027-Document-that-StyledText-also-supports-nbsp-and-quot.patch
-Patch1027:	0028-Support-apos-in-styled-text.patch
-Patch1028:	0029-Remove-unused-QPointer-QQuickPointerMask.patch
-Patch1029:	0030-Include-limits-in-Yarr.h-to-fix-build-with-GCC-11.patch
-Patch1030:	0031-QQuickLoader-Do-not-incubate-if-the-source-arrives-a.patch
-Patch1031:	0032-QQmlDelegateModel-Refresh-the-view-when-a-column-is-.patch
-Patch1032:	0033-Fix-sweep-step-for-tainted-QObject-JavaScript-wrappe.patch
-Patch1033:	0034-Fix-distorted-text-with-subpixel-matrix-translation.patch
-Patch1034:	0035-Revert-Fix-for-possible-crash-in-QSGDefaultLayer-gra.patch
-Patch1035:	0036-Do-not-revert-properties-of-deleted-objects.patch
-Patch1036:	0037-QQuickItemAnimation-close-potential-memory-leak.patch
-Patch1037:	0038-qqmldelegatemodel-Fix-out-of-bounds-cache-removal.patch
-Patch1038:	0039-QQuickWindow-don-t-leak-old-screenChanged-connection.patch
-Patch1039:	0040-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
-Patch1040:	0041-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
-Patch1041:	0042-Fix-crash-during-model-reset.patch
-Patch1042:	0043-QQuickTextInput-update-cursor-rectangle-after-paddin.patch
-Patch1043:	0044-V4-Do-not-call-dtor-of-an-object-we-continue-to-use.patch
-Patch1044:	0045-Make-sure-QQuickWidget-and-its-offscreen-window-s-sc.patch
+Patch1000:	0001-Give-a-warning-when-StyledText-encounters-a-non-supp.patch
+Patch1001:	0002-Add-missing-limits-include-to-fix-build-with-GCC-11.patch
+Patch1002:	0003-Document-that-StyledText-also-supports-nbsp-and-quot.patch
+Patch1003:	0004-Support-apos-in-styled-text.patch
+Patch1004:	0005-Remove-unused-QPointer-QQuickPointerMask.patch
+Patch1005:	0006-Include-limits-in-Yarr.h-to-fix-build-with-GCC-11.patch
+Patch1006:	0007-QQuickLoader-Do-not-incubate-if-the-source-arrives-a.patch
+Patch1007:	0008-QQmlDelegateModel-Refresh-the-view-when-a-column-is-.patch
+Patch1008:	0009-Fix-sweep-step-for-tainted-QObject-JavaScript-wrappe.patch
+Patch1009:	0010-Fix-distorted-text-with-subpixel-matrix-translation.patch
+Patch1010:	0011-Revert-Fix-for-possible-crash-in-QSGDefaultLayer-gra.patch
+Patch1011:	0012-QQuickItemAnimation-close-potential-memory-leak.patch
+Patch1012:	0013-qqmldelegatemodel-Fix-out-of-bounds-cache-removal.patch
+Patch1013:	0014-QQuickWindow-don-t-leak-old-screenChanged-connection.patch
+Patch1014:	0015-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
+Patch1015:	0016-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
+Patch1016:	0017-QQmlJs-FixedPoolArray-fix-UB-precondition-violation-.patch
+Patch1017:	0018-QQuickTextInput-update-cursor-rectangle-after-paddin.patch
+Patch1018:	0019-V4-Do-not-call-dtor-of-an-object-we-continue-to-use.patch
+Patch1019:	0020-Make-sure-QQuickWidget-and-its-offscreen-window-s-sc.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
@@ -522,7 +498,6 @@ Devel files needed to build apps based on Qt%{api} QmlModels.
 %{_qt5_libdir}/pkgconfig/Qt5QmlModels.pc
 %{_qt5_includedir}/QtQmlModels*
 %exclude %{_qt5_includedir}/QtQmlModels/%{version}
-%{_qt5_libdir}/libQt5QmlModels.prl
 %{_libdir}/cmake/Qt%{api}QmlModels
 %{_libdir}/qt5/mkspecs/modules/qt_lib_qmlmodels.pri
 %{_libdir}/metatypes/qt5qmlmodels_metatypes.json
@@ -623,7 +598,7 @@ Examples for the use of Qt Declarative.
 #------------------------------------------------------------------------------
 
 %prep
-%autosetup -n %{qttarballdir} -p1
+%autosetup -n %(echo %{qttarballdir}|sed -e 's,-opensource,,') -p1
 %{_qt_prefix}/bin/syncqt.pl -version %{version}
 
 # FIXME at some point we need to determine if this is needed because

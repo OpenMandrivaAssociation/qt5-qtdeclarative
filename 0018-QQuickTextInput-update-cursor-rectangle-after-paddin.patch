@@ -1,7 +1,7 @@
-From 9349f3975d26632befc036fc9f2ea6e03aee2182 Mon Sep 17 00:00:00 2001
+From 9bb03b5dcc21275986df3d8b0efb6f28cdc583ec Mon Sep 17 00:00:00 2001
 From: Wang Chuan <ouchuanm@outlook.com>
 Date: Mon, 5 Apr 2021 11:41:48 +0800
-Subject: [PATCH 43/45] QQuickTextInput: update cursor rectangle after padding
+Subject: [PATCH 18/20] QQuickTextInput: update cursor rectangle after padding
  changed
 
 The position of cursor delegate needs to be updated when we change
@@ -20,7 +20,7 @@ Reviewed-by: Shawn Rutledge <shawn.rutledge@qt.io>
  create mode 100644 tests/auto/quick/qquicktextinput/data/checkCursorDelegateWhenPaddingChanged.qml
 
 diff --git a/src/quick/items/qquicktextinput.cpp b/src/quick/items/qquicktextinput.cpp
-index bb78ead0e8..2b35b231eb 100644
+index 079bf58abe..7d0d05700a 100644
 --- a/src/quick/items/qquicktextinput.cpp
 +++ b/src/quick/items/qquicktextinput.cpp
 @@ -2952,6 +2952,7 @@ void QQuickTextInputPrivate::setTopPadding(qreal value, bool reset)
@@ -55,7 +55,7 @@ index bb78ead0e8..2b35b231eb 100644
          emit q->bottomPaddingChanged();
      }
  }
-@@ -4713,6 +4717,7 @@ void QQuickTextInput::setPadding(qreal padding)
+@@ -4712,6 +4716,7 @@ void QQuickTextInput::setPadding(qreal padding)
  
      d->extra.value().padding = padding;
      d->updateLayout();
