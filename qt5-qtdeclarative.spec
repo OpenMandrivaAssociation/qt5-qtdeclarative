@@ -43,13 +43,13 @@ Name:		qt5-qtdeclarative
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
-Version:	5.15.3
+Version:	5.15.4
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	11
+Release:	1
 %define qttarballdir qtdeclarative-everywhere-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -72,15 +72,14 @@ Patch1007:	0008-QQmlDelegateModel-Refresh-the-view-when-a-column-is-.patch
 Patch1008:	0009-Fix-sweep-step-for-tainted-QObject-JavaScript-wrappe.patch
 Patch1009:	0010-Fix-distorted-text-with-subpixel-matrix-translation.patch
 Patch1010:	0011-Revert-Fix-for-possible-crash-in-QSGDefaultLayer-gra.patch
-Patch1011:	0012-QQuickItemAnimation-close-potential-memory-leak.patch
-Patch1012:	0013-qqmldelegatemodel-Fix-out-of-bounds-cache-removal.patch
-Patch1013:	0014-QQuickWindow-don-t-leak-old-screenChanged-connection.patch
-Patch1014:	0015-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
-Patch1015:	0016-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
-Patch1016:	0017-QQmlJs-FixedPoolArray-fix-UB-precondition-violation-.patch
-Patch1017:	0018-QQuickTextInput-update-cursor-rectangle-after-paddin.patch
-Patch1018:	0019-V4-Do-not-call-dtor-of-an-object-we-continue-to-use.patch
-Patch1019:	0020-Make-sure-QQuickWidget-and-its-offscreen-window-s-sc.patch
+Patch1011:	0012-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
+Patch1012:	0013-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
+Patch1013:	0014-QQmlJs-FixedPoolArray-fix-UB-precondition-violation-.patch
+Patch1014:	0015-V4-Do-not-call-dtor-of-an-object-we-continue-to-use.patch
+Patch1015:	0016-Make-sure-QQuickWidget-and-its-offscreen-window-s-sc.patch
+Patch1016:	0017-QQuickItem-Guard-against-cycles-in-nextPrevItemInTab.patch
+Patch1017:	0018-QSGOpenGLDistanceFieldGlyphCache-fix-multiplication-.patch
+Patch1018:	0019-QSGOpenGLDistanceFieldGlyphCache-fix-UB-ordering-of-.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
