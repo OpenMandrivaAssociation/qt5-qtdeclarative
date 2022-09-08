@@ -1,4 +1,4 @@
-From 74db4a874a39b189d000d0b8507fccfbacf83294 Mon Sep 17 00:00:00 2001
+From 6b86df958de8c887e8685183e068bb200e357785 Mon Sep 17 00:00:00 2001
 From: Eskil Abrahamsen Blomfeldt <eskil.abrahamsen-blomfeldt@qt.io>
 Date: Tue, 12 Oct 2021 13:13:01 +0200
 Subject: [PATCH 08/19] Fix distorted text with subpixel matrix translation
@@ -479,5 +479,5 @@ index 0000000000..c60fc4d8b0
 +    }
 +}
 -- 
-2.36.1
+2.37.2
 
