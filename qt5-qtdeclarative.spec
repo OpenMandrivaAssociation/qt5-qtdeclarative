@@ -43,7 +43,7 @@ Name:		qt5-qtdeclarative
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
-Version:	5.15.6
+Version:	5.15.7
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
@@ -64,22 +64,21 @@ Patch4:		qtdeclarative-5.14.2-QQuickItemView-fix-maxXY-extent.patch
 Patch1000:	0001-Document-that-StyledText-also-supports-nbsp-and-quot.patch
 Patch1001:	0002-Support-apos-in-styled-text.patch
 Patch1002:	0003-Remove-unused-QPointer-QQuickPointerMask.patch
-Patch1003:	0004-Include-limits-in-Yarr.h-to-fix-build-with-GCC-11.patch
-Patch1004:	0005-QQuickLoader-Do-not-incubate-if-the-source-arrives-a.patch
-Patch1005:	0006-QQmlDelegateModel-Refresh-the-view-when-a-column-is-.patch
-Patch1006:	0007-Fix-sweep-step-for-tainted-QObject-JavaScript-wrappe.patch
-Patch1007:	0008-Fix-distorted-text-with-subpixel-matrix-translation.patch
-Patch1008:	0009-Revert-Fix-for-possible-crash-in-QSGDefaultLayer-gra.patch
-Patch1009:	0010-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
-Patch1010:	0011-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
-Patch1011:	0012-QQmlJs-FixedPoolArray-fix-UB-precondition-violation-.patch
-Patch1012:	0013-V4-Do-not-call-dtor-of-an-object-we-continue-to-use.patch
-Patch1013:	0014-Make-sure-QQuickWidget-and-its-offscreen-window-s-sc.patch
-Patch1014:	0015-QQuickItem-Guard-against-cycles-in-nextPrevItemInTab.patch
-Patch1015:	0016-QSGOpenGLDistanceFieldGlyphCache-fix-multiplication-.patch
-Patch1016:	0017-QSGOpenGLDistanceFieldGlyphCache-fix-UB-ordering-of-.patch
-Patch1017:	0018-Fix-Flickable-wheel-velocity-calculation.patch
-Patch1018:	0019-Fix-Flickable-with-QTBUG-56075-patch-applied.patch
+Patch1003:	0004-QQmlDelegateModel-Refresh-the-view-when-a-column-is-.patch
+Patch1004:	0005-Fix-sweep-step-for-tainted-QObject-JavaScript-wrappe.patch
+Patch1005:	0006-Revert-Fix-for-possible-crash-in-QSGDefaultLayer-gra.patch
+Patch1006:	0007-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
+Patch1007:	0008-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
+Patch1008:	0009-QQmlJs-FixedPoolArray-fix-UB-precondition-violation-.patch
+Patch1009:	0010-V4-Do-not-call-dtor-of-an-object-we-continue-to-use.patch
+Patch1010:	0011-Make-sure-QQuickWidget-and-its-offscreen-window-s-sc.patch
+Patch1011:	0012-QQuickItem-Guard-against-cycles-in-nextPrevItemInTab.patch
+Patch1012:	0013-QSGOpenGLDistanceFieldGlyphCache-fix-multiplication-.patch
+Patch1013:	0014-QSGOpenGLDistanceFieldGlyphCache-fix-UB-ordering-of-.patch
+Patch1014:	0015-Fix-Flickable-wheel-velocity-calculation.patch
+Patch1015:	0016-Fix-Flickable-with-QTBUG-56075-patch-applied.patch
+Patch1016:	0017-Reset-currentChanges-if-currentChanges-is-active-whe.patch
+Patch1017:	0018-Revert-Fix-ListView.isCurrentItem-when-used-with-Del.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}

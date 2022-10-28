@@ -1,7 +1,7 @@
-From b03b25f417d1db2a43e2df39a6fb355f993a341d Mon Sep 17 00:00:00 2001
+From 7dd0d9f9ce9bbd5e21f017069256d52b397a6195 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jan=20Arve=20S=C3=A6ther?= <jan-arve.saether@qt.io>
 Date: Thu, 3 Sep 2020 10:51:01 +0200
-Subject: [PATCH 10/19] Fix TapHandler so that it actually registers a tap
+Subject: [PATCH 07/18] Fix TapHandler so that it actually registers a tap
 
 This bug caused all quick examples that used the
 shared\LauncherList.qml to be broken.
@@ -69,5 +69,5 @@ index b51f53b74f..89081b4e84 100644
  
  void QQuickSinglePointHandler::handlePointerEventImpl(QQuickPointerEvent *event)
 -- 
-2.37.2
+2.38.1
 
