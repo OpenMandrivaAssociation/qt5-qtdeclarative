@@ -49,7 +49,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtdeclarative-everywhere-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -79,6 +79,11 @@ Patch1014:	0015-Fix-Flickable-wheel-velocity-calculation.patch
 Patch1015:	0016-Fix-Flickable-with-QTBUG-56075-patch-applied.patch
 Patch1016:	0017-Reset-currentChanges-if-currentChanges-is-active-whe.patch
 Patch1017:	0018-Revert-Fix-ListView.isCurrentItem-when-used-with-Del.patch
+Patch1018:	0019-Don-t-convert-QByteArray-in-startDrag.patch
+Patch1019:	0020-Fix-build-after-95290f66b806a307b8da1f72f8fc2c698019.patch
+Patch1020:	0021-Implement-accessibility-for-QQuickWidget.patch
+Patch1021:	0022-Send-ObjectShow-event-for-visible-components-after-i.patch
+Patch1022:	0023-QQuickItem-avoid-emitting-signals-during-destruction.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
