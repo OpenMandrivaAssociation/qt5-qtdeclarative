@@ -1,7 +1,7 @@
-From 6bd6464475d2fc00ab41e9b9ea4f2b5fb0e43385 Mon Sep 17 00:00:00 2001
+From 2574ff9d5c6e72d01dca283e66436cd90a64324d Mon Sep 17 00:00:00 2001
 From: Hannah von Reth <vonreth@kde.org>
 Date: Sat, 5 Nov 2022 18:48:41 +0100
-Subject: [PATCH 20/23] Fix build after
+Subject: [PATCH 16/21] Fix build after
  95290f66b806a307b8da1f72f8fc2c69801933d0
 
 ---

@@ -1,7 +1,7 @@
-From debc0a9c11ecd4694f7ba02cc67b15873fae4a88 Mon Sep 17 00:00:00 2001
+From 99c990d55802c1ea782ca609ccd2bcdf39fb786f Mon Sep 17 00:00:00 2001
 From: Fushan Wen <qydwhotmail@gmail.com>
 Date: Sat, 5 Nov 2022 01:44:30 +0800
-Subject: [PATCH 22/23] Send ObjectShow event for visible components after
+Subject: [PATCH 18/21] Send ObjectShow event for visible components after
  initialized
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
