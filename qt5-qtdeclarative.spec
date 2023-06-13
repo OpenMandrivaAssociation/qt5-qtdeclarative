@@ -43,7 +43,7 @@ Name:		qt5-qtdeclarative
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
-Version:	5.15.9
+Version:	5.15.10
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
@@ -80,6 +80,13 @@ Patch1016:	0016-Revert-Fix-missing-glyphs-when-using-NativeRendering.patch
 Patch1017:	0017-QQmlImportDatabase-Make-sure-the-newly-added-import-.patch
 Patch1018:	0018-QQuickState-when-handle-QJSValue-properties-correctl.patch
 Patch1019:	0019-Models-Avoid-crashes-when-deleting-cache-items.patch
+Patch1020:	0020-qv4function-Fix-crash-due-to-reference-being-invalid.patch
+Patch1021:	0021-Quick-Animations-Fix-crash.patch
+Patch1022:	0022-Prevent-crash-when-destroying-asynchronous-Loader.patch
+Patch1023:	0023-QQuickItem-Fix-effective-visibility-for-items-withou.patch
+Patch1024:	0024-Revert-QQuickItem-Fix-effective-visibility-for-items.patch
+Patch1025:	0025-Accessibility-respect-value-in-attached-Accessible-i.patch
+Patch1026:	0026-qml-tool-Use-QCommandLineParser-process-rather-than-.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
