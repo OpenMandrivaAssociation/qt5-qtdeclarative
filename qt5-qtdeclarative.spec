@@ -43,7 +43,7 @@ Name:		qt5-qtdeclarative
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
-Version:	5.15.10
+Version:	5.15.11
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
@@ -75,18 +75,22 @@ Patch1011:	0011-QQuickItem-avoid-emitting-signals-during-destruction.patch
 Patch1012:	0012-a11y-track-item-enabled-state.patch
 Patch1013:	0013-Make-QaccessibleQuickWidget-private-API.patch
 Patch1014:	0014-Qml-Don-t-crash-when-as-casting-to-type-with-errors.patch
-Patch1015:	0015-Fix-missing-glyphs-when-using-NativeRendering.patch
-Patch1016:	0016-Revert-Fix-missing-glyphs-when-using-NativeRendering.patch
-Patch1017:	0017-QQmlImportDatabase-Make-sure-the-newly-added-import-.patch
-Patch1018:	0018-QQuickState-when-handle-QJSValue-properties-correctl.patch
-Patch1019:	0019-Models-Avoid-crashes-when-deleting-cache-items.patch
-Patch1020:	0020-qv4function-Fix-crash-due-to-reference-being-invalid.patch
-Patch1021:	0021-Quick-Animations-Fix-crash.patch
-Patch1022:	0022-Prevent-crash-when-destroying-asynchronous-Loader.patch
-Patch1023:	0023-QQuickItem-Fix-effective-visibility-for-items-withou.patch
-Patch1024:	0024-Revert-QQuickItem-Fix-effective-visibility-for-items.patch
-Patch1025:	0025-Accessibility-respect-value-in-attached-Accessible-i.patch
-Patch1026:	0026-qml-tool-Use-QCommandLineParser-process-rather-than-.patch
+Patch1015:	0015-QQmlImportDatabase-Make-sure-the-newly-added-import-.patch
+Patch1016:	0016-QQuickState-when-handle-QJSValue-properties-correctl.patch
+Patch1017:	0017-Models-Avoid-crashes-when-deleting-cache-items.patch
+Patch1018:	0018-qv4function-Fix-crash-due-to-reference-being-invalid.patch
+Patch1019:	0019-Quick-Animations-Fix-crash.patch
+Patch1020:	0020-Prevent-crash-when-destroying-asynchronous-Loader.patch
+Patch1021:	0021-QQuickItem-Fix-effective-visibility-for-items-withou.patch
+Patch1022:	0022-Revert-QQuickItem-Fix-effective-visibility-for-items.patch
+Patch1023:	0023-Accessibility-respect-value-in-attached-Accessible-i.patch
+Patch1024:	0024-qml-tool-Use-QCommandLineParser-process-rather-than-.patch
+Patch1025:	0025-JIT-Add-missing-STORE-LOAD-_ACC-to-CreateCallContext.patch
+Patch1026:	0026-QQmlJs-MemoryPool-fix-potential-UB-pointer-overflow.patch
+Patch1027:	0027-QRecyclePool-fix-potential-UB.patch
+Patch1028:	0028-QtQml-Clean-up-QQmlData-ctor.patch
+Patch1029:	0029-QML-Make-notify-list-thread-safe.patch
+Patch1030:	0030-Flickable-prevent-fixup-from-being-called-while-drag.patch
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}
