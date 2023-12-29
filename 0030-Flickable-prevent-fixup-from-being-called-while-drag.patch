@@ -1,7 +1,7 @@
-From 1b0e366092bcfae0392592c3b7891f0e47af1018 Mon Sep 17 00:00:00 2001
+From aa66aa90e868381393f7fd492f7b7ee318e61716 Mon Sep 17 00:00:00 2001
 From: Oliver Eftevaag <oliver.eftevaag@qt.io>
 Date: Fri, 9 Dec 2022 18:40:54 +0100
-Subject: [PATCH 30/30] Flickable: prevent fixup() from being called while
+Subject: [PATCH 30/31] Flickable: prevent fixup() from being called while
  dragging
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -112,5 +112,5 @@ index d092cd0170..62f7c67dd4 100644
  
      QTest::mouseMove(window.data(), pos);
 -- 
-2.42.0
+2.43.0
 

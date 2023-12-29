@@ -1,7 +1,7 @@
-From 752b5bfa37c0b059883f52fcec4a41efc78521ad Mon Sep 17 00:00:00 2001
+From c8d7e8ac22001a0615a2729e74e98e575614e538 Mon Sep 17 00:00:00 2001
 From: Jaeyoon Jung <jaeyoon.jung@lge.com>
 Date: Fri, 19 Feb 2021 08:11:57 +0900
-Subject: [PATCH 15/30] QQmlImportDatabase: Make sure the newly added import
+Subject: [PATCH 15/31] QQmlImportDatabase: Make sure the newly added import
  path be first
 
 If it already exists in the import list, move it to the first place.
@@ -53,5 +53,5 @@ index 9c865b3f73..1f788f7a7f 100644
  
  Q_DECLARE_METATYPE(QQmlImports::ImportVersion)
 -- 
-2.42.0
+2.43.0
 

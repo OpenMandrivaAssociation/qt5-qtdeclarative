@@ -1,7 +1,7 @@
-From 4e9cc24046159483e47142cadbf432ff5d76981d Mon Sep 17 00:00:00 2001
+From 86bea17b50567c95143a72609cea1712dabd784d Mon Sep 17 00:00:00 2001
 From: Ulf Hermann <ulf.hermann@qt.io>
 Date: Wed, 29 Mar 2023 16:36:03 +0200
-Subject: [PATCH 17/30] Models: Avoid crashes when deleting cache items
+Subject: [PATCH 17/31] Models: Avoid crashes when deleting cache items
 
 Pick-to: 6.5 6.2 5.15
 Fixes: QTBUG-91425
@@ -158,5 +158,5 @@ index 1722447830..f473cff75f 100644
  
  #include "tst_qqmldelegatemodel.moc"
 -- 
-2.42.0
+2.43.0
 

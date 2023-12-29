@@ -43,7 +43,7 @@ Name:		qt5-qtdeclarative
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
-Version:	5.15.11
+Version:	5.15.12
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
@@ -61,36 +61,7 @@ Patch3:		qtdeclarative-python3.patch
 # (tpg) https://bugreports.qt.io/browse/QTBUG-83890
 Patch4:		qtdeclarative-5.14.2-QQuickItemView-fix-maxXY-extent.patch
 # from KDE https://invent.kde.org/qt/qt/qtdeclarative -b kde/5.15
-Patch1001:	0001-Remove-unused-QPointer-QQuickPointerMask.patch
-Patch1002:	0002-QQmlDelegateModel-Refresh-the-view-when-a-column-is-.patch
-Patch1003:	0003-Fix-TapHandler-so-that-it-actually-registers-a-tap.patch
-Patch1004:	0004-Revert-Fix-TapHandler-so-that-it-actually-registers-.patch
-Patch1005:	0005-Make-sure-QQuickWidget-and-its-offscreen-window-s-sc.patch
-Patch1006:	0006-QQuickItem-Guard-against-cycles-in-nextPrevItemInTab.patch
-Patch1007:	0007-Don-t-convert-QByteArray-in-startDrag.patch
-Patch1008:	0008-Fix-build-after-95290f66b806a307b8da1f72f8fc2c698019.patch
-Patch1009:	0009-Implement-accessibility-for-QQuickWidget.patch
-Patch1010:	0010-Send-ObjectShow-event-for-visible-components-after-i.patch
-Patch1011:	0011-QQuickItem-avoid-emitting-signals-during-destruction.patch
-Patch1012:	0012-a11y-track-item-enabled-state.patch
-Patch1013:	0013-Make-QaccessibleQuickWidget-private-API.patch
-Patch1014:	0014-Qml-Don-t-crash-when-as-casting-to-type-with-errors.patch
-Patch1015:	0015-QQmlImportDatabase-Make-sure-the-newly-added-import-.patch
-Patch1016:	0016-QQuickState-when-handle-QJSValue-properties-correctl.patch
-Patch1017:	0017-Models-Avoid-crashes-when-deleting-cache-items.patch
-Patch1018:	0018-qv4function-Fix-crash-due-to-reference-being-invalid.patch
-Patch1019:	0019-Quick-Animations-Fix-crash.patch
-Patch1020:	0020-Prevent-crash-when-destroying-asynchronous-Loader.patch
-Patch1021:	0021-QQuickItem-Fix-effective-visibility-for-items-withou.patch
-Patch1022:	0022-Revert-QQuickItem-Fix-effective-visibility-for-items.patch
-Patch1023:	0023-Accessibility-respect-value-in-attached-Accessible-i.patch
-Patch1024:	0024-qml-tool-Use-QCommandLineParser-process-rather-than-.patch
-Patch1025:	0025-JIT-Add-missing-STORE-LOAD-_ACC-to-CreateCallContext.patch
-Patch1026:	0026-QQmlJs-MemoryPool-fix-potential-UB-pointer-overflow.patch
-Patch1027:	0027-QRecyclePool-fix-potential-UB.patch
-Patch1028:	0028-QtQml-Clean-up-QQmlData-ctor.patch
-Patch1029:	0029-QML-Make-notify-list-thread-safe.patch
-Patch1030:	0030-Flickable-prevent-fixup-from-being-called-while-drag.patch
+%(P=1001; cd %{_sourcedir}; for i in [0-9][0-9][0-9][0-9]-*.patch; do echo -e "Patch$P:\t$i"; P=$((P+1)); done)
 
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
 BuildRequires:	qmake5 = %{version}

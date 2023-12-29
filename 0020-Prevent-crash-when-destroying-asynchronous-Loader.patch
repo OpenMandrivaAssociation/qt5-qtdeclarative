@@ -1,7 +1,7 @@
-From 3e199737af8faee64cb940aef904537b658fe375 Mon Sep 17 00:00:00 2001
+From f0039fae9be6c075cac2913fc47c805c89590c84 Mon Sep 17 00:00:00 2001
 From: Joni Poikelin <joni.poikelin@qt.io>
 Date: Thu, 3 Sep 2020 14:22:26 +0300
-Subject: [PATCH 20/30] Prevent crash when destroying asynchronous Loader
+Subject: [PATCH 20/31] Prevent crash when destroying asynchronous Loader
 
 Fixes: QTBUG-86255
 Pick-to: 5.15
@@ -125,5 +125,5 @@ index 94ec4f44d5..7d0d9fa7a7 100644
  {
      QScopedPointer<QQuickView> view(createView());
 -- 
-2.42.0
+2.43.0
 

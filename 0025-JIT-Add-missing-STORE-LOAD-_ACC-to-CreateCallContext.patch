@@ -1,7 +1,7 @@
-From cbfce7fd236c5305d85371c058a34f8f25e949fa Mon Sep 17 00:00:00 2001
+From ac79fc4ad54fd0cfaf7963c41bb9cd982a76ba4f Mon Sep 17 00:00:00 2001
 From: Ulf Hermann <ulf.hermann@qt.io>
 Date: Wed, 15 Mar 2023 08:59:43 +0100
-Subject: [PATCH 25/30] JIT: Add missing {STORE|LOAD}_ACC() to
+Subject: [PATCH 25/31] JIT: Add missing {STORE|LOAD}_ACC() to
  CreateCallContext
 
 We cannot assume anything about the accumulator register after calling
@@ -45,5 +45,5 @@ index 45150cfffd..5ad53faf95 100644
  
  void BaselineJIT::generate_PushCatchContext(int index, int name) { as->pushCatchContext(index, name); }
 -- 
-2.42.0
+2.43.0
 
