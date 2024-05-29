@@ -1,7 +1,7 @@
-From 48329d973115d8be1260ee4a47cb5870ebc827a1 Mon Sep 17 00:00:00 2001
+From 7ec8e126658396e2a515dc218008841b31365129 Mon Sep 17 00:00:00 2001
 From: Marc Mutz <marc.mutz@qt.io>
 Date: Tue, 27 Jun 2023 13:02:45 +0200
-Subject: [PATCH 26/31] QQmlJs::MemoryPool: fix potential UB (pointer overflow)
+Subject: [PATCH 23/28] QQmlJs::MemoryPool: fix potential UB (pointer overflow)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -41,5 +41,5 @@ index 0cf7ea84e6..1b81a87a2c 100644
              _ptr += size;
              return addr;
 -- 
-2.43.0
+2.45.1
 

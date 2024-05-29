@@ -1,7 +1,7 @@
-From c3bc84a6b6d3c32cd1295e51c432446145c36332 Mon Sep 17 00:00:00 2001
+From 8642c987e7fc762dfedb213f84f1fe9543436137 Mon Sep 17 00:00:00 2001
 From: Marc Mutz <marc.mutz@qt.io>
 Date: Mon, 26 Jun 2023 11:00:56 +0200
-Subject: [PATCH 27/31] QRecyclePool: fix potential UB
+Subject: [PATCH 24/28] QRecyclePool: fix potential UB
 
 Return the pointer returned by placement new, not the pointer used as
 input to placement new. There is a subtle difference and this grey
@@ -50,5 +50,5 @@ index 39f4f88512..c963e1878e 100644
  
  template<typename T, int Step>
 -- 
-2.43.0
+2.45.1
 
