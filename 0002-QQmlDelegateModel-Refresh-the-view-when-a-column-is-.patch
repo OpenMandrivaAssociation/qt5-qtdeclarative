@@ -1,7 +1,7 @@
-From c49cb3c8fb8cb98b0fda95d88a0bfbfc6d4d3b0f Mon Sep 17 00:00:00 2001
+From 74a95ae00839edf533ac435f2e4b0410fd5f5b20 Mon Sep 17 00:00:00 2001
 From: Aleix Pol <aleixpol@kde.org>
 Date: Thu, 23 Sep 2021 03:43:04 +0200
-Subject: [PATCH 02/28] QQmlDelegateModel: Refresh the view when a column is
+Subject: [PATCH 02/25] QQmlDelegateModel: Refresh the view when a column is
  added at 0
 
 It can happen that a model reports n>0 rows but columns=0 (See
@@ -174,5 +174,5 @@ index f0afdb16ca..e128d77c52 100644
  
  #include "tst_qqmldelegatemodel.moc"
 -- 
-2.45.1
+2.46.0
 

@@ -1,7 +1,7 @@
-From 50c8def854806485d66aabcf6918e8b987032e55 Mon Sep 17 00:00:00 2001
+From 310c124dac82d711ab15309a9cb0b9d95db9ea8f Mon Sep 17 00:00:00 2001
 From: Antonio Napolitano <anton@polit.no>
 Date: Sat, 30 Dec 2023 19:11:32 +0100
-Subject: [PATCH 28/28] masm: Don't crash on failed MADV_DONTNEED on Linux
+Subject: [PATCH 25/25] masm: Don't crash on failed MADV_DONTNEED on Linux
 
 The application could call mlockall(MCL_CURRENT|MCL_FUTURE) to lock all
 its memory for performance reasons, causing the madvise call to fail.
@@ -48,5 +48,5 @@ index b5c5f6a2b0..1a3d3cdf97 100644
      if (mprotect(address, bytes, PROT_NONE))
          CRASH();
 -- 
-2.45.1
+2.46.0
 

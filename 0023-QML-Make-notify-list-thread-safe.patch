@@ -1,7 +1,7 @@
-From f23fc4053a25bc767f88b587760b2a98421565b3 Mon Sep 17 00:00:00 2001
+From d15877e074b5e7c0e61589168b5eaaced7e55bf4 Mon Sep 17 00:00:00 2001
 From: Ulf Hermann <ulf.hermann@qt.io>
 Date: Tue, 8 Aug 2023 14:54:01 +0200
-Subject: [PATCH 26/28] QML: Make notify list thread safe
+Subject: [PATCH 23/25] QML: Make notify list thread safe
 
 We keep the notifyList itself alive until the QQmlData itself is
 deleted. This way any isSignalConnected() called while an
@@ -273,5 +273,5 @@ index 86a2d2b45a..d6b2711c2d 100644
      if (extendedData)
          delete extendedData;
 -- 
-2.45.1
+2.46.0
 

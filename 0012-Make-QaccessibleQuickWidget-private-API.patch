@@ -1,7 +1,7 @@
-From 2fa05f83e41e418f99effc05b6311afc398f332f Mon Sep 17 00:00:00 2001
+From 57db70756b3b96c6ce600474c7d169ff389d4ef1 Mon Sep 17 00:00:00 2001
 From: Fabian Kosmale <fabian.kosmale@qt.io>
 Date: Tue, 1 Jun 2021 16:40:44 +0200
-Subject: [PATCH 12/28] Make QaccessibleQuickWidget private API
+Subject: [PATCH 12/25] Make QaccessibleQuickWidget private API
 
 Its base class is private API, so it should be private API, too.
 
@@ -83,5 +83,5 @@ index f46deb54ac..85d156b8a3 100644
  
  SOURCES += \
 -- 
-2.45.1
+2.46.0
 

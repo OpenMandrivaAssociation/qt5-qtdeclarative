@@ -1,7 +1,7 @@
-From 359af80c09db8b72cc48f1b138db8c08b71834a3 Mon Sep 17 00:00:00 2001
+From 24dd58166de07a3657486fceaf93d64ea6824467 Mon Sep 17 00:00:00 2001
 From: Harald Sitter <sitter@kde.org>
 Date: Mon, 28 Nov 2022 14:59:33 +0100
-Subject: [PATCH 11/28] a11y: track item enabled state
+Subject: [PATCH 11/25] a11y: track item enabled state
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -33,10 +33,10 @@ index 0692ce634d..a8df58d450 100644
  }
  
 diff --git a/src/quick/items/qquickitem.cpp b/src/quick/items/qquickitem.cpp
-index 5ee2a440a3..c370d6e5c3 100644
+index 867bfc8172..708dc5fe5e 100644
 --- a/src/quick/items/qquickitem.cpp
 +++ b/src/quick/items/qquickitem.cpp
-@@ -6174,6 +6174,15 @@ void QQuickItemPrivate::setEffectiveEnableRecur(QQuickItem *scope, bool newEffec
+@@ -6175,6 +6175,15 @@ void QQuickItemPrivate::setEffectiveEnableRecur(QQuickItem *scope, bool newEffec
      }
  
      itemChange(QQuickItem::ItemEnabledHasChanged, effectiveEnable);
@@ -53,5 +53,5 @@ index 5ee2a440a3..c370d6e5c3 100644
  }
  
 -- 
-2.45.1
+2.46.0
 

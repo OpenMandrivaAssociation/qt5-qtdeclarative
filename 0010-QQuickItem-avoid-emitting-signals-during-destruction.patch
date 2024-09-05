@@ -1,7 +1,7 @@
-From 7de777fb012597205e2e82b191ee9f3564c1868b Mon Sep 17 00:00:00 2001
+From 6aeb36a5a37a3ad25f90ad72b14bb97445c1650d Mon Sep 17 00:00:00 2001
 From: Volker Hilsheimer <volker.hilsheimer@qt.io>
 Date: Wed, 9 Nov 2022 15:34:11 +0100
-Subject: [PATCH 10/28] QQuickItem: avoid emitting signals during destruction
+Subject: [PATCH 10/25] QQuickItem: avoid emitting signals during destruction
 
 If a QQuickItem is in the QQuickItem destructor, then it is both unsafe
 and unnecessary to emit property change notifications. Connected code
@@ -29,10 +29,10 @@ Reviewed-by: Mitch Curtis <mitch.curtis@qt.io>
  2 files changed, 14 insertions(+), 8 deletions(-)
 
 diff --git a/src/quick/items/qquickitem.cpp b/src/quick/items/qquickitem.cpp
-index 499fb61d1b..5ee2a440a3 100644
+index 552c3330a2..867bfc8172 100644
 --- a/src/quick/items/qquickitem.cpp
 +++ b/src/quick/items/qquickitem.cpp
-@@ -2327,6 +2327,7 @@ QQuickItem::QQuickItem(QQuickItemPrivate &dd, QQuickItem *parent)
+@@ -2328,6 +2328,7 @@ QQuickItem::QQuickItem(QQuickItemPrivate &dd, QQuickItem *parent)
  QQuickItem::~QQuickItem()
  {
      Q_D(QQuickItem);
@@ -40,7 +40,7 @@ index 499fb61d1b..5ee2a440a3 100644
  
      if (d->windowRefCount > 1)
          d->windowRefCount = 1; // Make sure window is set to null in next call to derefWindow().
-@@ -2694,9 +2695,8 @@ void QQuickItem::setParentItem(QQuickItem *parentItem)
+@@ -2695,9 +2696,8 @@ void QQuickItem::setParentItem(QQuickItem *parentItem)
  
          const bool wasVisible = isVisible();
          op->removeChild(this);
@@ -51,7 +51,7 @@ index 499fb61d1b..5ee2a440a3 100644
      } else if (d->window) {
          QQuickWindowPrivate::get(d->window)->parentlessItems.remove(this);
      }
-@@ -2773,8 +2773,9 @@ void QQuickItem::setParentItem(QQuickItem *parentItem)
+@@ -2774,8 +2774,9 @@ void QQuickItem::setParentItem(QQuickItem *parentItem)
  
      d->itemChange(ItemParentHasChanged, d->parentItem);
  
@@ -63,7 +63,7 @@ index 499fb61d1b..5ee2a440a3 100644
          emit d->parentItem->visibleChildrenChanged();
  }
  
-@@ -2970,7 +2971,8 @@ void QQuickItemPrivate::removeChild(QQuickItem *child)
+@@ -2971,7 +2972,8 @@ void QQuickItemPrivate::removeChild(QQuickItem *child)
  
      itemChange(QQuickItem::ItemChildRemovedChange, child);
  
@@ -73,7 +73,7 @@ index 499fb61d1b..5ee2a440a3 100644
  }
  
  void QQuickItemPrivate::refWindow(QQuickWindow *c)
-@@ -3199,6 +3201,7 @@ QQuickItemPrivate::QQuickItemPrivate()
+@@ -3200,6 +3202,7 @@ QQuickItemPrivate::QQuickItemPrivate()
      , touchEnabled(false)
  #endif
      , hasCursorHandler(false)
@@ -81,7 +81,7 @@ index 499fb61d1b..5ee2a440a3 100644
      , dirtyAttributes(0)
      , nextDirtyItem(nullptr)
      , prevDirtyItem(nullptr)
-@@ -6118,9 +6121,11 @@ bool QQuickItemPrivate::setEffectiveVisibleRecur(bool newEffectiveVisible)
+@@ -6119,9 +6122,11 @@ bool QQuickItemPrivate::setEffectiveVisibleRecur(bool newEffectiveVisible)
          QAccessible::updateAccessibility(&ev);
      }
  #endif
@@ -109,5 +109,5 @@ index 841d91bb40..ade8fb61f2 100644
      enum DirtyType {
          TransformOrigin         = 0x00000001,
 -- 
-2.45.1
+2.46.0
 

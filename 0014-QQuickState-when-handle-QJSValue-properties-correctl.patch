@@ -1,7 +1,7 @@
-From 37472bca62455a6d858a41bb35273b0f1cd7f82d Mon Sep 17 00:00:00 2001
+From 983f65f04c7b0570b8fbed2343a7328f04983b2b Mon Sep 17 00:00:00 2001
 From: Fabian Kosmale <fabian.kosmale@qt.io>
 Date: Wed, 20 Jul 2022 11:44:43 +0200
-Subject: [PATCH 14/28] QQuickState::when: handle QJSValue properties correctly
+Subject: [PATCH 14/25] QQuickState::when: handle QJSValue properties correctly
 
 If one assigns a binding whose evaluation results in a QJSValue, care
 must be take to correctly convert it into a bool. Instead of directly
@@ -98,5 +98,5 @@ index aa55b42935..26e86672b0 100644
  {
     QQmlEngine engine;
 -- 
-2.45.1
+2.46.0
 
