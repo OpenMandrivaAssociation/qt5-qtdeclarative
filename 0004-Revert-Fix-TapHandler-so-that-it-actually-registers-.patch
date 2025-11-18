@@ -1,7 +1,7 @@
-From fc67cb11baa5bb8de3612f9e86056b752ae3fb41 Mon Sep 17 00:00:00 2001
+From 995122e7607fc7c9a03ac1cec50186b3c2812338 Mon Sep 17 00:00:00 2001
 From: Albert Astals Cid <aacid@kde.org>
 Date: Tue, 16 Nov 2021 22:43:37 +0100
-Subject: [PATCH 04/25] Revert "Fix TapHandler so that it actually registers a
+Subject: [PATCH 04/22] Revert "Fix TapHandler so that it actually registers a
  tap"
 
 This reverts commit 36e8ccd434f948e4f11a8f9d59139ec072e41ff5.
@@ -57,5 +57,5 @@ index a508de455d..d785d8c0ca 100644
  
  void QQuickSinglePointHandler::handlePointerEventImpl(QQuickPointerEvent *event)
 -- 
-2.46.0
+2.51.2
 

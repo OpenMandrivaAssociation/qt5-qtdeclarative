@@ -1,7 +1,7 @@
-From 65b82ce6331083b963ec4f1e3f4aa660ec427600 Mon Sep 17 00:00:00 2001
+From b8654806063c3597705a45bd859f96bd35818fb6 Mon Sep 17 00:00:00 2001
 From: Fushan Wen <qydwhotmail@gmail.com>
 Date: Sat, 5 Nov 2022 01:44:30 +0800
-Subject: [PATCH 09/25] Send ObjectShow event for visible components after
+Subject: [PATCH 09/22] Send ObjectShow event for visible components after
  initialized
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -24,7 +24,7 @@ Reviewed-by: Jan Arve Sæther <jan-arve.saether@qt.io>
  1 file changed, 7 insertions(+)
 
 diff --git a/src/quick/items/qquickitem.cpp b/src/quick/items/qquickitem.cpp
-index 540d12c84a..552c3330a2 100644
+index c655b4c327..1e9d3a5cb7 100644
 --- a/src/quick/items/qquickitem.cpp
 +++ b/src/quick/items/qquickitem.cpp
 @@ -5126,6 +5126,13 @@ void QQuickItem::componentComplete()
@@ -42,5 +42,5 @@ index 540d12c84a..552c3330a2 100644
  
  QQuickStateGroup *QQuickItemPrivate::_states()
 -- 
-2.46.0
+2.51.2
 

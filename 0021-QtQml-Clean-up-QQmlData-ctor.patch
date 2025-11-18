@@ -1,7 +1,7 @@
-From 788c7ea1500dd6e82dd602fc51e5aa6f639bcf5e Mon Sep 17 00:00:00 2001
+From 301eaf8d6fbe7d290e8acd1f37832170479b6b91 Mon Sep 17 00:00:00 2001
 From: Ulf Hermann <ulf.hermann@qt.io>
 Date: Mon, 10 Jul 2023 07:43:28 +0200
-Subject: [PATCH 22/25] QtQml: Clean up QQmlData ctor
+Subject: [PATCH 21/22] QtQml: Clean up QQmlData ctor
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -27,17 +27,17 @@ Reviewed-by: Fabian Kosmale <fabian.kosmale@qt.io>
  2 files changed, 12 insertions(+), 15 deletions(-)
 
 diff --git a/src/qml/qml/qqmldata_p.h b/src/qml/qml/qqmldata_p.h
-index ee31cb38d9..bb0adf9dfa 100644
+index c44fb8608e..69dac27c9a 100644
 --- a/src/qml/qml/qqmldata_p.h
 +++ b/src/qml/qml/qqmldata_p.h
-@@ -187,7 +187,7 @@ public:
+@@ -185,7 +185,7 @@ public:
      private:
          void layout(QQmlNotifierEndpoint*);
      };
--    NotifyList *notifyList;
-+    NotifyList *notifyList = nullptr;
+-    QAtomicPointer<NotifyList> notifyList;
++    QAtomicPointer<NotifyList> notifyList = nullptr;
  
-     inline QQmlNotifierEndpoint *notify(int index);
+     inline QQmlNotifierEndpoint *notify(int index) const;
      void addNotify(int index, QQmlNotifierEndpoint *);
 @@ -201,12 +201,12 @@ public:
      QQmlContextData *outerContext = nullptr;
@@ -89,10 +89,10 @@ index ee31cb38d9..bb0adf9dfa 100644
      Q_NEVER_INLINE static QQmlData *createQQmlData(QObjectPrivate *priv);
      Q_NEVER_INLINE static QQmlPropertyCache *createPropertyCache(QJSEngine *engine, QObject *object);
 diff --git a/src/qml/qml/qqmlengine.cpp b/src/qml/qml/qqmlengine.cpp
-index 852a673ebd..86a2d2b45a 100644
+index 5ae937e22f..afb117d36e 100644
 --- a/src/qml/qml/qqmlengine.cpp
 +++ b/src/qml/qml/qqmlengine.cpp
-@@ -725,11 +725,8 @@ void QQmlPrivate::qdeclarativeelement_destructor(QObject *o)
+@@ -719,11 +719,8 @@ void QQmlPrivate::qdeclarativeelement_destructor(QObject *o)
  QQmlData::QQmlData()
      : ownedByQml1(false), ownMemory(true), indestructible(true), explicitIndestructibleSet(false),
        hasTaintedV4Object(false), isQueuedForDeletion(false), rootObjectInCreation(false),
@@ -107,5 +107,5 @@ index 852a673ebd..86a2d2b45a 100644
      memset(bindingBitsValue, 0, sizeof(bindingBitsValue));
      init();
 -- 
-2.46.0
+2.51.2
 

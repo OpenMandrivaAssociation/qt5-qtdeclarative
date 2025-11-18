@@ -1,7 +1,7 @@
-From 83cac09d86872edaa6fd4779597d6ba0bc4d2a8e Mon Sep 17 00:00:00 2001
+From c635f85b51e152225bb644e0548ec66940f14d3f Mon Sep 17 00:00:00 2001
 From: Ulf Hermann <ulf.hermann@qt.io>
 Date: Wed, 8 Feb 2023 12:14:21 +0100
-Subject: [PATCH 24/25] QML: Fortify qmlExecuteDeferred some more
+Subject: [PATCH 20/22] QML: Fortify qmlExecuteDeferred some more
 
 I don't know how to trigger this, but a recent crash report from the CI
 shows that we can get there without a valid engine.
@@ -15,10 +15,10 @@ Reviewed-by: Fabian Kosmale <fabian.kosmale@qt.io>
  1 file changed, 13 insertions(+), 8 deletions(-)
 
 diff --git a/src/qml/qml/qqmlengine.cpp b/src/qml/qml/qqmlengine.cpp
-index d6b2711c2d..5f3367e4d2 100644
+index 4337a7f454..5ae937e22f 100644
 --- a/src/qml/qml/qqmlengine.cpp
 +++ b/src/qml/qml/qqmlengine.cpp
-@@ -1588,17 +1588,22 @@ void qmlExecuteDeferred(QObject *object)
+@@ -1583,17 +1583,22 @@ void qmlExecuteDeferred(QObject *object)
  {
      QQmlData *data = QQmlData::get(object);
  
@@ -50,5 +50,5 @@ index d6b2711c2d..5f3367e4d2 100644
  
  QQmlContext *qmlContext(const QObject *obj)
 -- 
-2.46.0
+2.51.2
 

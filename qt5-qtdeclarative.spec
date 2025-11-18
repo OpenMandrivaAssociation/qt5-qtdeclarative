@@ -43,7 +43,7 @@ Name:		qt5-qtdeclarative
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		https://www.qt.io
-Version:	5.15.15
+Version:	5.15.18
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
@@ -426,8 +426,6 @@ Devel files needed to build apps based on Qt%{api}.
 %{_libdir}/qt5/mkspecs/features/qmltypes.prf
 %{_libdir}/qt5/bin/qmlformat
 %{_libdir}/qt5/bin/qmltyperegistrar
-%{_bindir}/qmlformat
-%{_bindir}/qmltyperegistrar
 
 #------------------------------------------------------------------------------
 
@@ -620,7 +618,3 @@ cd -
 
 # .la and .a files, die, die, die.
 rm -f %{buildroot}%{_qt5_libdir}/lib*.la
-
-mkdir -p %{buildroot}%{_bindir}
-ln -s ../%{_lib}/qt5/bin/qmlformat %{buildroot}%{_bindir}/qmlformat
-ln -s ../%{_lib}/qt5/bin/qmltyperegistrar %{buildroot}%{_bindir}/qmltyperegistrar
