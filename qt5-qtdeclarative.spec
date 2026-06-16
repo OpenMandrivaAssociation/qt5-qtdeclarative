@@ -75,6 +75,7 @@ BuildRequires:	pkgconfig(Qt5Xml) = %{version}
 BuildRequires:	ruby
 BuildRequires:	byacc
 BuildRequires:	bison
+BuildRequires:	make
 # For code generator in yarr
 BuildRequires:	python
 BuildRequires:	qlalr5
