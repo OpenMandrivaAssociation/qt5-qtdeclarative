@@ -43,7 +43,7 @@ Name:		qt5-qtdeclarative
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		https://www.qt.io
-Version:	5.15.18
+Version:	5.15.19
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtdeclarative-everywhere-src-%{version}-%{beta}
@@ -51,7 +51,7 @@ Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d.
 %else
 Release:	1
 %define qttarballdir qtdeclarative-everywhere-opensource-src-%{version}
-Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+Source0:	http://download.qt.io/archive/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
 # (tpg) fix build ../3rdparty/masm/yarr/YarrPattern.cpp:39:29: fatal error: RegExpJitTables.h: No such file or directory
 Patch1:		qtdeclarative-everywhere-src-5.6.0-fix-build.patch

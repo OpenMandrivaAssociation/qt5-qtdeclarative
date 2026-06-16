@@ -1,7 +1,7 @@
-From fce4cfb4f5d617f13e48a268552c812a1740c52f Mon Sep 17 00:00:00 2001
+From b3034ab987e9ff23a9cf4793580a51166de1b27f Mon Sep 17 00:00:00 2001
 From: Maximilian Goldstein <max.goldstein@qt.io>
 Date: Wed, 9 Jun 2021 15:02:45 +0200
-Subject: [PATCH 15/22] qv4function: Fix crash due to reference being
+Subject: [PATCH 15/23] qv4function: Fix crash due to reference being
  invalidated
 
 Function::updateInternalClass creates a reference to a QStringList that is appended to before being used.
@@ -31,5 +31,5 @@ index cf8a53cf9f..223e64271e 100644
              parameterNames[duplicate] =
                      QString(0xfffe) + QString::number(duplicate) + dup;
 -- 
-2.51.2
+2.53.0
 

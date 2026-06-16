@@ -1,7 +1,7 @@
-From c635f85b51e152225bb644e0548ec66940f14d3f Mon Sep 17 00:00:00 2001
+From d09b43b873e5311410d5800528032a80c45975c0 Mon Sep 17 00:00:00 2001
 From: Ulf Hermann <ulf.hermann@qt.io>
 Date: Wed, 8 Feb 2023 12:14:21 +0100
-Subject: [PATCH 20/22] QML: Fortify qmlExecuteDeferred some more
+Subject: [PATCH 20/23] QML: Fortify qmlExecuteDeferred some more
 
 I don't know how to trigger this, but a recent crash report from the CI
 shows that we can get there without a valid engine.
@@ -50,5 +50,5 @@ index 4337a7f454..5ae937e22f 100644
  
  QQmlContext *qmlContext(const QObject *obj)
 -- 
-2.51.2
+2.53.0
 

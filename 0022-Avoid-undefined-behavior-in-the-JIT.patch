@@ -1,7 +1,7 @@
-From 1189557a50f11e7bc5716467a149cd09987a9f88 Mon Sep 17 00:00:00 2001
+From 1b6e070ae2556fef87a8031947cd881f55a35fb3 Mon Sep 17 00:00:00 2001
 From: Ulf Hermann <ulf.hermann@qt.io>
 Date: Wed, 16 Jun 2021 13:49:17 +0200
-Subject: [PATCH 22/22] Avoid undefined behavior in the JIT
+Subject: [PATCH 22/23] Avoid undefined behavior in the JIT
 
 We need to add an entry to all the RegisterID enums, so that we can mark
 a RegisterID as invalid.
@@ -120,5 +120,5 @@ index c3b1eb34eb..a7028c437e 100644
      static const RegisterID ReturnValueRegisterValue = JSC::ARMRegisters::r0;
      static const RegisterID ReturnValueRegisterTag   = JSC::ARMRegisters::r1;
 -- 
-2.51.2
+2.53.0
 

@@ -1,7 +1,7 @@
-From b3db4285564f9dd97e27af87d7ae90b15eaa45b0 Mon Sep 17 00:00:00 2001
+From cf481d6ed3a8e2b7f4db8866c7eb61062c0aebee Mon Sep 17 00:00:00 2001
 From: Fabian Kosmale <fabian.kosmale@qt.io>
 Date: Tue, 29 Mar 2022 10:44:04 +0200
-Subject: [PATCH 16/22] Quick Animations: Fix crash
+Subject: [PATCH 16/23] Quick Animations: Fix crash
 
 SwipeDelegate causes the running animation job to be deleted when
 calling swipe.close in swipe.completed. Employ the RETURN_IF_DELETED
@@ -102,5 +102,5 @@ index 0000000000..38dfde41c3
 +    }
 +}
 -- 
-2.51.2
+2.53.0
 

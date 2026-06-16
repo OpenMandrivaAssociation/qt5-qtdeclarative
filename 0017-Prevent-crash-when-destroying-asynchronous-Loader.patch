@@ -1,7 +1,7 @@
-From 875c9900a1cc84ccaaaed4ebbe659a451fc95ee8 Mon Sep 17 00:00:00 2001
+From 9fd65d464d84dafd050d11c4934361d1f74357aa Mon Sep 17 00:00:00 2001
 From: Joni Poikelin <joni.poikelin@qt.io>
 Date: Thu, 3 Sep 2020 14:22:26 +0300
-Subject: [PATCH 17/22] Prevent crash when destroying asynchronous Loader
+Subject: [PATCH 17/23] Prevent crash when destroying asynchronous Loader
 
 Fixes: QTBUG-86255
 Pick-to: 5.15
@@ -30,5 +30,5 @@ index 4fd2092fd3..0d59d197dc 100644
          }
  
 -- 
-2.51.2
+2.53.0
 

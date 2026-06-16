@@ -1,7 +1,7 @@
-From 6d6503d9b0896fe58926ac7baaa4913ea506a02c Mon Sep 17 00:00:00 2001
+From 62fc256d6d3abc0742b0dc27fc977ce126a0c0e4 Mon Sep 17 00:00:00 2001
 From: Harald Sitter <sitter@kde.org>
 Date: Mon, 28 Nov 2022 14:59:33 +0100
-Subject: [PATCH 11/22] a11y: track item enabled state
+Subject: [PATCH 11/23] a11y: track item enabled state
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -53,5 +53,5 @@ index 2627494bdd..8b139cb539 100644
  }
  
 -- 
-2.51.2
+2.53.0
 

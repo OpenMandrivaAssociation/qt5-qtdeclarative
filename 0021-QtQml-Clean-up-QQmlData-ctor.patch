@@ -1,7 +1,7 @@
-From 301eaf8d6fbe7d290e8acd1f37832170479b6b91 Mon Sep 17 00:00:00 2001
+From c6608226e6d8453ae978f647b1bab000f4f3cf74 Mon Sep 17 00:00:00 2001
 From: Ulf Hermann <ulf.hermann@qt.io>
 Date: Mon, 10 Jul 2023 07:43:28 +0200
-Subject: [PATCH 21/22] QtQml: Clean up QQmlData ctor
+Subject: [PATCH 21/23] QtQml: Clean up QQmlData ctor
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -107,5 +107,5 @@ index 5ae937e22f..afb117d36e 100644
      memset(bindingBitsValue, 0, sizeof(bindingBitsValue));
      init();
 -- 
-2.51.2
+2.53.0
 
